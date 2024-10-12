@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+---
+
+# Exercise 5
+
+## Create Table for Aggregate Country Temperatures
+
+
+The objective of this exercise is to aggregate temperature measurements per country on an annual basis using the data from the `stg_temperatures_by_country` source. 
+Additionally, you will need to clean up the "Country" column by removing leading/trailing spaces and converting the country names to the proper format.
+
+To create a table called `aggregate_country_temperatures` with the desired columns in the `global_temperatures` schema:
+
+1. Investigate the data in the `stg_temperatures_by_country` source for any data quality issues.
+2. Clean up the "Country" column, removing leading/trailing spaces and converting the country names to the proper format using the `initcap` function.
+3. Remove any occurrences of the Lenny face '( ͡° ͜ʖ ͡°)' from the AverageTemperature column.
+4. Remove specified regex pattern `'[-#?()\\s]+'` within the REGEXP_REPLACE function. 
+It will remove any occurrences of hyphens, pound signs, question marks, parentheses, or whitespace from the AVERAGE_TEMPERATURE column before aggregating the values.
+5. Aggregate the temperature measurements per country on an annual basis using the AVG function to calculate the average temperature.
+6. Select the following columns for the output table:
+   - YEAR: Integer
+   - COUNTRY: String
+   - AVERAGETEMPERATURE: Float
+
+Sample Output
+
+| YEAR | AVERAGETEMPERATURE | COUNTRY   |
+|------|-------------------|-----------|
+| 1832 | 19.470083333      | Greenland |
+| 1835 | 19.837833333      | Greenland |
+
+:::note
+
+In the SQL statement, the use of double quotes around the YEAR column name is necessary because it is a reserved keyword in Snowflake. 
+
+``` select "YEAR" FROM TABLE ```
+
+:::

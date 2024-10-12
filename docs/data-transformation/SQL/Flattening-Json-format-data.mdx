@@ -1,0 +1,74 @@
+---
+sidebar_position: 3
+---
+
+# Flattening Json format data 🪄
+
+The CO2 emission data for various countries has been loaded from an S3 bucket to the PSA schema in Snowflake.
+
+# Task 
+
+
+The task is to flatten the JSON and modify column names, such as replacing spaces with underscores and removing special characters like `$` and `@`, for example, renaming the column name "Annual CO2 emissions" to "Annual_CO2_emissions".
+
+- Load the data to the `STG_EMISSIONS_BY_COUNTRY` Table 
+
+```
+JSON_STRING
+{  "Annual CO2 emissions": "2.391861",  
+   "Annual CO2 growth (%)": "26.051487", 
+   "Annual CO2 growth (abs)": "0.494334",   
+   "Annual consumption-based CO2 emissions": "", 
+   "CO2 emissions from coal": "0.076944",
+   ... 
+}
+```
+
+Similarily do it  `TemperaturesByCountry` and `GlobalTemperatures` data
+
+
+| Column Name                                    | Value           |
+| ---------------------------------------------- | --------------- |
+| ANNUAL_CO2_EMISSIONS                            | 2.391861        |
+| ANNUAL_CO2_GROWTH_PERCENTAGE                    | 26.051487       |
+| ANNUAL_CO2_GROWTH_ABS                           | 0.494334        |
+| ANNUAL_CONSUMPTION_BASED_CO2_EMISSIONS          |                 |
+| CO2_EMISSIONS_EMBEDDED_IN_TRADE                 | 0.021984        |
+| CO2_EMISSIONS_FROM_BUNKERS                      | 0.028581        |
+| CO2_EMISSIONS_FROM_CEMENT                       | 0.076944        |
+| CO2_EMISSIONS_FROM_COAL                         |                 |
+| CO2_EMISSIONS_FROM_FLARING                      | 2.286336        |
+| CO2_EMISSIONS_FROM_GAS                          |                 |
+| CO2_EMISSIONS_FROM_OIL                          | 0.079835        |
+| CO2_EMISSIONS_FROM_OTHER_INDUSTRY               | 0.214927        |
+| CO2_PER_GDP_KG_PER_PPP                          |                 |
+| CO2_PER_UNIT_ENERGY_KGCO2_PER_KILOWATT_HOUR     | 28.840519       |
+| CEMENT_EMISSIONS_PER_CAPITA                     | 0.195367        |
+| COAL_EMISSIONS_PER_CAPITA                       |                 |
+| CONSUMPTION_BASED_CO2_PER_GDP_KG_PER_PPP         | 1.058808        |
+| CUMULATIVE_CO2_EMISSIONS                        | 27.586344       |
+| CUMULATIVE_CEMENT_EMISSIONS                     |                 |
+| CUMULATIVE_COAL_EMISSIONS                       |                 |
+| CUMULATIVE_FLARING_EMISSIONS                    | 0.012616        |
+| CUMULATIVE_GAS_EMISSIONS                        | 0.007240        |
+| CUMULATIVE_OIL_EMISSIONS                        | 0.001171        |
+| CUMULATIVE_OTHER_INDUSTRY_EMISSIONS             | 0.005143        |
+| EMISSIONS_EMBEDDED_IN_TRADE_PER_CAPITA          | 0.002728        |
+| ENTITY                                         | Suriname        |
+| FLARING_EMISSIONS_PER_CAPITA                    | 6.386413        |
+| GAS_EMISSIONS_PER_CAPITA                        |                 |
+| OIL_EMISSIONS_PER_CAPITA                        | 6.681176        |
+| OTHER_EMISSIONS_PER_CAPITA                      | 0.012616        |
+| PER_CAPITA_CO2_EMISSIONS                        | 0.007240        |
+| PER_CAPITA_CONSUMPTION_BASED_CO2_EMISSIONS      | 0.001171        |
+| SHARE_OF_CO2_EMISSIONS_EMBEDDED_IN_TRADE        | 0.005143        |
+| SHARE_OF_GLOBAL_CO2_EMISSIONS                   | 0.000309        |
+| SHARE_OF_GLOBAL_CEMENT_EMISSIONS                |                 |
+| SHARE_OF_GLOBAL_COAL_EMISSIONS                  | 0.016783        |
+| SHARE_OF_GLOBAL_CUMULATIVE_CO2_EMISSIONS        | 0.025082        |
+| SHARE_OF_GLOBAL_CUMULATIVE_CEMENT_EMISSIONS     |                 |
+| SHARE_OF_GLOBAL_CUMULATIVE_COAL_EMISSIONS       | 0.012616        |
+| SHARE_OF_GLOBAL_CUMULATIVE_FLARING_EMISSIONS    | 0.007240        |
+| SHARE_OF_GLOBAL_CUMULATIVE_GAS_EMISSIONS        | 0.001171        |
+
+
