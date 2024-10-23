@@ -1,8 +1,8 @@
 {
-    "label": "Statistical-Concepts",
-    "position": 3,
+    "label": "Statistical-Concepts-EDA",
+    "position": 5,
     "link": {
       "type": "generated-index",
-      "description": "Statistical-Concepts"
+      "description": "Statistical-Concepts-and-EDA"
     }
   }
