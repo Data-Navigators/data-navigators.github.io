@@ -1,0 +1,124 @@
+---
+id: workshop-setup
+title: Data Analyst Workshop Setup
+sidebar_label: Workshop Setup
+
+sidebar_position: 5 
+---
+
+# Data Analyst Workshop Setup
+
+Welcome to the Data Analyst Workshop! Follow the steps below to set up your Snowflake environment and load the necessary data files.
+
+## Step 1: Create a Free Tier Account on Snowflake
+
+1. Go to [Snowflake's Free Trial Signup](https://signup.snowflake.com/) and sign up for a free trial account.
+
+![snowflake_setup](./assets/snowflake_setup.png)
+
+2. Follow the instructions in your email to activate your account and log in to Snowflake.
+
+![snowflake_setup](./assets/snowflake_password.png)
+
+
+## Step 2: Create a Database
+
+Once logged in, create a new database to store your data.
+
+- **Database Name**: `EXERCISE_CO2_VS_TEMPERATURE`
+
+To create this database:
+```sql
+CREATE DATABASE EXERCISE_CO2_VS_TEMPERATURE;
+```
+
+**OR**
+
+![snowflake_database](./assets/snowflake_database.png)
+
+
+![snowflake_database](./assets/create_database.png)
+
+
+## Step 3: Create Schemas
+
+Inside the database, create the following schemas to organize your data:
+
+- **Schemas**:
+  - `PSA`
+  - `GLOBAL_TEMPERATURES`
+  - `CARBON_EMISSIONS`
+
+To create these schemas:
+```sql
+USE DATABASE EXERCISE_CO2_VS_TEMPERATURE;
+
+CREATE SCHEMA PSA;
+CREATE SCHEMA GLOBAL_TEMPERATURES;
+CREATE SCHEMA CARBON_EMISSIONS;
+```
+
+**OR**
+
+You can also create schemas using the Snowflake web interface:
+
+![Click on the database](./assets/click_database.png)
+
+![Create a new schema](./assets/creating_schema.png)
+
+![View inside the database](./assets/inside_database.png)
+
+
+## Step 4: Download the CSV Files
+
+Clone the GitHub repository to access the necessary data files:
+
+1. Open a terminal or command prompt.
+2. Run the following command to clone the repository:
+
+```bash
+git clone https://github.com/Data-Navigators/Data_Processing/tree/main/data
+```
+
+This will download the following CSV files:
+
+- `EMISSIONSBYCOUNTRY.csv`
+- `GLOBALTEMPERATURES.csv`
+- `TEMPERATURESBYCOUNTRY.csv`
+
+## Step 5: Load Data into Snowflake
+
+Load the downloaded CSV files into the `PSA` schema within your Snowflake database.
+
+### File to Table Mapping
+
+| CSV File                    | Schema | Table                   |
+|-----------------------------|--------|-------------------------|
+| `EMISSIONSBYCOUNTRY.csv`    | PSA    | `EMISSIONBYCOUNTRY`     |
+| `GLOBALTEMPERATURES.csv`    | PSA    | `GLOBALTEMPERATURES`    |
+| `TEMPERATURESBYCOUNTRY.csv` | PSA    | `TEMPERATURESBYCOUNTRY` |
+
+### Steps to Load Data
+
+For each CSV file, run the following commands:
+
+1. **Create Tables** in the `PSA` schema.
+   ```sql
+   USE SCHEMA PSA;
+
+   CREATE TABLE EMISSIONBYCOUNTRY (...); -- Define columns based on your data
+   CREATE TABLE GLOBALTEMPERATURES (...); -- Define columns based on your data
+   CREATE TABLE TEMPERATURESBYCOUNTRY (...); -- Define columns based on your data
+   ```
+
+2. **Load Data** from the local files:
+   - You can use Snowflake's data loading utilities, such as SnowSQL or the Snowflake UI, to upload each CSV to its respective table.
+
+
+![Load data into table](./assets/load_data_into_table.png)
+
+![Load data table window](./assets/load_data_table_window.png)
+
+![Define schema database](./assets/define_schema_database.png)
+
+Once these steps are complete, your Snowflake environment will be set up with the necessary data for the workshop!

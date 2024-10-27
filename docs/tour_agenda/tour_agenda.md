@@ -1,5 +1,5 @@
 ---
-title: Tour Agenda [WIP]
+title: Tour Agenda
 sidebar_position: 1
 ---
 
@@ -7,6 +7,7 @@ sidebar_position: 1
 
 ## 👩‍💻 Intro to Data Analyst
 An introductory session focused on the role and responsibilities of a Data Analyst, including key skills, tools, and methodologies used in data analysis.
+
 
 ## 🔄 Data Processing
 Learn about data cleaning and transformation techniques, including data wrangling, handling missing values, and data normalization.
@@ -19,6 +20,14 @@ If you are familiar with this topic, go through a quick refresher and solve the 
 | SQL     | [Introduction to SQL](https://thoughtworks.udemy.com/course/sql-introduction-to-mysql/learn/lecture/29407174?learning_path_id=7614108#overview) |
 | Python     | [Data Processing with Python](https://thoughtworks.udemy.com/course/the-data-analyst-course-complete-data-analyst-bootcamp/learn/lecture/22864769?course_portion_id=635214&learning_path_id=7614108#overview) |
 | Data Cleaning  | [Data Cleaning with Python](https://towardsdatascience.com/how-to-clean-your-data-in-python-8f178638b98d) |
+
+| Course Title | Link |
+|--------------|------|
+| SQL          | [Introduction to MySQL](https://thoughtworks.udemy.com/course/sql-introduction-to-mysql/learn/lecture/29407174?learning_path_id=7614108#overview) |
+| Python       | [The Data Analyst Course: Complete Data Analyst Bootcamp](https://thoughtworks.udemy.com/course/the-data-analyst-course-complete-data-analyst-bootcamp/learn/lecture/22864769?course_portion_id=635214&learning_path_id=7614108#overview) |
+| Data Cleaning | [How to Clean Your Data in Python](https://towardsdatascience.com/how-to-clean-your-data-in-python-8f178638b98d) |
+
+
 
 ## 📈 Data Visualization
 Discover best practices in data visualization, including the use of visualization tools and libraries to effectively communicate data insights.
@@ -82,6 +91,5 @@ To get into more details about this topic
 | Content       | Reference Link                    |
 |-------------|----------------------------|
 |  Data Modeling   | [Business analysis with data modeling](https://thoughtworks.udemy.com/course/business-analysis-data-modelling/#overview) |
-
 
 
