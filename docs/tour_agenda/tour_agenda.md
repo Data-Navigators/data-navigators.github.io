@@ -12,7 +12,7 @@ An introductory session focused on the role and responsibilities of a Data Analy
 ## 🔄 Data Processing
 Learn about data cleaning and transformation techniques, including data wrangling, handling missing values, and data normalization.
 If you are familiar with this topic, go through a quick refresher and solve the exercises
-[here](https://data-navigators.github.io/docs/data-processing/SQL/sql-quick-review#)
+[here](docs/data-processing/SQL/sql-quick-review#)
 
 **Optional**
 
@@ -27,7 +27,7 @@ If you are familiar with this topic, go through a quick refresher and solve the 
 ## 📈 Data Visualization
 Discover best practices in data visualization, including the use of visualization tools and libraries to effectively communicate data insights.
 
-If you already have experience with Data Visualisation, here is a [Quick Refresher](https://github.com/Data-Navigators/data-navigators.github.io/blob/0e08e4542f9f2683f7f3dbf50e61728ca3f6a29e/docs/data-visualisation/understanding-your-data.md) and [references to visualisation tools](https://github.com/Data-Navigators/data-navigators.github.io/blob/0e08e4542f9f2683f7f3dbf50e61728ca3f6a29e/docs/data-visualisation/visualization-tools.md) to choose from based on your use case.
+If you already have experience with Data Visualisation, go through a [Quick Refresher](docs/data-visualisation/understanding-your-data.md) and [references to visualisation tools](docs/data-visualisation/visualization-tools.md) to choose from based on your use case.
 
 **Optional**
 
@@ -41,7 +41,7 @@ For more details on this topic refer the following:
 ## 📊 Statistical Concepts and EDA (Exploratory Data Analysis)
 Explore fundamental statistical concepts essential for data analysis, such as descriptive statistics, probability distributions, hypothesis testing, and inferential statistics.
 
-Refer [this concise learning material](https://data-navigators.github.io/docs/category/statistical-concepts-eda) if you know about statistical concepts. Attempt the associated exercises to test your skills.
+Refer [this concise learning material](docs/category/statistical-concepts-eda) if you know about statistical concepts. Attempt the associated exercises to test your skills.
 
 **Optional**
 
@@ -57,7 +57,7 @@ For deeper learning refer the following links:
 ## 📊 Comparative Analysis
 Comparative analysis in trend analysis helps you uncover key patterns by comparing data over time or across different categories. You'll learn how to identify trends, spot deviations, and provide insights to make data-driven decisions for business.
 
-Refer this [short read](https://data-navigators.github.io/docs/category/statistical-concepts-eda) and try out this [hands-on exercise](https://data-navigators.github.io/docs/comparative-analysis/Trend%20Analysis/Exercise) to test your comparative analytics skills.
+Refer this [short read](docs/comparative-analysis/Trend%20Analysis/trend-analysis.md) and try out this [hands-on exercise](docs/comparative-analysis/Trend%20Analysis/Exercise) to test your comparative analytics skills.
 
 **Optional**
 
@@ -75,7 +75,7 @@ For deeper learning refer the following links:
 ## 📊 Business Intelligence Tools (Recommended but Optional for this course completion)
 BI tools streamline data analysis by transforming complex datasets into interactive, visual reports, making insights more accessible and actionable for decision-makers.Explore BI tools like Power BI and Tableau, to apply your DA skills for quick delivery of data insights.
 
-Refer this [short read](https://data-navigators.github.io/docs/bi-tools/business-intelligence)
+Refer this [short read](docs/bi-tools/business-intelligence)
 
 **Optional**
 
@@ -90,7 +90,7 @@ To learn in detail about BI Tools topics in Business Intelligence refer
 ## 📊 Data Modeling (Recommended but Optional for this course completion)
 BI tools streamline data analysis by transforming complex datasets into interactive, visual reports, making insights more accessible and actionable for decision-makers. Knowledge of Data Modeling is essential to understand the data and to design data products in an enterprise.
 
-Refer this [short read](https://data-navigators.github.io/docs/data-modeling/intro-to-data-modeling)
+Refer this [short read](docs/data-modeling/intro-to-data-modeling)
 
 **Optional**
 
