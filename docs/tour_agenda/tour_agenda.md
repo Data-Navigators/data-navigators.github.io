@@ -11,8 +11,7 @@ An introductory session focused on the role and responsibilities of a Data Analy
 
 ## 🔄 Data Processing
 Learn about data cleaning and transformation techniques, including data wrangling, handling missing values, and data normalization.
-If you are familiar with this topic, go through a quick refresher and solve the exercises
-[here](docs/data-processing/SQL/sql-quick-review#)
+If you are familiar with this topic, go through a quick refresher and solve all the exercises for data processing with SQL and Python [here](docs/data-processing/SQL/sql-quick-review#)
 
 **Optional**
 
