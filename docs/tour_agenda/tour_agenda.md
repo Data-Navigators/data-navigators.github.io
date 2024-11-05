@@ -99,4 +99,8 @@ To get into more details about this topic
 |-------------|----------------------------|
 |  Data Modeling   | [Business analysis with data modeling](https://thoughtworks.udemy.com/course/business-analysis-data-modelling/#overview) |
 
+## Data Science and Interpretability (Optional for this course completion)
+Where an Analyst might ask for very specific or aggregated data (many cases, not all), a ML Engineer will more than likely ask for a subset of data but "as raw as possible". What they mean by this is that they want non-aggregated data as close to the source as possible. 
 
+There is an extent to which some standardisation and harmonisation is ok (but it is important to document the transformations that have taken place as to not obscure any significant patterns that would have appeared in ML work).
+Refer this [overview](docs/data-science-and-interpretability/#overview) and other [learning references](docs/data-science-and-interpretability/want-to-learn-more)
