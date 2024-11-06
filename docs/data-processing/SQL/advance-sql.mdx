@@ -65,6 +65,92 @@ FROM employees;
 
 This query returns the `first_name`, `last_name`, and `salary` columns from the `employees` table, along with a `row_number` column that indicates the number of the current row within its partition.
 
+
+
+Here is a Markdown formatted document about parsing JSON in Snowflake:
+
+# Parsing JSON in Snowflake
+
+Snowflake provides powerful functions for working with JSON data. One of the most commonly used functions is `PARSE_JSON()`, which allows you to extract data from JSON strings and convert it into Snowflake data types.
+
+## Using PARSE_JSON()
+
+The `PARSE_JSON()` function takes a JSON-formatted string as input and returns a variant data type representing the JSON structure. Here's a basic example:
+
+```sql
+SELECT 
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}')
+FROM values(1);
+```
+
+This query will return a result similar to the following:
+
+```
+{
+  "name": "John Doe",
+  "age": 35,
+  "email": "john.doe@example.com"
+}
+```
+
+## Accessing JSON Elements
+
+Once you have parsed the JSON data using `PARSE_JSON()`, you can access individual elements using dot notation or array indexing. For example:
+
+```sql
+SELECT
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}'):'name' AS name,
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}'):'age' AS age,
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}'):'email' AS email
+FROM values(1);
+```
+
+This will return:
+
+```
+name        age  email
+----------  ---  -------------------
+John Doe    35   john.doe@example.com
+```
+
+## Casting JSON Elements
+
+You can also cast the extracted JSON elements to specific data types. For example:
+
+```sql
+SELECT
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}'):'name'::VARCHAR AS name,
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}'):'age'::INTEGER AS age,
+  PARSE_JSON('{"name": "John Doe", "age": 35, "email": "john.doe@example.com"}'):'email'::VARCHAR AS email
+FROM values(1);
+```
+
+This will return the same result as the previous example, but with the appropriate data types for each column.
+
+## Nested JSON
+
+`PARSE_JSON()` can also handle nested JSON structures. For example:
+
+```sql
+SELECT
+  PARSE_JSON('{"name": "John Doe", "address": {"street": "123 Main St", "city": "Anytown", "state": "CA"}}'):'name' AS name,
+  PARSE_JSON('{"name": "John Doe", "address": {"street": "123 Main St", "city": "Anytown", "state": "CA"}}'):'address':'street' AS street,
+  PARSE_JSON('{"name": "John Doe", "address": {"street": "123 Main St", "city": "Anytown", "state": "CA"}}'):'address':'city' AS city,
+  PARSE_JSON('{"name": "John Doe", "address": {"street": "123 Main St", "city": "Anytown", "state": "CA"}}'):'address':'state' AS state
+FROM values(1);
+```
+
+This will return:
+
+```
+name        street           city       state
+----------  ---------------  ---------- -----
+John Doe    123 Main St      Anytown    CA
+```
+
+Remember, the `PARSE_JSON()` function is very powerful and can handle a wide range of JSON structures. It's an essential tool for working with JSON data in Snowflake.
+
+
 ## Conclusion
 
 Aggregate and window functions are powerful tools that can help you to perform complex calculations on your SQL data. By mastering these functions, you can gain a deeper understanding of your data and create more insightful reports and visualizations.
