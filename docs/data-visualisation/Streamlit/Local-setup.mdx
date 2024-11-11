@@ -104,22 +104,6 @@ exec "$SHELL"
 
 #### Create virtualenv and Install Dependencies
 
-```shell
-# setup virtualenv and install the dependencies
-poetry install
-
-# run a command inside the virtualenv
-poetry run dbt --version
-
-# start a virtualenv shell and run commands inside it
-poetry shell
-dbt --version
-
-# install dbt packages
-cd data_transformation
-dbt deps
-```
-
 #### Data Visualizations
 
 ```shell
