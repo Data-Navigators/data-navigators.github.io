@@ -4,12 +4,6 @@ title: Resources
 
 ## Resources 
 
-
-| Course Title | Link |
-|--------------|------|
-| SQL          | [Introduction to MySQL](https://thoughtworks.udemy.com/course/sql-introduction-to-mysql/learn/lecture/29407174?learning_path_id=7614108#overview) |
-
-
 ## 📊 Statistical Concepts
 
 | Course Title | Link |
