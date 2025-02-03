@@ -1,3 +1,52 @@
 ---
 sidebar_position: 2
 ---
+
+We have tried to simulate data based on our experience with the sales domain and have generated these datasets.
+
+## Option 1
+**Data :** https://www.kaggle.com/datasets/ankitabhatia10/fashion-retail-india/data
+
+**Context :** A fashion merchant (wholesale and retail) is operating out of stores in multiple regions. 
+We have collected the sales and purchase data for the last few years and want to use this data to answer some business questions to help improve the way we do business. 
+We are also trying to optimise our inventory and stocking and would need help from a data analyst to guide us with actionable insights.
+For practical purposes, please assume that the inventory on the first purchase date available in the purchase_data.csv was 0.
+
+**Questions:**
+1. The sales team wants to know their best selling product for the current month and the sales growth pattern for the same. They want to decide, if they should be buying more units of this product or should keep the purchase steady to support the next month’s sales. Can you calculate and report the metrics they should look at? (examples of metrics, sales growth, inventory on hand, etc.)
+
+2. Which are the most and least profitable stores based on profit margins? 
+3. Find the product that is causing the store to be least profitable in the last 3 months.
+
+**Optional Questions (slightly advanced)**
+1. Would you recommend continuing or discontinuing this product or refer to a different course of action to manage the inventory and sales better? Explain (Recommendations)
+2. What is the sell through rate of the products in the store which is most profitable? Is there a cause of concern for the inventory manager? 
+
+
+
+
+## Option 2
+**Data:** https://www.kaggle.com/datasets/nbazzaneze/synthetic-dataset/data
+
+**Context :** A mid-sized e-commerce platform, which specializes in selling a wide range of consumer goods, from electronics to home decor has shared their data for analysis. The business has been growing steadily, but the competitive nature of the e-commerce industry demands continuous optimization of operations, marketing strategies, and customer engagement.
+To better understand customer behavior, streamline operations, and identify growth opportunities, ShopSphere's data team decided to involve a data analyst to help answer questions for the sales team. 
+
+**Questions:**
+1. For customers who buy more than one type of product id: are the products of different categories? If so, is there a correlation between categories sold together? Are some categories sold together more often?
+
+2. Are the general sales seasonal? Is there any category/product that has seasonal sales? 
+
+- Intuition: some festive dates or specific seasons may impact certain products.
+
+3. How much do recurring costumers spend per category on average? Do they buy often from specific categories more often than other (identify the slow moving and fast moving categories)? 
+
+**Optional Questions (slightly advanced)**
+1. Which variables impact if you get a discount? Are customers, who got a discount, more likely to return? 
+
+- Intuition: payment method and total value of the order impact if you get a discount (money has no credit card tax, so you may get a discount to make it more attractive to the customer; higher priced orders may have discount to influence the client in buying it); customers who get and discount have a higher return rate.
+
+2. Which variable influences the payment method choice? 
+
+- Intuition: Expensive orders are paid with credit card more often.
+
+3. Is there an association between rating and product_id? Is there a supplier with better/worse scores? If there is, what would you recommend them as an action based on the review text? Report if some products/supplier may have recurring complaints
