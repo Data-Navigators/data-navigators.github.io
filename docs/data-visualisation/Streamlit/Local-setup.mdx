@@ -122,7 +122,40 @@ streamlit run DataDynamos.py # should be able to access the UI
 
 ### Prerequisites
 
-- Docker 🐳
+- Docker 🐳 : Tool to create independent containers in the local machine
+- Colima : Tool to run Docker containers on macOS with minimal setup
+
+### Docker & Colima Installation
+
+Install Colima using Homebrew:
+```shell
+brew install colima
+```
+
+Once Colima installs, install Docker and Docker Compose.
+```shell
+brew install docker docker-compose
+```
+
+Then configure docker-compose as a Docker plugin so you can use docker compose as a command instead of the legacy docker-compose script. First, create a folder in your home directory to hold Docker CLI plugins:
+```shell
+mkdir -p ~/.docker/cli-plugins
+```
+
+Then symlink the docker-compose command into that new folder:
+```shell
+ln -sfn $(brew --prefix)/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+```
+
+Check docker compose is installed correctly:
+```shell
+docker --version
+```
+
+Check colima is installed correctly:
+```shell
+colima --version
+```
 
 ### Usage
 
@@ -146,7 +179,7 @@ docker run --rm -it -v $PWD:/opt/data_dynamos_exercise quay.io/data-dynamos/data
 docker run --rm -it -v $PWD:/opt/data_dynamos_exercise quay.io/data-dynamos/data_dynamos_exercise -p 8501:8501 bash
 ```
 
-- Run the code inside the container
+- Run the code inside the container, replace the placeholders with your Snowflake credentials created in the previous section
 
 ```shell
 export SNOWFLAKE_ACCOUNT='<your-snowflake-account-name>'
@@ -160,7 +193,7 @@ streamlit run DataDynamos.py # should be able to access the UI
 
 ### Reference
 
-Follow this Instruction
+For additional reference of streamlit installation
 
 https://docs.streamlit.io/library/get-started/installation
 
