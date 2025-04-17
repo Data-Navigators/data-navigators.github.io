@@ -1,0 +1,21 @@
+---
+title: Dispersion Analysis
+sidebar_position: 3
+---
+
+Dispersion refers to the spread or variability of a dataset. It helps answer questions like, "How much do values differ from each other?" or "Is the data consistent or variable?" Understanding dispersion is crucial for interpreting data accurately.
+
+### Key measures of Dispersion
+| **Measure**       | **Formula**           | **Intuition / Meaning**                                               | **When to Use**                                 | **Business Question It Solves**                                 |
+|-------------------|------------------------|------------------------------------------------------------------------|--------------------------------------------------|------------------------------------------------------------------|
+| **Range**         | Max − Min             | Total spread — quick view of extremes                                 | Quick checks or small datasets                  | What’s the difference between our highest and lowest order size?|
+| **IQR**           | Q3 − Q1               | Spread of the “middle 50%” — ignores outliers                         | Understand core variability                     | What’s the typical salary band for a role?                      |
+| **Variance**      | Σ(x − μ)² / n         | Measures overall spread by squaring deviations                        | Need to quantify consistency or volatility       | How much do monthly sales fluctuate?                            |
+| **Std Deviation** | √Variance             | Same as variance, but in original units — easier to interpret         | Comparing consistency across groups             | Are store revenues consistent across locations?                 |
+
+Important practical points to note:
+- **Range** gives a quick view of extremes but can be misleading if outliers are present.
+- **IQR** is a better measure of spread when outliers are present.
+- **Variance** and **Standard Deviation** are useful for understanding the spread of data, but they can be affected by outliers.
+
+Python packages **numpy** and **scipy** are commonly used for calculating these statistics.

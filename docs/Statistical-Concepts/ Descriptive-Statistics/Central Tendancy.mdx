@@ -1,0 +1,21 @@
+---
+title: Central Tendancy
+sidebar_position: 2
+---
+
+Use a single value to summarize a dataset, representing the "center" of the data. It helps answer questions like, "What is the typical value?" or "What is the average?"
+
+### Measure of Central Tendency
+| **Measure**       | **Formula**           | **Intuition / Meaning**                                               | **When to Use**                                 | **Business Question It Solves**                                 |
+|-------------------|------------------------|------------------------------------------------------------------------|--------------------------------------------------|------------------------------------------------------------------|
+| **Mean**          | Σx / n                | Balances all values — the “center of gravity”                         | Data is symmetric, no extreme outliers          | How many items do we typically sell each day?                   |
+| **Median**        | Middle value (sorted) | Represents the middle — resistant to extreme values                   | Skewed data or presence of outliers             | What’s a typical customer wait time?                            |
+| **Mode**          | Most frequent value   | Most common value — shows what happens most often                     | Categorical or repeated numeric data            | What product size do people buy most?                           |
+
+Important practical points to note:
+- **Mean** is sensitive to outliers, while **Median** is robust against them.
+- **Mode** is useful for categorical data or repeated numeric data.
+
+![mode.png](./assets/mode.png)
+
+python packages **numpy** and **scipy** are commonly used for calculating these statistics.

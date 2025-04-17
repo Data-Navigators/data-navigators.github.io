@@ -8,50 +8,50 @@ sidebar_position: 1
 
  ![statistics.png](./assets/statistics.png)
 
-Descriptive statistics are like the foundation of a house 🏠—they help you build a solid understanding of your dataset. Whether you want to know the **average** value, how **spread out** the data is, or how **skewed** it might be, these statistics are essential for summarizing and making sense of data. Let’s explore the key concepts!
+Descriptive statistics are like the foundation of a house 🏠—they help you build a solid understanding of your dataset. As the name suggests, they help describe the dataset. 
 
-1. **Mean** 🧮
-   - The average value of the dataset.
-   - Helps in identifying the central value in the distribution.
+They help answer **common business questions** like,**"As a cafe that bakes muffins everyday, how many muffins should I prepare tomorrow?"**
 
-2. **Median** 🔢
-   - The middle value when data is sorted.
-   - Important for understanding the center of the distribution, especially when the data contains outliers.
+And, some **complex business questions** for an online retail merchant like, **"Which product categories show the most inconsistent customer ratings?"**
 
-3. **Mode** ➿
+A short example to show how to estimate the number of muffins to bake tomorrow:
+```python
+import pandas as pd
+import numpy as np
+# Typically this data would come from sales records.
+# For simplicity, we will simulate the sales data for last 30 days 
+np.random.seed(42)
+data = pd.DataFrame({
+    'day': pd.date_range(start='2023-01-01', periods=30, freq='D'),
+    'sales': np.random.randint(30, 100, size=30)
+})
+print(f"Simulated sales adta: {data}")
+# Calculate the mean sales
+mean_sales = data['sales'].mean()
+# Estimate the number of muffins to bake tomorrow
+estimated_muffins = mean_sales
+print(f"Estimated muffins to bake tomorrow: {round(estimated_muffins,2)}")
+```
 
-   ![mode.png](./assets/mode.png)
+### What does this code do?  
+- It simulates sales data for 30 days, calculates the average sales, and estimates the number of muffins to bake for tomorrow based on that average.
 
-    - The most frequently occurring value in the dataset.
-   - Useful for identifying the most common observation in the dataset.
+**Before we move ahead refer this table to understand the key symbols used in statistics.**
+### 📚 Statistical Symbols Glossary
 
-4. **Skewness** 📐
+| **Symbol** | **Meaning**                                                                 |
+|------------|-----------------------------------------------------------------------------|
+| **Σ**      | Sum of all values or terms.                                                 |
+| **x**      | A data point or value in the dataset.                                       |
+| **μ (Mu)** | The mean (average) of the dataset or population.                            |
+| **n**      | The total number of data points in the dataset or sample size.              |
+| **σ (Sigma)** | The standard deviation of the dataset or population.                     |
+| **σ² (Sigma Squared)** | The variance of the dataset or population.                            |
+| **(x - μ)** | The difference between a data point and the mean, or the deviation from the mean. |
+| **(x - μ)³** | The deviation from the mean raised to the third power (used in skewness).  |
+| **P(x)** | The probability of observing a value x in a probability distribution.         |
+| **Z**      | The **Z-score**, which represents how many standard deviations a data point is from the mean. |
 
-   - A measure of the asymmetry of the data distribution.
-   - Skewness indicates whether the data is skewed to the left (negative skew) or right (positive skew).
 
-5.  **Kurtosis** 🚀
-
-    ![mode.png](./assets/Kurtosiṣ.png)
-
-   - A measure of the "tailedness" of the data distribution.
-   - Helps to understand the presence of outliers in the dataset, with higher kurtosis indicating more extreme values.
-
-   | Statistic | Definition | Significance | Interpretation |
-|-----------|------------|--------------|-----------------|
-| **Mean** | Average of values | Central tendency | Sensitive to outliers |
-| **Median** | Middle value | Central tendency | Less affected by outliers |
-| **Mode** | Most frequent value | Commonality | Useful for categorical data |
-| **Skewness** | Asymmetry measure | Distribution shape | Positive or negative skew indicates concentration of values |
-| **Kurtosis** | Tailedness measure | Outlier likelihood | High kurtosis indicates more extreme values |
-
-## Dataset:
-We will be using a retail dataset, specifically focusing on the **Total Amount** column, which represents the total amount of transactions made by customers.
-
-## Steps Covered:
-1. Calculate the **Mean**, **Median**, and **Mode** of the **Total Amount** in the dataset to determine the central tendencies.
-2. Analyze the **Skewness** and **Kurtosis** of the **Total Amount** to understand the distribution shape and the presence of any outliers.
-
-### Why is this important?
-Descriptive statistics are foundational for any form of data analysis. They provide simple summaries about the data, which can be either a representation of the entire dataset or just an attribute of the data. Understanding these statistics is crucial for making data-driven decisions and interpreting data distributions accurately.
+Let’s explore the key concepts!
 
