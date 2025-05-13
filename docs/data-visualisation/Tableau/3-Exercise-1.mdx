@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+---
+
+# Exercise 1
+
+
+## Exercise: Total Emissions and Average Temperature for Different Countries
+
+In this exercise, we will create visualizations using Streamlit to analyze the total emissions and average temperature for different countries in a specific year. We will display this information using a bar chart for selected countries.
+
+### Problem Description:
+You have been provided with a dataset that contains information about carbon emissions and average temperature for different countries over several years. Your task is to create visualizations that showcase the total emissions for selected countries in a specific year. Additionally, you will create a bar chart to compare the total emissions of these countries.
+
+### Instructions:
+Follow the steps below to complete the exercise:
+
+1. Import the csv data generated from the previous exercise into Tableau public.
+
+2. Go to the "Sheet 1" tab in Tableau Public and rename it to "Total Emissions and Average Temperature for different Countries 🧭".Select the option as Bar under the "Mark" - "All" Section
+
+3. Ensure that the "YEAR" and "COUNTRY" columns are set as dimensions in Tableau, Also ensure Year is set as Date by right clicking on the Year column.
+
+4. Drag the Total Emissions and Average Temperature columns to the Rows shelf.
+Note: you can also use it in columns shelf if you want vertical bar chart.
+
+5. Drag the "COUNTRY" dimension to the Filter shelf and select show filter option.  
+
+6. Similarly, drag the "YEAR" dimension to the Filter shelf and select show filter option.
+
+7. In the title make the Year and Country dynamic by below syntax:
+   ```
+    Country : <Country>
+    Year: <YEAR(Year)>
+   ```
+
+8. The final chart should look something like below:
+
+![different-countries.png](./assets/Exer-1.png)
