@@ -1,37 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
-# Understanding Your Data
-
-## Using a Critical Eye
-
-Visualization helps bring out the story of your data and being able to tell these stories with data is of great significance for data‐driven decision making.
-
-<div style={{textAlign:"center",height:"90%",width:"90%"}}>
-
-![ticket_example.png](./assets/ticket_example.png)
-
-</div>
-
-For example,
-
-- How does the volume of received and processed tickets vary per month?
-- Are we falling behind in terms of processing the recieved tickets? If so, from when and why?
-- What are the factors slowing down the ticket processing? Are these factors correlated? [Correlation is NOT causation](https://www.youtube.com/watch?v=ROpbdO-gRUo)
-
-**Exploratory vs Explanatory Analysis**
-
-<div style={{textAlign:"center",height:"50%",width:"50%"}}>
-
-![explanatory_vs_exploratory.png](./assets/explanatory_vs_exploratory.png)
-
-</div>
-
-- Exploratory analysis is what you do to understand the data, finding patterns, outliers, relationships and so on.
-- Explanatory analysis is communicating the key insights of the analysis to decision-makers, stakeholders, etc.
-
-## Choose an effective visual
+# Choose an effective visual representation
 
 ### **Simple Text**
 
