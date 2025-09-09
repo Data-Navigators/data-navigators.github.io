@@ -68,5 +68,7 @@ Visualization Tools are standalone applications that can be used to create visua
 
 - [QuickSight](https://aws.amazon.com/quicksight/) - Amazon QuickSight is a cloud-based business intelligence service that allows users to create interactive dashboards and reports. All the access and authentication can be managed through AWS IAM and SSO, and support integrations with other AWS services.
 
-
+### Practical Python Visualisation examples to practice in python notebook
+- [Refer to link](https://www.geeksforgeeks.org/data-visualization/python-data-visualization-tutorial/?utm_source=chatgpt.com#getting-started-data-visualization-with-matplotlib)
+- go to the above link and practice few visualisation techniques using python libraries such as Matplotlib, Seaborn and Pandas etc..
 
