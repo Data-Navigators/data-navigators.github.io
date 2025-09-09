@@ -12,10 +12,10 @@ There are two ways to setup and run the code in this repository:
 ## Setup Directly on the Machine
 
 ### Prerequisites
-
-- Pyenv
+Install the following libraries
+- Plotly
 - Python
-- Poetry
+- Streamlit
 
 **Ensure you have Git installed** on your machine. If not, you can download it from [git-scm.com](https://git-scm.com/).
 
@@ -33,187 +33,49 @@ There are two ways to setup and run the code in this repository:
    ```bash
    git clone https://github.com/Data-Dynamos/data_dynamos_exercise.git
    ```
-
-
-
-
 #### Create a new project and set the root folder of project as working directory
 ```shell
 cd data_dynamos_exercise
 ```
 
-#### Install Pyenv v2.3.22
-
+#### go to the Streamlit_local folder after successfully cloning the repository
 ```shell
-curl https://pyenv.run | PYENV_GIT_TAG=v2.3.22 bash
+cd Streamlit_local
 ```
+#### Copy 3 csv files from below location. Unzip the files.
+    - 1. Streamlit_local/EMISSIONSBYCOUNTRY.csv.zip
+    - 2. Streamlit_local/GLOBALTEMPERATURES_SAMPLE.csv
+    - 3. Streamlit_local/TEMPERATURESBYCOUNTRY_SAMPLE.csv.zip
+) and place then inside SQL_Exercise
 
-##### Load pyenv automatically
+#### create a folder "data" inside like - "SQL_Exercise/data/"" and place the unzipped files into this folder
 
-###### For bash
-
+#### go to folder
 ```shell
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-exec "$SHELL"
+cd Transformation
 ```
-
-###### For Zsh
-
+#### run the following commands in order. One after the other, this will apply necessary transformation and create the final data
 ```shell
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-exec "$SHELL"
+python data_processing.py
 ```
-**Note** :
-If you attempt to update .zshrc (as mentioned above) and encounter a permissions error like:
-"Permission denied: ~/.zshrc"
-
-You can grant permissions by doing the following before executing the steps "Load pyenv automatically":
 ```shell
-chmod u+w ~/.zshrc
+python global_temp.py
 ```
-In some cases it might require you to use sudo user.
 ```shell
-ls -l ~/.zshrc
-sudo chown $(whoami) ~/.zshrc
-chmod u+w ~/.zshrc
+python temp_by_country.py
 ```
-
-If you are using shells other than bash or Zsh refer: https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
-
-#### Install Python 3.8.16
-
+#### Successful run of above scripts will generate dedicated output files in the Output folder
+#### go back to Streamlit folder
 ```shell
-pyenv --version
-pyenv install 3.8.16
-pyenv versions # should list Python 3.8.16 version
+cd Streamlit
 ```
-
-#### Install Poetry 1.5.1
-
+#### run the command
 ```shell
-curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
+streamlit run app.py
 ```
+#### This should open the web page in local host and you are good to analyse the data using the visualisation.
 
-##### Add Poetry bin directory to PATH
-
-###### For bash:
-
-```shell
-echo 'export PATH="$HOME/.local/bin/:$PATH"' >> ~/.bashrc
-exec "$SHELL"
-```
-
-###### For Zsh:
-
-```shell
-echo 'export PATH="$HOME/.local/bin/:$PATH"' >> ~/.zshrc
-exec "$SHELL"
-```
-
-### Usage
-
-#### Create virtualenv and Install Dependencies
-
-#### Data Visualizations
-
-```shell
-poetry shell
-
-export SNOWFLAKE_ACCOUNT='<your-snowflake-account-name>'
-export SNOWFLAKE_DATABASE='<your-database-name>'
-export SNOWFLAKE_USER='<your-user-name>'
-export SNOWFLAKE_PASSWORD='<your-password>'
-
-cd data_visualization
-streamlit run DataDynamos.py # should be able to access the UI
-```
-
-## Setup Using Docker
-
-### Prerequisites
-
-- Docker 🐳 : Tool to create independent containers in the local machine
-- Colima : Tool to run Docker containers on macOS with minimal setup
-
-### Docker & Colima Installation
-
-Install Colima using Homebrew:
-```shell
-brew install colima
-```
-
-Once Colima installs, install Docker and Docker Compose.
-```shell
-brew install docker docker-compose
-```
-
-Then configure docker-compose as a Docker plugin so you can use docker compose as a command instead of the legacy docker-compose script. First, create a folder in your home directory to hold Docker CLI plugins:
-```shell
-mkdir -p ~/.docker/cli-plugins
-```
-
-Then symlink the docker-compose command into that new folder:
-```shell
-ln -sfn $(brew --prefix)/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
-```
-
-Check docker compose is installed correctly:
-```shell
-docker --version
-```
-
-Check colima is installed correctly:
-```shell
-colima --version
-```
-
-### Usage
-
-> **Note:** The code will be mounted inside the container so whatever changes you make in your local machine will be synced to the container.
-
-#### Data Transformations
-
-- Start the container
-
-```shell
-docker run --rm -it -v $PWD:/opt/data_dynamos_exercise quay.io/data-dynamos/data_dynamos_exercise bash
-```
-
-- Run the code inside the container
-
-#### Data Visualizations
-
-- Start the container
-
-```shell
-docker run --rm -it -v $PWD:/opt/data_dynamos_exercise quay.io/data-dynamos/data_dynamos_exercise -p 8501:8501 bash
-```
-
-- Run the code inside the container, replace the placeholders with your Snowflake credentials created in the previous section
-
-```shell
-export SNOWFLAKE_ACCOUNT='<your-snowflake-account-name>'
-export SNOWFLAKE_DATABASE='<your-database-name>'
-export SNOWFLAKE_USER='<your-user-name>'
-export SNOWFLAKE_PASSWORD='<your-password>'
-
-cd data_visualization
-streamlit run DataDynamos.py # should be able to access the UI
-```
-
-### Reference
-
-For additional reference of streamlit installation
-
-https://docs.streamlit.io/library/get-started/installation
-
-# Connect Streamlit to Snowflake
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SgWxkAdjK78" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-Link:
-https://docs.streamlit.io/knowledge-base/tutorials/databases/snowflake
+#### Task:
+    > See how the visualisations can be further improved
+    > See how we have preprocessed the raw files and understand the aggregations used to arrive at the output
+    > See how the streamlit app is configured and different elements within streamlit are used to get the complete view
