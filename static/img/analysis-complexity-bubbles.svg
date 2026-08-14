@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520">
+  <style>
+    .bg { fill: #ffffff; }
+    .axis { stroke: #ddd; stroke-width: 1; }
+    .title { font-family: Arial, sans-serif; font-size: 14px; fill: #111; font-weight:600 }
+    .label { font-family: Arial, sans-serif; font-size: 13px; fill: #0b1220; }
+    .bubble { opacity: 0.95; }
+    .desc { font-family: Arial, sans-serif; font-size: 12px; fill: #111; }
+    .callout { stroke: #888; stroke-width: 1; stroke-dasharray: 2 2 }
+  </style>
+  <rect width="100%" height="100%" class="bg"/>
+  <!-- axes -->
+  <line x1="60" y1="380" x2="940" y2="380" class="axis"/>
+  <line x1="60" y1="380" x2="60" y2="40" class="axis"/>
+  <text x="500" y="410" text-anchor="middle" class="title">Data Maturity →</text>
+  <text x="20" y="210" transform="rotate(-90 20,210)" text-anchor="middle" class="title">Complexity ↑</text>
+
+  <!-- (AI ribbon moved to end to render on top of bubbles) -->
+
+  <!-- bubbles (x = maturity, y = complexity, r = impact (area)) -->
+  <!-- Exploratory / Descriptive Stats -->
+  <g>
+    <circle id="exploratory" cx="180" cy="320" r="62" fill="#1F78B4" class="bubble"/>
+    <text x="180" y="320" text-anchor="middle" alignment-baseline="central" font-size="14" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700">Exploratory</text>
+    <text x="180" y="338" text-anchor="middle" class="desc" fill="#ffffff">Descriptive, EDA</text>
+  </g>
+
+  <!-- Diagnostic -->
+  <g>
+    <circle id="diagnostic" cx="380" cy="260" r="84" fill="#33A02C" class="bubble"/>
+    <text x="380" y="260" text-anchor="middle" alignment-baseline="central" font-size="14" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700">Diagnostic</text>
+    <text x="380" y="282" text-anchor="middle" class="desc" fill="#ffffff">Root-cause, drill-downs</text>
+  </g>
+
+  <!-- Predictive -->
+  <g>
+    <circle id="predictive" cx="620" cy="200" r="100" fill="#FFB000" class="bubble"/>
+    <text x="620" y="200" text-anchor="middle" alignment-baseline="central" font-size="14" fill="#2F1F00" font-family="Arial, sans-serif" font-weight="700">Predictive</text>
+    <text x="620" y="222" text-anchor="middle" class="desc" fill="#2F1F00">Forecasting, ML</text>
+  </g>
+
+  <!-- Prescriptive -->
+  <g>
+    <circle id="prescriptive" cx="840" cy="140" r="115" fill="#E31A1C" class="bubble"/>
+    <text x="840" y="140" text-anchor="middle" alignment-baseline="central" font-size="14" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700">Prescriptive</text>
+    <text x="840" y="162" text-anchor="middle" class="desc" fill="#ffffff">Recommendations, optimisation</text>
+  </g>
+
+  <!-- x-axis tick labels under axis for clarity (moved up so legend doesn't overlap) -->
+  <line x1="180" y1="380" x2="180" y2="386" stroke="#bbb"/>
+  <text x="180" y="394" text-anchor="middle" class="label">Exploratory</text>
+  <line x1="380" y1="380" x2="380" y2="386" stroke="#bbb"/>
+  <text x="380" y="394" text-anchor="middle" class="label">Diagnostic</text>
+  <line x1="620" y1="380" x2="620" y2="386" stroke="#bbb"/>
+  <text x="620" y="394" text-anchor="middle" class="label">Predictive</text>
+  <line x1="840" y1="380" x2="840" y2="386" stroke="#bbb"/>
+  <text x="840" y="394" text-anchor="middle" class="label">Prescriptive</text>
+
+  <!-- legend (moved further down to avoid overlapping top label) -->
+  <rect x="60" y="452" width="880" height="56" fill="#fafafa" stroke="#eee" rx="6"/>
+  <text x="80" y="476" class="desc">Bubble positions: increasing data maturity (→) and complexity (↑). Bubble area = <tspan font-weight="bold">Business value / Impact</tspan> (larger → higher expected impact).</text>
+  <text x="80" y="496" class="desc">Main labels are inside bubbles; technologies/examples are shown under each bubble.</text>
+
+  <!-- AI enabling ribbon across top (drawn last so it remains visible above bubbles) -->
+  <rect x="60" y="12" width="880" height="36" fill="#EFE8FF" stroke="#E0D3FF" rx="6"/>
+  <text x="500" y="36" text-anchor="middle" class="label" fill="#2E0E5A">AI &amp; LLMs — enabling layer across stages (examples: LLMs, agents, transformers; augment EDA, feature extraction, summarisation)</text>
+
+</svg>
