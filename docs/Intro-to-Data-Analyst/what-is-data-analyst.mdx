@@ -2,23 +2,73 @@
 sidebar_position: 1
 ---
 
-# What is Data Analyst?
+# Who is a Data Analyst?
+   
+**A data analyst** turns raw data into clear, actionable answers for business problems. At its core, the role requires two complementary abilities: *understand the data itself* and *understand the business reason for analysing it*. Strong analysts combine technical skills with curiosity about the problem to deliver reliable insights that decision-makers can act on.
+
+**In brief:** a data analyst combines data literacy, problem framing, and communication to convert messy inputs into trustworthy outputs.
+
+### Key responsibilities
+- **Clarify the business problem:** ask what decision the analysis should inform and which metrics matter.
+- **Understand the data:** profile sources, types, limitations, and provenance before trusting results.
+- **Prepare the data:** ingest, clean, deduplicate, and document transformations so analyses are reproducible.
+- **Explore and analyse:** run exploratory data analysis (EDA), compute relevant statistics, and test assumptions.
+- **Model and summarise:** create aggregates, visualisations, and simple predictive or segmentation models where appropriate.
+- **Communicate results:** produce clear dashboards, reports, and an executive summary with recommendations.
+
+### Initial steps a data analyst should take
+- Frame the question with stakeholders: confirm success criteria and the time horizon for impact.
+- Inventory available data and check quality: sample, profile, and record missingness or anomalies.
+- Define the core metrics and any required calculations or derived fields.
+- Create a reproducible notebook or pipeline that documents each transformation and check.
+
+### Final deliverables (what the analyst produces)
+- Validated datasets or a reproducible data pipeline
+- Analytical notebooks or scripts with documented assumptions
+- Visualisations and an interactive dashboard with key metrics
+- A one-page executive summary with recommended action and confidence level
+
+### Requirements to fit this role
+- **Technical:** comfort with SQL, spreadsheet tools, at least one scripting language (Python/R), and a visualization tool (e.g., Power BI, Tableau, or Plotly).
+- **Analytical:** knowledge of descriptive statistics, basic hypothesis testing, and EDA techniques.
+- **Process:** ability to write reproducible analyses, version control basics, and data-quality checks.
+- **Communication:** clear written and verbal skills to translate insights into business actions.
+- **Mindset:** curiosity, attention to detail, and the discipline to question assumptions and document decisions.
+
+- **AI & Agentic tools:** familiarity with large language models (e.g., ChatGPT/GPTs), transformer-based tools, and agentic workflows; skills in prompt design and using model APIs to accelerate exploration, generate code snippets, summarise findings, and automate repetitive tasks. Understanding model limitations, hallucination risk, evaluation of outputs, and data-privacy/ethical considerations is essential.
+
+---
+
+
+## Types of Data Analysis (single taxonomy)
+
+The core functional stages used across organisations are intentionally presented as a single taxonomy. Technologies and methods are provided as examples under each stage.
+
+- **Exploratory (Descriptive)** — summarise and understand historical data: counts, averages, distributions, and early visual checks.
+	- Tools/examples: SQL, spreadsheets, `pandas`, Excel pivot tables, matplotlib/seaborn, basic dashboards.
+
+- **Diagnostic** — investigate why events or patterns occurred; prioritise root causes and test hypotheses.
+	- Tools/examples: cohort analysis, SQL slicing, drill-downs in BI tools, causal inference libraries, interactive notebooks.
+
+- **Predictive** — build models to forecast future outcomes when patterns are stable and data is sufficient.
+	- Tools/examples: `scikit-learn`, `statsmodels`, `prophet`, LightGBM/XGBoost, time-series toolkits.
+
+- **Prescriptive** — recommend actions and optimisations based on analysis and model outputs; focus on measurable impact.
+	- Tools/examples: optimisation libraries (`cvxpy`), simulation, decision modelling, A/B testing frameworks, deployment pipelines.
+
+> Note: NLP and AI technologies are examples that augment multiple stages (see the chart). For instance, transformers and LLMs can speed EDA (summaries, feature extraction), assist diagnostic investigations (automated root-cause summarisation), enable predictive feature engineering, and generate natural-language recommendations for prescriptive outputs.
+The flow from descriptive → diagnostic → predictive → prescriptive reflects increasing data maturity and complexity: start by summarising data and validating assumptions, then investigate causes, build predictive models when patterns are stable, and finally recommend optimal actions. As organisations collect more text and unstructured data, NLP techniques and LLM-powered agentic tools augment each stage (quick summarisation, automated feature extraction, and narrative generation).
+
+### Complexity vs Data Maturity (visual)
+Below is a conceptual bubble chart that maps the four functional stages against complexity and data maturity. Bubble *area* represents a single metric: **Business value / impact** (larger area → higher expected impact). Technologies are shown in-stage as examples rather than separate bubbles.
 
 <div style={{textAlign: 'center'}}>
-
-<figure class="video-container">
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/ywZXpfdqg1o?si=7CNbfkD5sS-OYRMr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</figure>
-
+	<img src="/img/analysis-complexity-bubbles.svg" alt="Analysis complexity vs data maturity bubble chart" style={{maxWidth: '100%'}} />
 </div>
 
-# Types of Data Analysis
-<div style={{textAlign: 'center'}}>
-
-<figure class="video-container">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/8gCRG0BksjA?si=_CveSs8oSH137usm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>   
-</figure>
-
-</div>
-
-We credit the videos to the creators. We do not own any rights to these videos.
+### How to use these stages in practice
+- Start with exploratory/descriptive work to ensure data quality and to produce the basic metrics stakeholders expect.
+- Use diagnostic analysis to prioritise issues and generate testable hypotheses; document checks and edge cases.
+- Only progress to predictive work after validating stable patterns and completing robust feature engineering and validation.
+- Use prescriptive analysis when you can measure outcomes and iterate (A/B tests, experiments); provide clear monitoring and rollback paths.
+- Treat AI/LLM/NLP as an enabling layer: use it to automate repetitive tasks, accelerate summarisation and feature extraction, and draft narratives — but validate outputs, track provenance, and include human review for high-stakes recommendations.
