@@ -1,35 +1,65 @@
 ---
-title: Tour Agenda
+title: Course Agenda
 sidebar_position: 1
 ---
 
-# Tour Agenda
+# Course Agenda
+## Overview
+This course is organised into five focused modules. Each module builds on the previous one to move from raw data to actionable insights and a presentation-ready case study. The flow is deliberate: clean and validate data first, then explore and model it, visualise insights for stakeholders, and finally apply learning in a hands-on case study.
 
-## 👩‍💻 Intro to Data Analyst
-An introductory session focused on the role and responsibilities of a Data Analyst, including key skills, tools, and methodologies used in data analysis.
+---
 
-## 🔄 Data Processing
-Learn about data cleaning and transformation techniques, including data wrangling, handling missing values, and data normalization.
+## Module 1 — Data Processing & Quality Assessment
+**Why it matters**: High-quality analysis starts with high-quality data. Cleaning, validating, and understanding data quality prevents misleading results and saves time downstream.
 
-## 📈 Data Visualization
-Discover best practices in data visualization, including the use of visualization tools and libraries to effectively communicate data insights.
+**What the module covers**: data ingestion basics, missing-value strategies, deduplication, normalization, type coercion, profiling, and automated quality checks.
 
-## 📊 Statistical Concepts and EDA
-Explore fundamental statistical concepts essential for data analysis, such as descriptive statistics, probability distributions, hypothesis testing, and inferential statistics.
+**How the flow helps you learn in depth**: practice pipelines that detect and log data issues, write repeatable cleaning steps, and add tests/assertions so you can trust inputs for statistical and BI work.
 
-## 📊 Comparative Analysis
-Comparative analysis in trend analysis helps you uncover key patterns by comparing data over time or across different categories. You'll learn how to identify trends, spot deviations, and provide insights to make data-driven decisions for business.
+---
 
-## 📊 Business Intelligence Tools
-BI tools streamline data analysis by transforming complex datasets into interactive, visual reports, making insights more accessible and actionable for decision-makers.Explore BI tools like Power BI and Tableau, to apply your DA skills for quick delivery of data insights.
+## Module 2 — Statistical Concepts & Exploratory Analysis
+**Why it matters**: Statistics and EDA provide the tools to summarise data, detect patterns, and validate assumptions before you model or report findings.
 
-## 📊 Data Modeling
-BI tools streamline data analysis by transforming complex datasets into interactive, visual reports, making insights more accessible and actionable for decision-makers. Knowledge of Data Modeling is essential to understand the data and to design data products in an enterprise.
+**What the module covers**: descriptive statistics, distributions, sampling, correlation vs causation, hypothesis testing, basic probability, and hands-on EDA workflows (visual + programmatic).
 
-## 📊 Data Science and Interpretability 
-Where an Analyst might ask for very specific or aggregated data (many cases, not all), a ML Engineer will more than likely ask for a subset of data but "as raw as possible". What they mean by this is that they want non-aggregated data as close to the source as possible. 
+**How the flow helps you learn in depth**: iterate between visual exploration and statistical checks; generate reproducible notebooks that document assumptions, outliers, and the reasoning behind further analyses.
 
-There is an extent to which some standardisation and harmonisation is ok (but it is important to document the transformations that have taken place as to not obscure any significant patterns that would have appeared in ML work).
+---
 
-## 📊 Case Study
-We have provided 2 different datasets with problems or business asks associated with them. Please pick one dataset and use learning from the training to answer the given problems with data. 
+## Module 3 — Business Intelligence & Data Modelling
+**Why it matters**: BI and good data modelling translate analysis into scalable assets (dashboards, reports, star/snowflake schemas) that business users can rely on.
+
+**What the module covers**: dimensional modelling, fact and dimension tables, aggregation strategies, performance-aware schema design, and hands-on use of BI tools (building interactive dashboards and KPIs).
+
+**How the flow helps you learn in depth**: connect modelling choices to user questions and performance requirements; practice building a data model from cleaned data and expose it through a BI report.
+
+---
+
+## Module 4 — Data Visualization & Executive Storytelling
+**Why it matters**: Effective visuals and storytelling are how insights influence decisions. This module teaches how to craft visuals that surface the right signals for stakeholders.
+
+**What the module covers**: visualization principles, chart choice, color and accessibility, narrative structure (context → insight → recommendation), dashboard layout, and slide-level storytelling for executives.
+
+**How the flow helps you learn in depth**: build dashboards and a short executive memo; practise turning analytical findings into concise recommendations and visual narratives.
+
+---
+
+## Module 5 — Case Study Presentation by Learner
+**Why it matters**: The capstone synthesises technical and communication skills: you must prepare data, run analysis, model results, visualise findings, and present recommendations.
+
+**What the module covers**: select a dataset/problem, produce an end-to-end analysis (ingest → clean → explore → model → visualise), and deliver a short presentation with an executive summary and technical appendix.
+
+**How the flow helps you learn in depth**: feedback-driven iteration — present to peers or instructors, incorporate critique, and document reproducible steps so your work can be validated and extended.
+
+---
+
+## Reading the course flow
+**The sequence is intentional**: Modules 1–2 ensure your data and analysis are correct; Module 3 converts that work into reliable data products; Module 4 focuses on communicating the resulting insights; Module 5 tests your ability to combine all skills into a real deliverable. For deeper study, alternate between hands-on exercises and short theory readings, and maintain reproducible notebooks and versioned datasets so each stage can be audited.
+
+## Next steps for learners
+- Keep a small lab notebook (notebook or repo) that records datasets, transformations, and assumptions.
+- Practice by building one small pipeline + dashboard from a new dataset.
+- Seek feedback early: present sketches of visuals and models before polishing the final case study.
+
+Enjoy the course — practical repetition plus narrative polish makes data work memorable and impactful.
