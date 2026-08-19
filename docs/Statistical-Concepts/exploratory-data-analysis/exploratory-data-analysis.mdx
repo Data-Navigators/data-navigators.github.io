@@ -2,44 +2,1372 @@
 sidebar_position: 2
 ---
 
+import {
+  EDAVisual1Histogram,
+  EDAVisual2CategoryFrequency,
+  EDAVisual3GroupComparison,
+  EDAVisual4DistributionComparison,
+  EDAVisual5CorrelationExplorer,
+  EDAVisual6TrendExplorer,
+  EDAVisual7OutlierExplorer,
+  EDAVisual8FeatureEngineeringExplorer,
+} from '@site/src/components/StatisticalCharts/EDA';
 
-#### [Walkthrough python script and narrative on EDA: Read before proceeding](https://towardsdatascience.com/exploratory-data-analysis-in-python-a-step-by-step-process-d0dfa6bf94ee/)
-# Exploratory Data Analysis (EDA)
+# Exploratory Data Analysis
 
-## What EDA is and why it matters
-### Overview of EDA in the analytics workflow
+## Objective
 
-## Data profiling and inspection
-### Understanding structure, schema, and quality
+By the end of this module, you should be able to:
 
-## Missing values, outliers, and anomalies
-### Detecting issues before analysis
+* Understand the structure of a dataset before analysing it
+* Identify missing values, duplicates, and basic data-quality issues
+* Summarize numerical and categorical variables
+* Choose appropriate visualizations for different types of data
+* Compare groups and segments
+* Explore relationships between variables
+* Identify trends and patterns over time
+* Detect unusual observations and potential outliers
+* Create simple derived variables for analysis
+* Turn exploratory observations into useful business questions
 
-## Univariate analysis
-### Distribution, shape, and central tendency
+The goal is not to learn every visualization or statistical technique.
 
-## Bivariate analysis
-### Relationships between variables
+The goal is to develop the ability to **look at a dataset systematically and ask the right questions.**
 
-## Graphs and visualisations
-### Histograms
-### Box plots
-### Scatter plots
-### Bar charts
-### Line charts
-### Heatmaps
+---
 
-## Interpreting visual patterns
-### Turning charts into business insight
+# What is Exploratory Data Analysis?
 
-## Examples of EDA in real business and data contexts
-### Customer behaviour, sales, operations, and retention examples
+In the previous module, we learned how descriptive statistics can summarize a dataset.
 
-## Importance of feature engineering
-### Creating meaningful features
-### Improving model performance
-### Uncovering hidden patterns
-### Better business interpretation
+For example:
 
-Exploratory Data Analysis (EDA) is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. EDA is used to understand what the data can tell us beyond the formal modeling or hypothesis testing task. It is a crucial step in the data analysis process.
-In the [notebook](https://github.com/Data-Navigators/data-navigators.github.io/blob/main/docs/data-processing/Python/Exercise.ipynb),refer the "Exploratory Data Analysis section." to attempt a few steps in the EDA process and understand important statistics parameters. We will also visualize the data using different plots and graphs to understand the data better.
+> Mean sales = ₹1,850
+
+> Median sales = ₹920
+
+> Standard deviation = ₹1,200
+
+These numbers tell us something about the data.
+
+But they do not tell us the complete story.
+
+We may still want to know:
+
+* Are there unusual orders?
+* Is sales concentrated in a particular region?
+* Are some categories performing better than others?
+* Does sales change over time?
+* Are discounts related to profit?
+* Are some customer segments behaving differently?
+* Are there missing or incorrect values?
+* Are there patterns hidden inside the overall numbers?
+
+This is where **Exploratory Data Analysis (EDA)** becomes useful.
+
+> **Exploratory Data Analysis is the systematic process of examining data to discover patterns, relationships, differences, trends, anomalies, and potential insights.**
+
+EDA combines:
+
+* Data profiling
+* Data quality checks
+* Summary statistics
+* Visualization
+* Comparison
+* Relationship analysis
+* Trend analysis
+* Outlier investigation
+* Basic feature creation
+
+The important word is **exploratory**.
+
+You are not yet trying to prove a final conclusion.
+
+You are trying to understand:
+
+> **"What is happening in this data, and what should I investigate further?"**
+
+---
+
+# A Dataset to Explore
+
+Throughout this module, we will use a simple retail dataset.
+
+Imagine that each row represents one customer order.
+
+| Order ID | Order Date | Region | Category    | Customer Segment | Sales | Quantity | Discount | Profit | Delivery Days |
+| -------- | ---------- | ------ | ----------- | ---------------- | ----: | -------: | -------: | -----: | ------------: |
+| O1001    | 2026-01-04 | South  | Electronics | Consumer         |   850 |        2 |       5% |    120 |             3 |
+| O1002    | 2026-01-05 | West   | Furniture   | Corporate        | 1,450 |        1 |      10% |    180 |             5 |
+| O1003    | 2026-01-07 | South  | Clothing    | Consumer         |   320 |        4 |       0% |     75 |             2 |
+| O1004    | 2026-01-08 | North  | Electronics | Corporate        | 2,100 |        3 |      15% |    210 |             7 |
+| O1005    | 2026-01-10 | East   | Clothing    | Consumer         |   450 |        2 |       5% |     90 |             3 |
+
+A real dataset would contain thousands of observations.
+
+The techniques we learn here can be applied using:
+
+* Python
+* R
+* Excel
+* SQL
+* Power BI
+* Tableau
+* Other analytical tools
+
+The tool may change.
+
+The analytical thinking remains the same.
+
+---
+
+# 1. Start by Understanding the Dataset
+
+Before creating charts or calculating statistics, first understand what you have.
+
+A simple principle is:
+
+> **Do not analyse a dataset you do not understand.**
+
+Some of the first questions an analyst should ask are:
+
+* How many rows are there?
+* How many columns are there?
+* What does one row represent?
+* What does each column represent?
+* What are the data types?
+* Which columns are numerical?
+* Which columns are categorical?
+* Which columns represent dates?
+* Are there missing values?
+* Are there duplicate records?
+* Are there unexpected values?
+
+---
+
+## Dataset dimensions
+
+The first basic check is the size of the dataset.
+
+For example:
+
+```python
+df.shape
+```
+
+could return:
+
+```text
+(25000, 10)
+```
+
+This means:
+
+> 25,000 rows and 10 columns.
+
+In R:
+
+```r
+dim(df)
+```
+
+In Excel, the same information can be obtained by examining the used range or using functions such as `ROWS()` and `COLUMNS()`.
+
+### Why does this matter?
+
+Imagine someone tells you:
+
+> "We analysed customer behaviour."
+
+Before trusting the analysis, you should know:
+
+> How many customers?
+
+> How many observations?
+
+> What period does the data cover?
+
+> Are we looking at transactions, customers, products, or something else?
+
+The number of rows alone does not tell you the number of customers.
+
+If one customer has 50 orders, that customer may appear in 50 rows.
+
+---
+
+# 2. Understand the Variables and Data Types
+
+Next, understand the structure of the columns.
+
+For example:
+
+| Variable         | Type        | Example     |
+| ---------------- | ----------- | ----------- |
+| Order ID         | Identifier  | O1001       |
+| Order Date       | Date        | 2026-01-04  |
+| Region           | Categorical | South       |
+| Category         | Categorical | Electronics |
+| Customer Segment | Categorical | Consumer    |
+| Sales            | Numerical   | 850         |
+| Quantity         | Numerical   | 2           |
+| Discount         | Numerical   | 0.05        |
+| Profit           | Numerical   | 120         |
+| Delivery Days    | Numerical   | 3           |
+
+In Python:
+
+```python
+df.info()
+```
+
+This provides useful information such as:
+
+* Number of entries
+* Column names
+* Data types
+* Non-null counts
+* Memory usage
+
+A similar inspection can be performed in R:
+
+```r
+str(df)
+```
+
+---
+
+# 3. Check for Missing Values
+
+Missing values are one of the first things to investigate.
+
+For example:
+
+| Order ID | Sales |      Profit | Region |
+| -------- | ----: | ----------: | ------ |
+| O1001    |   850 |         120 | South  |
+| O1002    |  1450 |         180 | West   |
+| O1003    |   320 | **Missing** | South  |
+| O1004    |  2100 |         210 | North  |
+
+Python:
+
+```python
+df.isnull().sum()
+```
+
+This might produce:
+
+```text
+Order ID             0
+Order Date           0
+Region               0
+Category             0
+Sales                0
+Profit             125
+Quantity             0
+Discount            18
+Delivery Days       42
+```
+
+The important question is not simply:
+
+> **"How many values are missing?"**
+
+The next question is:
+
+> **"Why are they missing?"**
+
+---
+
+## What should we do with missing values?
+
+There is no single rule that says:
+
+> "Missing value = delete the row."
+
+Possible approaches include:
+
+### 1. Remove the record
+
+Appropriate when:
+
+* The record is unusable
+* Only a very small number of records are affected
+* Missing information makes the observation irrelevant
+
+### 2. Replace with a meaningful value
+
+For example:
+
+* Mean
+* Median
+* Mode
+* Business-defined default
+
+But this should be done carefully.
+
+### 3. Forward/backward fill
+
+Useful in some time-series situations.
+
+### 4. Create a separate category
+
+For categorical data:
+
+```text
+Region = Unknown
+```
+
+may sometimes be better than deleting the record.
+
+### 5. Investigate the source system
+
+Sometimes the best solution is not statistical at all.
+
+For example:
+
+> Why is Profit missing for all orders from one particular system?
+
+That may indicate a data pipeline problem.
+
+---
+
+# 4. Check for Duplicates
+
+Another basic check:
+
+> **Are any observations duplicated?**
+
+Python:
+
+```python
+df.duplicated().sum()
+```
+
+Example:
+
+```text
+47
+```
+
+This means 47 duplicate rows have been identified.
+
+But again, do not automatically delete them.
+
+Ask:
+
+> Is this a genuine duplicate?
+
+For example, two rows may have the same:
+
+* Customer
+* Product
+* Date
+* Quantity
+
+but still represent two legitimate transactions.
+
+A duplicate should be removed only when we understand why it is duplicated.
+
+---
+
+# 5. Get a Quick Statistical Summary
+
+Once the structure and basic quality are understood, we can obtain a quick summary of numerical variables.
+
+In Python:
+
+```python
+df.describe()
+```
+
+A simplified output might look like:
+
+|       |   Sales | Quantity | Discount | Profit | Delivery Days |
+| ----- | ------: | -------: | -------: | -----: | ------------: |
+| count |  25,000 |   25,000 |   24,982 | 24,875 |        24,958 |
+| mean  |   1,850 |      3.2 |     0.11 |    215 |           4.6 |
+| std   |   1,200 |      2.1 |     0.08 |    320 |           2.7 |
+| min   |      15 |        1 |        0 |   -500 |             1 |
+| 25%   |     650 |        2 |     0.05 |     50 |             2 |
+| 50%   |     920 |        3 |     0.10 |    120 |             4 |
+| 75%   |   1,900 |        4 |     0.15 |    250 |             6 |
+| max   | 950,000 |       25 |     0.60 | 12,000 |            45 |
+
+This immediately raises questions.
+
+For example:
+
+> Why is the maximum sales value ₹950,000 when the median is ₹920?
+
+> Why is minimum profit negative?
+
+> Why is delivery time as high as 45 days?
+
+These are exactly the types of questions EDA should generate.
+
+---
+
+# 6. Explore Numerical Variables
+
+One of the simplest ways to begin EDA is to examine numerical variables individually.
+
+Examples:
+
+* Sales
+* Profit
+* Quantity
+* Discount
+* Delivery Days
+
+We can ask:
+
+> What is the typical value?
+
+> How spread out are the values?
+
+> Is the distribution symmetric?
+
+> Are there extreme values?
+
+> Are there multiple clusters?
+
+---
+
+## Histogram
+
+A histogram helps us understand the distribution of a numerical variable.
+
+---
+
+<EDAVisual1Histogram />
+
+---
+
+# 7. Frequency Analysis for Categorical Variables
+
+Numerical variables are not the only variables we need to explore.
+
+For categorical variables, we often want to know:
+
+> **How frequently does each category occur?**
+
+For example:
+
+| Region | Number of Orders |
+| ------ | ---------------: |
+| South  |            4,200 |
+| West   |            3,800 |
+| North  |            2,700 |
+| East   |            1,900 |
+
+This is a **frequency distribution**.
+
+A bar chart makes this easier to interpret.
+<EDAVisual2CategoryFrequency />
+
+We can also calculate percentages.
+
+For example:
+
+```text
+South = 33.3%
+West  = 30.2%
+North = 21.4%
+East  = 15.1%
+```
+
+This helps us understand the composition of the dataset.
+
+---
+
+
+---
+
+# 8. Compare Groups
+
+A major purpose of EDA is to compare groups.
+
+Examples:
+
+* Region vs Region
+* Product Category vs Product Category
+* Consumer vs Corporate
+* Online vs Offline
+* New vs Existing Customers
+
+The key question is:
+
+> **How does one group differ from another?**
+
+Suppose we calculate revenue by region:
+
+| Region | Orders | Revenue | Average Order Value |
+| ------ | -----: | ------: | ------------------: |
+| South  |  4,200 |   ₹5.2M |              ₹1,238 |
+| West   |  3,800 |   ₹6.8M |              ₹1,789 |
+| North  |  2,700 |   ₹4.1M |              ₹1,519 |
+| East   |  1,900 |   ₹2.0M |              ₹1,053 |
+
+Now we see something interesting.
+
+South has the most orders.
+
+But West has the highest revenue.
+
+Why?
+
+Because West has a much higher average order value.
+
+This is why analysts should avoid relying on a single metric.
+
+---
+
+## Common comparison visualizations
+
+### Bar chart
+
+Useful for comparing:
+
+* Revenue
+* Orders
+* Profit
+* Quantity
+* Customer counts
+
+### Box plot
+
+Useful for comparing distributions across groups.
+
+For example:
+
+> Is order value distributed differently across regions?
+
+### Grouped bar chart
+
+Useful for comparing multiple measures or categories.
+
+---
+
+<EDAVisual3GroupComparison />
+
+---
+
+# 9. Compare Distributions
+
+Sometimes comparing averages is not enough.
+
+Suppose:
+
+| Region | Mean Order Value | Median Order Value |
+| ------ | ---------------: | -----------------: |
+| South  |           ₹1,240 |               ₹900 |
+| West   |           ₹1,790 |             ₹1,050 |
+
+We might conclude:
+
+> West customers place larger orders.
+
+But what if West has a small number of extremely large orders?
+
+A box plot can help us investigate the distribution.
+
+A box plot shows:
+
+* Median
+* First quartile
+* Third quartile
+* IQR
+* Potential outliers
+
+---
+
+<EDAVisual4DistributionComparison />
+
+---
+
+# 10. Explore Relationships Between Variables
+
+EDA is also about understanding whether variables appear to be related.
+
+Suppose we want to investigate:
+
+> **Is discount related to profit?**
+
+A scatter plot can help.
+
+```text
+Profit
+  ↑
+  | ●
+  |  ●
+  |   ●
+  |    ●
+  |     ●
+  |       ●
+  |          ●
+  +--------------------→
+          Discount
+```
+
+If the points generally move downward from left to right, we may observe a negative relationship.
+
+We can also calculate correlation.
+
+For example:
+
+```text
+Correlation = -0.62
+```
+
+This indicates a moderately strong negative linear relationship.
+
+---
+
+# 11. Correlation Is a Starting Point
+
+A common mistake is:
+
+> **Correlation = Causation**
+
+Suppose:
+
+> Discount and Profit have a correlation of -0.62.
+
+We should not immediately conclude:
+
+> "Discounting caused profit to decrease."
+
+Instead, investigate further.
+
+Ask:
+
+* Are discounts concentrated in certain categories?
+* Are discounts higher for Corporate customers?
+* Are discounts used during promotions?
+* Did order volume increase?
+* Are some products naturally less profitable?
+* Is there another variable influencing both discount and profit?
+
+Correlation helps identify relationships worth exploring.
+
+It does not establish causation by itself.
+
+---
+
+<EDAVisual5CorrelationExplorer />
+
+---
+
+# 12. Split the Relationship by Category
+
+An overall relationship can sometimes hide important differences.
+
+Suppose:
+
+> Overall correlation between Discount and Profit = -0.62
+
+Now split the data by category:
+
+| Category    | Correlation |
+| ----------- | ----------: |
+| Electronics |       -0.75 |
+| Furniture   |       -0.35 |
+| Clothing    |       -0.10 |
+
+Now we learn something more useful.
+
+The relationship appears much stronger in Electronics.
+
+This is an example of **segmented analysis**.
+
+Instead of asking only:
+
+> "What is happening overall?"
+
+we ask:
+
+> **"Does the pattern remain the same across different groups?"**
+
+This is a very important EDA habit.
+
+---
+
+# 13. Explore Trends Over Time
+
+Many datasets contain dates.
+
+Whenever you have a date variable, one important question is:
+
+> **How does the metric change over time?**
+
+Suppose monthly revenue is:
+
+| Month    | Revenue |
+| -------- | ------: |
+| January  |   ₹2.1M |
+| February |   ₹2.2M |
+| March    |   ₹2.4M |
+| April    |   ₹2.6M |
+| May      |   ₹2.3M |
+| June     |   ₹2.8M |
+
+A line chart makes the pattern easier to see.
+
+<EDAVisual6TrendExplorer />
+
+We can investigate:
+
+* Growth
+* Decline
+* Peaks
+* Dips
+* Sudden changes
+* Possible seasonality
+* Unusual periods
+
+---
+
+
+
+---
+
+# 14. Look for Changes in More Than One Metric
+
+Suppose we observe:
+
+| Metric              | January |   June |
+| ------------------- | ------: | -----: |
+| Orders              |  10,000 | 14,000 |
+| Revenue             |   ₹2.1M |  ₹2.8M |
+| Average Order Value |    ₹210 |   ₹200 |
+| Profit              |   ₹420K |  ₹350K |
+
+A simple analysis might say:
+
+> **Revenue increased by 33%.**
+
+But a deeper analysis shows:
+
+* Orders increased
+* Revenue increased
+* Average order value decreased
+* Profit decreased
+
+This produces a much more interesting question:
+
+> **What is driving the revenue growth, and why is profit declining?**
+
+EDA helps uncover these questions.
+
+---
+
+# 15. Investigate Outliers
+
+Outliers are observations that are unusually different from the rest of the data.
+
+Suppose most orders have sales between:
+
+```text
+₹100 → ₹10,000
+```
+
+but one order has:
+
+```text
+₹950,000
+```
+
+This is an obvious candidate for investigation.
+
+But:
+
+> **An outlier is not automatically an error.**
+
+It could be:
+
+* A data-entry error
+* A duplicate
+* A genuine bulk order
+* A corporate transaction
+* A currency issue
+* A special business event
+
+The correct process is:
+
+```text
+Detect
+  ↓
+Investigate
+  ↓
+Understand
+  ↓
+Decide
+```
+
+not:
+
+```text
+Detect
+  ↓
+Delete
+```
+
+---
+
+<EDAVisual7OutlierExplorer />
+
+---
+
+# 16. Create Useful Analytical Variables
+
+During EDA, we may discover that the existing variables do not directly answer our questions.
+
+Suppose we have:
+
+```text
+Order Date
+Delivery Date
+```
+
+We can create:
+
+```text
+Delivery Duration
+```
+
+using:
+
+```text
+Delivery Duration = Delivery Date − Order Date
+```
+
+Now we can ask:
+
+> Which regions have the longest delivery times?
+
+> Does delivery time differ by category?
+
+> Does delivery time affect customer behaviour?
+
+---
+
+## Other examples
+
+| Existing Variables                       | New Analytical Variable |
+| ---------------------------------------- | ----------------------- |
+| Order Date                               | Order Month             |
+| Order Date                               | Day of Week             |
+| Order Date                               | Quarter                 |
+| Delivery Date − Order Date               | Delivery Duration       |
+| Revenue ÷ Number of Orders               | Average Order Value     |
+| Revenue ÷ Quantity                       | Revenue per Unit        |
+| Customer First Order Date → Current Date | Customer Tenure         |
+
+This is a basic introduction to **feature engineering**.
+
+At this stage:
+
+> **Feature engineering means creating useful analytical variables from existing data.**
+
+---
+
+# 17. Date-Based Feature Engineering
+
+Dates are particularly useful for EDA.
+
+For example:
+
+```text
+2026-08-18
+```
+
+can be transformed into:
+
+```text
+Year       → 2026
+Month      → August
+Quarter    → Q3
+Day        → Tuesday
+Weekend    → No
+```
+
+Now instead of simply analysing orders by date, we can investigate:
+
+> Are weekends more profitable?
+
+> Which month has the highest sales?
+
+> Are there seasonal patterns?
+
+> Is performance different by quarter?
+
+---
+
+<EDAVisual8FeatureEngineeringExplorer />
+
+---
+
+# 18. Frequency, Comparison, Relationship, and Trend
+
+At this point, four common EDA questions should become familiar.
+
+### Frequency
+
+> **How often does something happen?**
+
+Example:
+
+> How many orders come from each region?
+
+Typical visual:
+
+**Bar chart**
+
+---
+
+### Comparison
+
+> **How is one group different from another?**
+
+Example:
+
+> Which region generates the most profit?
+
+Typical visuals:
+
+**Bar chart / Box plot**
+
+---
+
+### Relationship
+
+> **How are two variables related?**
+
+Example:
+
+> Is discount related to profit?
+
+Typical visual:
+
+**Scatter plot**
+
+---
+
+### Trend
+
+> **How does something change over time?**
+
+Example:
+
+> How has revenue changed month by month?
+
+Typical visual:
+
+**Line chart**
+
+---
+
+# 19. Choosing the Right Visualization
+
+You do not need to memorize every chart type.
+
+Start with the question.
+
+| Question                                  | Data                  | Useful Visualization    |
+| ----------------------------------------- | --------------------- | ----------------------- |
+| How is a numerical variable distributed?  | Numerical             | Histogram               |
+| What is the frequency of each category?   | Categorical           | Bar chart               |
+| How do groups compare?                    | Category + Numerical  | Bar chart               |
+| How do distributions differ?              | Category + Numerical  | Box plot                |
+| Are two numerical variables related?      | Numerical + Numerical | Scatter plot            |
+| How does something change over time?      | Date + Numerical      | Line chart              |
+| What percentage belongs to each category? | Categorical           | Bar chart / 100% bar    |
+| Where are unusual observations?           | Numerical             | Box plot / Scatter plot |
+
+The most important principle is:
+
+> **Choose the visualization that answers the question.**
+
+Not:
+
+> **Choose a visualization because it looks interesting.**
+
+---
+
+# 20. EDA Is an Iterative Process
+
+EDA does not always follow a perfectly fixed sequence.
+
+You may start with a trend and discover an unusual month.
+
+Then you investigate that month by region.
+
+Then you discover that one category caused the change.
+
+Then you investigate that category by customer segment.
+
+Then you discover that discounting changed.
+
+The process can look like:
+
+```text
+Overall trend
+      ↓
+Unexpected change
+      ↓
+Compare regions
+      ↓
+Identify category
+      ↓
+Compare customer segments
+      ↓
+Investigate discount
+      ↓
+Explore relationship with profit
+```
+
+This is why EDA is called **exploratory**.
+
+One finding leads to the next question.
+
+---
+
+# 21. From Observation to Hypothesis
+
+Suppose you discover:
+
+> Electronics revenue increased by 18%.
+
+That is an **observation**.
+
+You then discover:
+
+> Electronics discounts also increased.
+
+Another observation.
+
+Then:
+
+> Electronics profit margin decreased.
+
+Another observation.
+
+Now you have a hypothesis:
+
+> **Higher discounting may be contributing to lower profitability in Electronics.**
+
+This is a hypothesis to investigate.
+
+It is not yet a proven conclusion.
+
+EDA therefore helps us move from:
+
+```text
+Data
+ ↓
+Observation
+ ↓
+Question
+ ↓
+Pattern
+ ↓
+Hypothesis
+```
+
+---
+
+# 22. A Simple EDA Investigation
+
+Let's put everything together.
+
+Suppose the business asks:
+
+> **"Why has revenue changed over the last six months?"**
+
+You might investigate:
+
+### Overall trend
+
+Revenue increased.
+
+↓
+
+### Region comparison
+
+Most growth came from the South and West.
+
+↓
+
+### Category comparison
+
+Electronics contributed most of the growth.
+
+↓
+
+### Customer segmentation
+
+Corporate customers contributed significantly to Electronics growth.
+
+↓
+
+### Relationship analysis
+
+Discount levels increased.
+
+↓
+
+### Profit analysis
+
+Profit margin declined.
+
+↓
+
+### Outlier investigation
+
+No single extreme order explains the change.
+
+↓
+
+### Hypothesis
+
+Higher discounting in Electronics, particularly among Corporate customers, may be contributing to the decline in profitability despite higher revenue.
+
+Notice that the analysis did not start with a predetermined answer.
+
+The pattern emerged through exploration.
+
+---
+
+# 23. Common EDA Mistakes
+
+### Mistake 1 — Looking only at the average
+
+An average can hide:
+
+* Skewness
+* Outliers
+* Multiple groups
+* Different distributions
+
+---
+
+### Mistake 2 — Looking only at overall numbers
+
+A business may look healthy overall while one important segment is performing poorly.
+
+Always consider segmentation.
+
+---
+
+### Mistake 3 — Assuming correlation means causation
+
+A relationship is a reason to investigate further.
+
+It is not automatically proof of cause.
+
+---
+
+### Mistake 4 — Removing outliers automatically
+
+Understand the observation first.
+
+---
+
+### Mistake 5 — Creating too many charts
+
+More charts do not automatically mean better analysis.
+
+Every visualization should answer a question.
+
+---
+
+### Mistake 6 — Ignoring data quality
+
+A beautiful visualization based on incorrect or incomplete data can produce a very convincing wrong answer.
+
+---
+
+### Mistake 7 — Stopping at the first interesting pattern
+
+An interesting pattern is the beginning of an investigation, not necessarily the conclusion.
+
+---
+
+# 24. EDA Questions to Keep Asking
+
+When exploring any new dataset, use these questions as a mental checklist.
+
+### About the data
+
+* What does one row represent?
+* What variables do I have?
+* Are the data types correct?
+* Are there missing values?
+* Are there duplicates?
+
+### About individual variables
+
+* What is typical?
+* How spread out is it?
+* Is it skewed?
+* Are there outliers?
+* What categories occur most frequently?
+
+### About groups
+
+* Which groups differ?
+* How large are the differences?
+* Does the difference remain when using another metric?
+* Are the distributions different?
+
+### About relationships
+
+* Which variables appear related?
+* Is the relationship positive or negative?
+* Is it strong or weak?
+* Does the relationship change by segment?
+
+### About time
+
+* Is there a trend?
+* Are there peaks or dips?
+* Is there seasonality?
+* When did the change begin?
+
+### About unusual observations
+
+* Is this an error?
+* Is this a genuine business event?
+* Does it materially affect the analysis?
+
+### About derived variables
+
+* Can I create a variable that better represents the business question?
+* Can I transform the date?
+* Can I calculate a ratio, duration, rate, or percentage?
+
+---
+
+# 25. EDA Quick Reference
+
+| EDA Activity        | Question                             | Common Technique              |
+| ------------------- | ------------------------------------ | ----------------------------- |
+| Data profiling      | What do I have?                      | `info()`, `str()`, dimensions |
+| Data quality        | Can I trust the data?                | Missing/duplicate checks      |
+| Summary             | What are the basic statistics?       | `describe()`                  |
+| Distribution        | How is a numerical variable spread?  | Histogram                     |
+| Frequency           | How common is each category?         | Bar chart                     |
+| Comparison          | How do groups differ?                | Bar chart / Box plot          |
+| Relationship        | Are two variables related?           | Scatter plot / Correlation    |
+| Trend               | How does something change over time? | Line chart                    |
+| Outlier analysis    | What observations are unusual?       | Box plot / Scatter plot       |
+| Segmentation        | Does the pattern differ by group?    | Grouped analysis              |
+| Feature engineering | Can I create a more useful variable? | Derived variables             |
+
+---
+
+# 26. Practice Exercise — Explore Before You Conclude
+
+Use the retail dataset provided for this module.
+
+Your objective is **not** to produce a large report.
+
+Your objective is to explore the dataset and identify **three meaningful observations**.
+
+Complete the following:
+
+### Dataset understanding
+
+1. How many rows and columns are present?
+2. What does one row represent?
+3. What are the numerical variables?
+4. What are the categorical variables?
+5. Are there missing values?
+6. Are there duplicate records?
+
+### Individual variables
+
+7. Which numerical variable is most skewed?
+8. Which variable contains potential outliers?
+9. Which category occurs most frequently?
+
+### Comparison
+
+10. Which region has the highest revenue?
+11. Which region has the highest profit?
+12. Which category has the highest average order value?
+
+### Relationship
+
+13. Is discount positively or negatively related to profit?
+14. Is the relationship strong or weak?
+15. Does the relationship change when you split the data by category?
+
+### Trend
+
+16. How has monthly revenue changed?
+17. Which month shows the largest change?
+18. Does the trend look similar across all regions?
+
+### Investigation
+
+19. Identify one unusual observation.
+20. Explain why it should or should not be treated as a data-quality issue.
+
+### Final question
+
+> **What are the three most important patterns you discovered, and what additional question would you investigate for each one?**
+
+---
+
+# 27. Key Takeaways
+
+EDA is not about producing more statistics.
+
+It is about **asking better questions of the data**.
+
+Remember the basic pattern:
+
+```text
+Understand
+    ↓
+Check quality
+    ↓
+Summarize
+    ↓
+Visualize
+    ↓
+Compare
+    ↓
+Explore relationships
+    ↓
+Investigate trends
+    ↓
+Check anomalies
+    ↓
+Create useful features
+    ↓
+Generate hypotheses
+```
+
+The most important skill is not memorizing which Python function creates which chart.
+
+It is being able to look at a dataset and ask:
+
+> **What should I investigate next?**
+
+A good exploratory analysis should leave you with:
+
+* A better understanding of the data
+* A clearer view of important patterns
+* Areas that require further investigation
+* Hypotheses that can be tested using appropriate analytical methods
+
+> **EDA turns a dataset from a collection of values into a set of questions worth investigating.**
+
+#### [Walkthrough python script and narrative on EDA: Optional reading blog](https://towardsdatascience.com/exploratory-data-analysis-in-python-a-step-by-step-process-d0dfa6bf94ee/)
+
+**Exploratory Data Analysis (EDA)** is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. 
+Download this notebook and practice with Jupyter notebook env or google colab. Try and understand the application hands-on with the notebook.
+ [Linked here](https://github.com/Data-Navigators/data-navigators.github.io/blob/main/docs/data-processing/Python/Exercise.ipynb)

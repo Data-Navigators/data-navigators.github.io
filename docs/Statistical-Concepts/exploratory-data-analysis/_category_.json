@@ -2,7 +2,7 @@
     "label": "Exploratory Data Analysis (EDA)",
     "position": 3,
     "link": {
-      "type": "generated-index",
-      "description": "exploratory-data-analysis"
+      "type": "doc",
+      "id": "Statistical-Concepts/exploratory-data-analysis/exploratory-data-analysis"
     }
   }

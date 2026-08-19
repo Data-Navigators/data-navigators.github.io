@@ -1,5 +1,5 @@
 ---
-title: Retail Dataset Analysis & Problem Solving
+title:  Retail Dataset Analysis & Problem Solving
 sidebar_position: 999
 ---
 
@@ -36,51 +36,71 @@ The **Retail Dataset** contains information about sales transactions, customers,
 
 ---
 
-## Solutions 💡
+## Final Retail Dataset Exercise
 
-## Questions:
+This exercise is designed to take approximately 1 to 1.5 hours and is intended to test a candidate's ability to move from raw data exploration to statistical reasoning and a business-ready conclusion.
 
-1. **Descriptive Statistics for Numerical Columns**
-   - Calculate the mean, median, min, max, and standard deviation for the following numerical columns: **Age, Quantity, Price per Unit, and Total Amount**.
-   - What can you infer from these descriptive statistics?
+Use the sample dataset below as the working data. The goal is not to find a single textbook answer, but to build a coherent analytical story using descriptive statistics, EDA, and hypothesis testing.
 
+### Sample Data
 
-<details>
-  <summary>📊 Mean, Median, Mode , Skewnes and Kurtosis : Total Amount</summary>
+| Transaction ID | Date       | Customer ID | Gender | Age | Product Category | Quantity | Price per Unit | Total Amount |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2023-11-24 | CUST001 | Male | 34 | Beauty | 3 | 50 | 150 |
+| 2 | 2023-02-27 | CUST002 | Female | 26 | Clothing | 2 | 500 | 1000 |
+| 3 | 2023-01-13 | CUST003 | Male | 50 | Electronics | 1 | 30 | 30 |
+| 4 | 2023-05-21 | CUST004 | Male | 37 | Clothing | 1 | 500 | 500 |
+| 5 | 2023-05-06 | CUST005 | Male | 30 | Beauty | 2 | 50 | 100 |
+| 6 | 2023-04-25 | CUST006 | Female | 45 | Beauty | 1 | 30 | 30 |
+| 7 | 2023-03-13 | CUST007 | Male | 46 | Clothing | 2 | 25 | 50 |
+| 8 | 2023-02-22 | CUST008 | Male | 30 | Electronics | 4 | 25 | 100 |
+| 9 | 2023-12-13 | CUST009 | Male | 63 | Electronics | 2 | 300 | 600 |
 
-  - **Mean**: 456.000
-  - **Median**: 135.0
-  - **Mode**:  50.0
-  - **Skewness**: 1.376128
-  - **Kurtosis**:  0.815031
+### Exercise Questions
 
-</details>
+1. **Data quality and descriptive summary**
+   - Review the dataset for missing values, inconsistent entries, and any obvious data issues.
+   - Compute a concise summary of the main numerical variables: Age, Quantity, Price per Unit, and Total Amount.
+   - Explain what these summary measures suggest about the retail mix and customer spending pattern.
 
+2. **Exploratory Data Analysis: customer and product patterns**
+   - Build a profile of the customer base using age, gender, and product category distribution.
+   - Compare category-level spending patterns and identify which categories contribute the most revenue and which appear relatively low-value.
+   - Create at least two visuals that help explain the customer and product patterns. Interpret them in business language rather than just describing the chart.
 
-2. **Visualizing Distributions of Numerical Variables**
-   - Create histograms with KDE plots for the numerical variables **Age, Quantity, Price per Unit,** and **Total Amount**.
-   - What do the shapes of these distributions (normal, skewed, etc.) tell you?
+3. **Relationship and outlier analysis**
+   - Investigate whether there is a relationship between age and total spend, and whether that relationship is different across product categories.
+   - Identify any outliers or unusually high-value transactions and discuss whether they are likely to be genuine business signals or potential data anomalies.
+   - Explain how such observations might affect the decision to rely on averages alone.
 
-3. **Frequency Distribution of Categorical Variables**
-   - Visualize the frequency distribution for **Gender** and **Product Category**.
-   - Is the data balanced, or does one category dominate?
+4. **Formulate and test a business hypothesis**
+   - Frame a business question using the same dataset, for example: whether spending differs by gender or whether one product category has a materially different customer profile.
+   - Choose an appropriate statistical test based on the type of variable and the research question.
+   - State the null and alternative hypotheses clearly, explain whether the test conditions are reasonable for this dataset, and interpret the outcome in business terms.
 
-4. **Relationship Between Age and Total Amount Spent**
-   - Create a scatter plot to explore the relationship between **Age** and **Total Amount** spent.
-   - What patterns or trends can you identify? Are there any outliers?
+5. **Decision-oriented conclusion**
+   - Write a short business recommendation based on your findings from the descriptive analysis and hypothesis testing.
+   - Discuss whether the evidence is strong enough to support a strategy change, and what additional information would make the conclusion more reliable.
+   - Contrast the risk of a false positive and a false negative in this retail setting, and explain which type of mistake would be more costly for the business.
 
-5. **Sales by Product Category**
-   - Analyze the total sales for each product category.
-   - Which product categories generate the most revenue?
+### What this exercise is testing
 
-6. **Average Transaction Value by Gender**
-   - Calculate the average transaction value for each gender.
-   - Is there a significant difference in spending between male and female customers?
+This task is deliberately designed to require a candidate to:
 
----
+* inspect the data before applying analysis,
+* choose appropriate visuals and summary statistics,
+* connect patterns to actual business meaning,
+* decide which statistical method matches the question,
+* interpret uncertainty and decision risk,
+* and present a conclusion that is evidence-based rather than formula-driven.
 
-## Solutions
+A strong answer should be a short analytical report, not a list of raw outputs. It should show reasoning, assumptions, and judgment.
 
-You can find the solutions to these problems in the following GitHub repository:
+## > Note to the learner
 
-[GitHub Link to Solutions](https://github.com/Data-Navigators/Statistical_Concept_Excercise/blob/main/exercise/exercise_1.ipynb)
+This exercise is intentionally designed so that a direct answer is not available from a generic GPT response alone. The value of the task lies in the reasoning process, not in a single numerical output.
+
+A candidate should be expected to produce a structured analysis, supporting visuals, and a business recommendation based on evidence from the data.
+> Below is the reference material with some sample exercise solutions and hypothesis testing, they do not answer any question above directly, 
+this is just a starter and guidance. Learners are recommended to download the data and build their own working notebook and solve for the question with their own reasoning and analysis
+[GitHub Link to reference material](https://github.com/Data-Navigators/Statistical_Concept_Excercise/tree/main)
