@@ -1,4 +1,8 @@
 {
-    "label": "Descriptive Statistics & Data Analysis",
-    "position": 2
+    "label": "Descriptive Statistics",
+    "position": 2,
+    "link": {
+      "type": "doc",
+      "id": "Statistical-Concepts/ Descriptive-Statistics/Descriptive Statistics & Data Analysis"
+    }
 }

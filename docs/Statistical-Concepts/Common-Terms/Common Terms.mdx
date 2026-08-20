@@ -1,33 +1,1285 @@
 ---
 sidebar_position: 1
 ---
+# Foundations: Thinking with Data
 
-Before diving into statistical techniques, it's important to understand the foundational terms used in statistics. The table below introduces key terms you'll encounter frequently, explained in simple, non-technical language to help build a strong conceptual base.
+Before learning statistical techniques, it is important to understand **how to think about data**.
 
-### 📘 Basic Statistics Glossary
+As a consultant, you will often work with data that comes from different systems, teams, customers, surveys, or business processes. Your job is not simply to calculate numbers. You need to understand:
 
-| **Term**              | **Meaning **                                                                 | Why It Matters?                                                                 |
-|------------------------|----------------------------------------------------------------------------------------------|
-| **Data**              | Raw numbers or facts collected for analysis (e.g., sales numbers, survey responses).         |    Forms the basis of all statistical analysis.                                      |
-| **Variable**          | A measurable attribute or property that can change (like age, income, or product type).      |    Helps identify what you're studying.                                          |
-| **Population**        | The complete group you're interested in analyzing (e.g., all users of your app). Population mean denoted as μ            |    Helps define the scope of your study.                                          |
-| **Sample**            | A smaller group taken from the population to study when you can’t measure everyone.          |    Makes analysis manageable and cost-effective.                                 |
-| **Observation** (x)      | A single recorded instance (e.g., one customer's response or one transaction).               |    Represents the data points you analyze.                                      |
-| **Statistic**         | A value (like a mean) calculated from a sample.                                              |    Helps summarize and understand the sample data.                             |
-| **Parameter**         | A value that describes an entire population (usually estimated from a sample).               |    Helps understand the population without measuring it directly.            |
-| **Distribution**      | Describes how values are spread out across the data (e.g., normal, skewed, uniform).         |    Helps understand the shape and spread of data.                       |
-| **Outlier**           | A value much higher or lower than the rest — possibly an error or rare event.                |    Helps identify unusual data points that may affect analysis.         |
-| **Range**             | Difference between the largest and smallest values.                                          |    Provides a quick view of data spread.                                      |
-| **Frequency**         | How often a specific value or category appears in the data.                                  |    Helps identify common patterns or trends.                                 |
-| **Confidence Interval** | A range in which we expect the true value to fall, with a certain level of confidence.     |    Provides a measure of uncertainty in estimates.                          |
-| **Probability**          | The likelihood of an event occurring, expressed as a number between 0 and 1.              |    Helps assess risk and make informed decisions.                          |
-| **Symmetric** | A distribution where values are evenly spread around the mean.                        |    Indicates a balanced dataset.                                             |
-| **Skewed**           | A distribution where values are not evenly spread, leading to a tail on one side.           |    Indicates potential outliers or data issues.                             |
-| **Tailedness** | A measure of how heavy the tails of a distribution are, indicating the presence of outliers. |    Helps assess the risk of extreme values.                                 |
-| **Central Tendency** | A measure that represents the center of a dataset (mean, median, mode).                     |    Helps summarize data with a single value.                                 |
-| **Dispersion**       | A measure of how spread out the values are (range, variance, standard deviation).            |    Helps understand the variability in the data.                             |
-| **Correlation**      | A measure of the relationship between two variables (positive, negative, or none).          |    Helps identify relationships and dependencies.                           |
-| **Causation**        | Indicates that one event is the result of another (e.g., smoking causes lung cancer).       |    Helps understand cause-and-effect relationships.                          |
-| **Continuous variable** | A variable that can take any value within a range (e.g., height, weight).                |    Helps model real-world phenomena.                                         |
-| **Discrete variable** | A variable that can only take specific values (e.g., number of students).                  |    Helps model countable phenomena.                                          |
-| **Probability Distribution** | A function that describes the likelihood of different outcomes in a random experiment. |    Helps model uncertainty and make predictions.                            |
+* What does the data represent?
+* Who does it represent?
+* Can we trust the data?
+* How was the data collected?
+* What can we conclude from it?
+* How certain are we about that conclusion?
+* What business decision can we make based on the evidence?
+
+This module introduces these foundational ideas through a single business case study.
+
+---
+
+# Case Study: Is Slow Checkout Causing Customers to Abandon Their Purchases?
+
+Imagine that you are working as a data consultant for a large e-commerce company.
+
+The company has noticed that its **checkout completion rate has decreased over the last few months**.
+
+The product team believes that the problem is caused by a slow checkout experience.
+
+The product manager tells your consulting team:
+
+> "Customers are abandoning their purchases because our checkout process is too slow. Can you analyze the data and tell us whether this is actually the problem?"
+
+At first, this sounds like a straightforward data analysis problem.
+
+But before calculating anything, we need to ask some basic questions.
+
+**What exactly is the data?**
+
+**Who does it represent?**
+
+**Can we trust it?**
+
+**How was it collected?**
+
+**What does one row represent?**
+
+**What can we actually conclude from the data?**
+
+These questions form the foundation of statistical thinking.
+
+---
+
+# 1. Start With the Business Question
+
+The first step in data analysis is not opening Excel, Python, or a dashboard.
+
+It is understanding the **business question**.
+
+Our business question is:
+
+> **Is a slow checkout experience associated with a higher probability of customers abandoning their purchase?**
+
+Notice that this is different from simply asking:
+
+> "What is the average checkout time?"
+
+The second question is descriptive.
+
+The first question is a **business question that requires evidence**.
+
+This distinction is important for consultants.
+
+A business stakeholder usually does not need a number simply because the number exists.
+
+They need the number to help answer a question or make a decision.
+
+### Our initial hypothesis
+
+The product team believes:
+
+> **Customers who experience longer checkout times are more likely to abandon their purchase.**
+
+This becomes a hypothesis that we can investigate using data.
+
+---
+
+# 2. What Is Data?
+
+In simple terms:
+
+> **Data is information collected about people, objects, events, transactions, or processes that can be used to understand what is happening and support decisions.**
+
+For our e-commerce company, data could come from:
+
+* Customer accounts
+* Website activity
+* Mobile applications
+* Orders
+* Payments
+* Checkout events
+* Customer surveys
+* Customer support interactions
+
+For our case study, we will focus on checkout transactions.
+
+A simplified dataset might look like this:
+
+| Customer | Age | Device  | Region | Checkout Time (sec) | Payment Method | Completed Purchase | Satisfaction |
+| -------- | --: | ------- | ------ | ------------------: | -------------- | ------------------ | -----------: |
+| C001     |  32 | Mobile  | South  |                  42 | UPI            | Yes                |            4 |
+| C002     |  27 | Mobile  | North  |                  91 | Card           | No                 |            2 |
+| C003     |  41 | Desktop | South  |                  35 | UPI            | Yes                |            5 |
+| C004     |  29 | Mobile  | West   |                  78 | Card           | No                 |            2 |
+| C005     |  36 | Desktop | South  |                  45 | UPI            | Yes                |            4 |
+
+At first glance, this looks like a simple table.
+
+But statistically, every part of this table has a meaning.
+
+---
+
+# 3. What Is an Observation?
+
+Look at the first row:
+
+| Customer | Age | Device | Region | Checkout Time | Payment Method | Completed Purchase | Satisfaction |
+| -------- | --: | ------ | ------ | ------------: | -------------- | ------------------ | -----------: |
+| C001     |  32 | Mobile | South  |            42 | UPI            | Yes                |            4 |
+
+This row contains information about one customer transaction.
+
+In statistics, an individual record or case in a dataset is called an:
+
+> **Observation**
+
+So:
+
+* C001 is one observation.
+* C002 is another observation.
+* C003 is another observation.
+
+If our dataset contains 20,000 customer transactions, we have **20,000 observations**.
+
+### Important
+
+An observation does not always have to mean a person.
+
+Depending on the business problem, an observation could represent:
+
+* One customer
+* One transaction
+* One order
+* One employee
+* One store
+* One day
+* One machine reading
+* One insurance claim
+
+The key question is:
+
+> **What does one row represent?**
+
+Always ask this before analyzing a dataset.
+
+---
+
+# 4. What Is a Variable?
+
+Now look at the columns.
+
+We have:
+
+* Age
+* Device
+* Region
+* Checkout Time
+* Payment Method
+* Completed Purchase
+* Satisfaction
+
+These are called **variables**.
+
+> **A variable is a characteristic or attribute that can take different values across observations.**
+
+For example:
+
+The `Age` variable can take values such as:
+
+`27, 29, 32, 36, 41`
+
+The `Device` variable can take values such as:
+
+`Mobile, Desktop, Tablet`
+
+The `Checkout Time` variable can take values such as:
+
+`35, 42, 78, 91`
+
+The `Completed Purchase` variable can take values such as:
+
+`Yes, No`
+
+---
+
+# 5. Types of Variables
+
+For this foundation module, we will use two broad categories.
+
+## Quantitative Variables
+
+These represent numerical quantities.
+
+Examples from our dataset:
+
+* Age
+* Checkout Time
+* Satisfaction Score
+
+These variables contain values that represent amounts or measurements.
+
+For example:
+
+> A checkout time of 90 seconds is a meaningful numerical measurement.
+
+---
+
+## Qualitative or Categorical Variables
+
+These represent groups or categories.
+
+Examples:
+
+* Device
+* Region
+* Payment Method
+* Completed Purchase
+
+For example:
+
+`Device = Mobile`
+
+is a category rather than a numerical measurement.
+
+---
+
+# 6. Independent and Dependent Variables
+
+Now return to our original business question:
+
+> **Is a slow checkout experience associated with a higher probability of customers abandoning their purchase?**
+
+We are interested in whether one variable is related to another.
+
+### Dependent Variable
+
+The outcome we are trying to understand is:
+
+**Completed Purchase**
+
+This is our **dependent variable**.
+
+Why?
+
+Because we want to understand what factors might be associated with whether the customer completes the purchase.
+
+### Independent Variables
+
+Potential explanatory variables include:
+
+* Checkout Time
+* Device
+* Payment Method
+* Age
+* Region
+
+These are potential **independent variables**.
+
+A simplified representation is:
+
+**Checkout Time → Completed Purchase**
+
+However, be careful.
+
+Calling something an independent variable does **not automatically mean it causes the dependent variable to change**.
+
+That distinction becomes very important later when we discuss relationships and causation.
+
+---
+
+# 7. Can We Trust the Data?
+
+Suppose the client gives us a dataset containing 20,000 observations.
+
+Should we immediately start calculating statistics?
+
+No.
+
+Before analysis, we should ask:
+
+> **Can we trust the data?**
+
+Imagine that we discover the following problems.
+
+### Problem 1: Missing values
+
+Some customers have no checkout time recorded.
+
+```text
+Customer: C01245
+Checkout Time: Missing
+```
+
+This is a **completeness** issue.
+
+---
+
+### Problem 2: Impossible values
+
+We find:
+
+```text
+Checkout Time = -25 seconds
+```
+
+A negative checkout time is not logically valid.
+
+This is a **validity** and potentially an **accuracy** issue.
+
+---
+
+### Problem 3: Inconsistent categories
+
+The region field contains:
+
+```text
+South
+south
+S
+Southern
+```
+
+These may all represent the same region.
+
+This is a **consistency** issue.
+
+---
+
+### Problem 4: Duplicate records
+
+The same transaction appears twice.
+
+This could cause us to count the same customer activity more than once.
+
+---
+
+### Problem 5: Invalid satisfaction score
+
+The satisfaction scale is supposed to be 1–5.
+
+But we find:
+
+```text
+Satisfaction = 15
+```
+
+This is an obvious **validity** problem.
+
+---
+
+# 8. Four Important Data Quality Concepts
+
+When assessing data quality, four concepts are particularly useful.
+
+## Accuracy
+
+> Does the data correctly represent reality?
+
+Example:
+
+If the customer's actual checkout time was 45 seconds but the system recorded 450 seconds, the data is inaccurate.
+
+---
+
+## Completeness
+
+> Do we have all the information that we need?
+
+Example:
+
+If checkout time is missing for 10% of customers, the dataset is incomplete for this analysis.
+
+---
+
+## Consistency
+
+> Is the data represented in a consistent way?
+
+Example:
+
+```text
+South
+south
+S
+Southern
+```
+
+may represent the same category but are stored differently.
+
+---
+
+## Validity
+
+> Does the data follow the expected rules or constraints?
+
+Example:
+
+A satisfaction score should be between 1 and 5.
+
+A value of 15 is invalid.
+
+---
+
+## Why does this matter?
+
+Imagine that we calculate the average checkout time perfectly using a dataset containing incorrect and duplicate records.
+
+The mathematical calculation may be correct.
+
+But the **business conclusion can still be wrong**.
+
+This is one of the most important principles in data analysis:
+
+> **Good analysis cannot compensate for fundamentally poor-quality data.**
+
+---
+
+# 9. Who Does Our Data Represent?
+
+Now suppose the e-commerce company has:
+
+> **5 million customers**
+
+But our analysis dataset contains only:
+
+> **20,000 customers**
+
+Are we analyzing the entire customer base?
+
+No.
+
+The 5 million customers represent the:
+
+## Population
+
+> **The population is the complete group that we are interested in understanding.**
+
+In our case:
+
+**Population = all 5 million customers**
+
+The 20,000 customers in our dataset represent the:
+
+## Sample
+
+> **A sample is a subset of the population that we actually collect or analyze.**
+
+So:
+
+**Population → 5,000,000 customers**
+
+**Sample → 20,000 customers**
+
+We often use a sample because studying the entire population may be:
+
+* Expensive
+* Time-consuming
+* Impractical
+* Unnecessary
+
+---
+
+# 10. Why Does the Sample Matter?
+
+Suppose we analyze our 20,000 customers and discover:
+
+> **22% abandoned their purchase.**
+
+Can we say:
+
+> "Exactly 22% of all 5 million customers abandon their purchases"?
+
+Not necessarily.
+
+The 20,000 customers are only a sample.
+
+The sample gives us an **estimate** of what may be happening in the population.
+
+This introduces one of the most important ideas in statistics:
+
+> **We often use a sample to learn something about a much larger population.**
+
+---
+
+# 11. How Should We Select the Sample?
+
+Suppose the company asks us to select 20,000 customers.
+
+There are many ways we could do this.
+
+## Approach 1: Take the first 20,000 customers
+
+This may be easy, but it may not represent the entire customer base.
+
+For example, the first 20,000 records may mostly belong to recent customers or a particular region.
+
+---
+
+## Approach 2: Randomly select 20,000 customers
+
+Each customer has an opportunity to be selected.
+
+This is an example of:
+
+> **Simple random sampling**
+
+---
+
+## Approach 3: Select customers from each region
+
+Suppose our customer population looks like this:
+
+| Region | Percentage of Customers |
+| ------ | ----------------------: |
+| South  |                     30% |
+| North  |                     30% |
+| West   |                     25% |
+| East   |                     15% |
+
+We could select customers from each region while maintaining similar proportions.
+
+This is an example of:
+
+> **Stratified sampling**
+
+---
+
+## Approach 4: Select every 100th customer
+
+For example:
+
+```text
+Customer 100
+Customer 200
+Customer 300
+Customer 400
+...
+```
+
+This is an example of:
+
+> **Systematic sampling**
+
+At this stage, you do not need to memorize all sampling techniques.
+
+The important principle is:
+
+> **How we select our sample can influence the conclusions we draw from it.**
+
+---
+
+# 12. Sampling Bias
+
+Suppose we want to understand the checkout experience for all customers.
+
+But our sample contains:
+
+* 90% mobile users
+* 10% desktop users
+
+while the actual customer population contains:
+
+* 50% mobile users
+* 50% desktop users
+
+Our sample does not properly represent the population.
+
+This can introduce **sampling bias**.
+
+> **Sampling bias occurs when the way we select our sample systematically makes it different from the population we want to understand.**
+
+This is different from simply getting a slightly different result because of random variation.
+
+---
+
+# 13. Sampling Error
+
+Suppose the true abandonment rate across all 5 million customers is:
+
+**20%**
+
+But our sample produces:
+
+**22%**
+
+Why might this happen?
+
+Because we did not analyze all 5 million customers.
+
+Different samples can produce slightly different results.
+
+The difference between a sample estimate and the true population value due to sampling variation is referred to as:
+
+> **Sampling error**
+
+For example:
+
+**Population abandonment rate = 20%**
+
+**Sample abandonment rate = 22%**
+
+The 2 percentage-point difference may simply reflect sampling variation.
+
+---
+
+# 14. Parameter and Statistic
+
+Now we can introduce two important statistical terms.
+
+## Parameter
+
+A **parameter** describes a characteristic of the entire population.
+
+For example:
+
+> The actual abandonment rate among all 5 million customers is 20%.
+
+That 20% is a **population parameter**.
+
+---
+
+## Statistic
+
+A **statistic** describes a characteristic calculated from a sample.
+
+For example:
+
+> Our sample of 20,000 customers has an abandonment rate of 22%.
+
+That 22% is a **sample statistic**.
+
+### Remember
+
+**Population → Parameter**
+
+**Sample → Statistic**
+
+This distinction becomes important because we often use a statistic to estimate a parameter.
+
+---
+
+# 15. Frequency
+
+Now suppose our sample contains 20,000 customers.
+
+We want to know:
+
+> How many customers completed their purchase?
+
+Suppose:
+
+* 15,600 completed their purchase
+* 4,400 abandoned it
+
+The number of customers in a category is its **frequency**.
+
+So:
+
+**Completed = Yes → Frequency = 15,600**
+
+**Completed = No → Frequency = 4,400**
+
+Frequency simply tells us **how often something occurs**.
+
+You will use frequency frequently when exploring categorical data.
+
+---
+
+# 16. Range
+
+Suppose checkout times in our sample range from:
+
+**18 seconds to 140 seconds**
+
+The range is:
+
+> **Range = Maximum − Minimum**
+
+Therefore:
+
+**Range = 140 − 18 = 122 seconds**
+
+The range gives us a simple measure of how spread out the observed values are.
+
+We will explore measures of spread in more detail in the Descriptive Statistics module.
+
+For now, remember:
+
+> **Range tells us the distance between the smallest and largest observed values.**
+
+---
+
+# 17. From Estimates to Uncertainty
+
+Suppose our sample shows:
+
+> **22% of customers abandoned checkout.**
+
+A stakeholder asks:
+
+> "So is the actual abandonment rate 22%?"
+
+We should be careful.
+
+Our sample provides an estimate.
+
+There is uncertainty because we have not observed every customer.
+
+One way statistics communicates this uncertainty is through a:
+
+## Confidence Interval
+
+Suppose our analysis gives:
+
+> **Estimated abandonment rate = 22%**
+> **95% confidence interval = 21.3% to 22.7%**
+
+At this stage, you do not need to calculate the confidence interval.
+
+The important idea is:
+
+> **A confidence interval gives us a range of plausible values around a sample estimate.**
+
+It helps communicate the uncertainty associated with estimating a population value from a sample.
+
+---
+
+# 18. Is the Difference Real?
+
+Now the product team makes a more specific claim:
+
+> "Customers who take longer than 60 seconds to complete checkout are more likely to abandon their purchases."
+
+We divide our customers into two groups.
+
+| Checkout Time | Abandonment Rate |
+| ------------- | ---------------: |
+| ≤ 60 seconds  |              15% |
+| > 60 seconds  |              28% |
+
+There is a noticeable difference.
+
+But we need to ask:
+
+> **Could this difference simply have occurred because of random variation in the sample?**
+
+This leads us to the idea of:
+
+## Statistical Significance
+
+Statistical significance helps us assess whether an observed result is unlikely to have occurred merely because of random variation, under a specified statistical model or null hypothesis.
+
+In simple terms:
+
+> **Is the difference we observed strong enough to provide evidence that there may be a real difference in the population?**
+
+Later in the course, we will learn how hypothesis testing and p-values help answer this question.
+
+For now, remember:
+
+> **Statistical significance is about evidence against random variation; it does not automatically mean the result is important to the business.**
+
+---
+
+# 19. Statistical Significance Is Not the Same as Business Importance
+
+Imagine we have 5 million customers.
+
+We discover that customers with longer checkout times have an abandonment rate that is statistically significantly higher by:
+
+> **0.3 percentage points**
+
+The result may be statistically significant because our sample is very large.
+
+But ask:
+
+> **Is a 0.3 percentage-point difference important enough to justify a major technology investment?**
+
+That is a business question.
+
+Statistical significance and practical or business significance are not the same thing.
+
+As a consultant, you should always ask both:
+
+1. **Is the result statistically meaningful?**
+2. **Is the result meaningful for the business?**
+
+---
+
+# 20. Association Does Not Automatically Mean Causation
+
+Now suppose we find:
+
+> Customers with longer checkout times are more likely to abandon their purchases.
+
+Can we immediately say:
+
+> "Slow checkout causes customers to abandon their purchases"?
+
+Not necessarily.
+
+There may be another factor involved.
+
+For example, suppose:
+
+* Mobile users experience longer checkout times.
+* Mobile users are also more likely to abandon purchases.
+
+Then device type may be influencing both variables.
+
+Our observation tells us that two variables are **associated**.
+
+It does not automatically prove that one variable **causes** the other.
+
+This distinction is extremely important in consulting and data analysis.
+
+> **Association tells us that variables are related. Causation tells us that a change in one variable produces a change in another.**
+
+Establishing causation usually requires stronger evidence and an appropriate study design.
+
+---
+
+# 21. What Would You Tell the Client?
+
+After analyzing the data, imagine that we have the following findings:
+
+* The sample contains 20,000 customers.
+* Customers with checkout times above 60 seconds have a 28% abandonment rate.
+* Customers with checkout times of 60 seconds or less have a 15% abandonment rate.
+* The difference is statistically significant.
+* However, 80% of customers in the high-checkout-time group are mobile users.
+* Only 35% of customers in the low-checkout-time group are mobile users.
+
+The client asks:
+
+> **"So, should we conclude that slow checkout is causing customers to abandon their purchases?"**
+
+A responsible analyst should not immediately say yes.
+
+A better conclusion would be:
+
+> "The data shows a statistically significant association between longer checkout times and higher abandonment rates. However, the two groups differ substantially in device usage, so we should investigate whether device type or other factors may explain part of the observed relationship before concluding that checkout speed is the direct cause."
+
+This is the type of thinking expected from a data consultant.
+
+---
+
+# 22. The Statistical Thinking Framework
+
+You can now summarize the entire case using a simple flow.
+
+```text
+Business Question
+       ↓
+Understand the Data
+       ↓
+Identify Observations & Variables
+       ↓
+Check Data Quality
+       ↓
+Identify Population & Sample
+       ↓
+Understand Sampling
+       ↓
+Consider Bias & Sampling Error
+       ↓
+Calculate Sample Statistics
+       ↓
+Estimate Population Parameters
+       ↓
+Understand Uncertainty
+       ↓
+Evaluate Statistical Significance
+       ↓
+Interpret the Evidence
+       ↓
+Make a Business Decision
+```
+
+The important point is that **statistical analysis is not just about calculating numbers**.
+
+It is about understanding what those numbers mean and how much confidence we should place in them.
+
+---
+
+# 23. Foundation Terms — Quick Reference
+
+| Term                         | Simple Meaning                                                                                                 | Example from Our Case                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| **Data**                     | Information collected for analysis                                                                             | Customer checkout records                  |
+| **Observation**              | One individual record or case                                                                                  | One customer transaction                   |
+| **Variable**                 | A characteristic measured for an observation                                                                   | Checkout Time                              |
+| **Quantitative Variable**    | A variable represented numerically                                                                             | Age, Checkout Time                         |
+| **Categorical Variable**     | A variable representing categories                                                                             | Device, Region                             |
+| **Independent Variable**     | A variable used to explain or predict an outcome                                                               | Checkout Time                              |
+| **Dependent Variable**       | The outcome we are trying to understand                                                                        | Completed Purchase                         |
+| **Population**               | The entire group of interest                                                                                   | All 5 million customers                    |
+| **Sample**                   | A subset of the population                                                                                     | 20,000 customers                           |
+| **Parameter**                | A value describing the population                                                                              | True population abandonment rate           |
+| **Statistic**                | A value calculated from a sample                                                                               | Sample abandonment rate                    |
+| **Frequency**                | Number of times something occurs                                                                               | Number of customers who abandoned          |
+| **Range**                    | Maximum minus minimum                                                                                          | 140 − 18 = 122 seconds                     |
+| **Sampling Error**           | Difference caused by sampling variation                                                                        | Sample rate differs from population rate   |
+| **Sampling Bias**            | Systematic difference caused by how the sample was selected                                                    | Sample contains too many mobile users      |
+| **Confidence Interval**      | A range used to communicate uncertainty around an estimate                                                     | 21.3%–22.7%                                |
+| **Statistical Significance** | Evidence that an observed result is unlikely to be explained by random variation alone under the assumed model | Difference between 15% and 28%             |
+| **Data Quality**             | How trustworthy and usable the data is                                                                         | Accurate, complete, consistent, valid data |
+
+---
+
+# 24. What You Should Remember
+
+You do not need to memorize every statistical term after reading this module.
+
+Instead, remember these questions.
+
+### When you receive a dataset, ask:
+
+**1. What does one row represent?**
+
+→ Observation
+
+**2. What does each column represent?**
+
+→ Variable
+
+**3. What type of variables do we have?**
+
+→ Quantitative or categorical
+
+**4. What are we trying to explain or predict?**
+
+→ Dependent variable
+
+**5. What factors might be related to it?**
+
+→ Independent variables
+
+**6. Who are we trying to understand?**
+
+→ Population
+
+**7. Who did we actually collect data from?**
+
+→ Sample
+
+**8. How was the sample selected?**
+
+→ Sampling method
+
+**9. Could the sample be biased?**
+
+→ Sampling bias
+
+**10. Could the sample result differ from the population simply because of sampling variation?**
+
+→ Sampling error
+
+**11. Can we trust the data?**
+
+→ Check accuracy, completeness, consistency, and validity
+
+**12. How certain are we about our estimate?**
+
+→ Consider uncertainty and confidence intervals
+
+**13. Is the observed relationship statistically meaningful?**
+
+→ Consider statistical significance
+
+**14. Does association prove causation?**
+
+→ No
+
+**15. What decision can the business actually make?**
+
+→ Interpret the evidence in context
+
+---
+
+# 25. Knowledge Check
+
+Use the case study above to answer the following questions.
+> **NOTE**: `Try to answer yourself before checking the provided output`
+
+## Question 1
+
+The company has 5 million customers, but the analysis uses 20,000 customers.
+
+Which is the population and which is the sample?
+
+<details>
+<summary>Answer</summary>
+
+The **5 million customers** are the population.
+
+The **20,000 customers** are the sample.
+
+</details>
+
+---
+
+## Question 2
+
+In the dataset, each row represents one customer transaction.
+
+What is one row called in statistics?
+
+<details>
+<summary>Answer</summary>
+
+An **observation**.
+
+</details>
+
+---
+
+## Question 3
+
+Is `Checkout Time` a quantitative or categorical variable?
+
+<details>
+<summary>Answer</summary>
+
+**Quantitative**, because it represents a numerical measurement.
+
+</details>
+
+---
+
+## Question 4
+
+Is `Payment Method` a quantitative or categorical variable?
+
+<details>
+<summary>Answer</summary>
+
+**Categorical**, because it represents categories such as UPI, Card, or Net Banking.
+
+</details>
+
+---
+
+## Question 5
+
+In our analysis, `Completed Purchase` is the outcome we are trying to understand.
+
+Is it the independent or dependent variable?
+
+<details>
+<summary>Answer</summary>
+
+It is the **dependent variable**.
+
+</details>
+
+---
+
+## Question 6
+
+The dataset contains:
+
+```text
+South
+south
+S
+Southern
+```
+
+What type of data quality problem could this represent?
+
+<details>
+<summary>Answer</summary>
+
+A **consistency** problem.
+
+The same concept may have been recorded using different values.
+
+</details>
+
+---
+
+## Question 7
+
+The satisfaction score is supposed to be between 1 and 5, but one record contains 15.
+
+What type of data quality problem is this?
+
+<details>
+<summary>Answer</summary>
+
+A **validity** problem.
+
+The value violates the expected range.
+
+</details>
+
+---
+
+## Question 8
+
+Suppose the sample contains 90% mobile users, but the actual customer population contains only 50% mobile users.
+
+What problem might this create?
+
+<details>
+<summary>Answer</summary>
+
+It could introduce **sampling bias**, because the sample does not adequately represent the population.
+
+</details>
+
+---
+
+## Question 9
+
+The sample abandonment rate is 22%, while the actual population abandonment rate is 20%.
+
+What statistical concept helps explain why a sample estimate can differ from the population value?
+
+<details>
+<summary>Answer</summary>
+
+**Sampling error** or sampling variation.
+
+</details>
+
+---
+
+## Question 10
+
+A sample of customers has an abandonment rate of 22%.
+
+Is 22% a parameter or a statistic?
+
+<details>
+<summary>Answer</summary>
+
+It is a **statistic**, because it was calculated from a sample.
+
+</details>
+
+---
+
+## Question 11
+
+The company calculates the actual abandonment rate across all 5 million customers.
+
+Is this a parameter or a statistic?
+
+<details>
+<summary>Answer</summary>
+
+It is a **parameter**, because it describes the entire population.
+
+</details>
+
+---
+
+## Question 12
+
+The fastest checkout takes 18 seconds and the slowest takes 140 seconds.
+
+What is the range?
+
+<details>
+<summary>Answer</summary>
+
+**Range = 140 − 18 = 122 seconds.**
+
+</details>
+
+---
+
+## Question 13
+
+The sample abandonment rate is 22%, with a 95% confidence interval of 21.3%–22.7%.
+
+What does the confidence interval help communicate?
+
+<details>
+<summary>Answer</summary>
+
+It communicates the **uncertainty around the sample estimate** and provides a range of plausible values for the population quantity under the assumptions of the interval procedure.
+
+</details>
+
+---
+
+## Question 14
+
+Customers with checkout times above 60 seconds have a significantly higher abandonment rate.
+
+Does this automatically prove that slow checkout causes customers to abandon their purchases?
+
+<details>
+<summary>Answer</summary>
+
+**No.**
+
+The result shows an **association**. It does not automatically establish **causation**.
+
+Other variables, such as device type, may contribute to the observed relationship.
+
+</details>
+
+---
+
+## Question 15 — Consultant Thinking
+
+The client asks:
+
+> "The difference is statistically significant. Should we immediately invest millions of dollars to redesign the checkout system?"
+
+What should you consider before recommending the investment?
+
+<details>
+<summary>Answer</summary>
+
+Consider:
+
+* How large is the actual business impact?
+* Is the difference practically significant?
+* Could other variables explain the relationship?
+* Is the sample representative?
+* Is the data reliable?
+* Is there evidence of causation?
+* What would be the expected business benefit of fixing the problem?
+* Are there alternative explanations or solutions?
+
+Statistical evidence should support the business decision, but it should not replace business judgment.
+
+</details>
+
+---
+
+# Final Takeaway
+
+Statistics is not simply a collection of formulas.
+
+It is a way of **reasoning about data under uncertainty**.
+
+When working with a business problem, your first questions should be:
+
+> **What are we trying to understand?**
+
+> **What data do we have?**
+
+> **What does the data represent?**
+
+> **Can we trust it?**
+
+> **Who does it represent?**
+
+> **How was it collected?**
+
+> **What can we infer from the sample?**
+
+> **How certain are we?**
+
+> **What can we confidently tell the client?**
+
+Once you develop this way of thinking, statistical techniques become much easier to understand because you know **why you are using them and what question they are helping you answer**.
+
+The next module will build on this foundation by learning how to **describe and summarize data using descriptive statistics**.

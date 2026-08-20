@@ -2,57 +2,1383 @@
 title: Descriptive Statistics
 sidebar_position: 1
 ---
-#### [Reading Material - Revise the concepts of statistics](https://www.analyticsvidhya.com/blog/2021/08/a-guide-to-complete-statistics-for-data-science-beginners/)
-#### [Optional: Guide to Statistics python functions](https://realpython.com/python-statistics/)
-## Why Descriptive Statistics? 🤔
 
+import DistributionExplorer from '@site/src/components/StatisticalCharts/DistributionExplorer';
+import SpreadDistributionExplorer from '@site/src/components/StatisticalCharts/SpreadDistributionExplorer';
 
- ![statistics.png](./assets/statistics.png)
+# Descriptive Statistics: Understanding What the Data Is Telling You
 
-Descriptive statistics are like the foundation of a house 🏠—they help you build a solid understanding of your dataset. As the name suggests, they help describe the dataset. 
+In the previous session, we learned how to think about data.
 
-They help answer **common business questions** like,**"As a cafe that bakes muffins everyday, how many muffins should I prepare tomorrow?"**
+We learned about:
 
-And, some **complex business questions** for an online retail merchant like, **"Which product categories show the most inconsistent customer ratings?"**
+* Data
+* Observations
+* Variables
+* Population and sample
+* Data quality
+* Sampling
+* Sampling error and bias
+* Parameters and statistics
+* Confidence intervals
+* Statistical significance
 
-A short example to show how to estimate the number of muffins to bake tomorrow:
-```python
-import pandas as pd
-import numpy as np
-# Typically this data would come from sales records.
-# For simplicity, we will simulate the sales data for last 30 days 
-np.random.seed(42)
-data = pd.DataFrame({
-    'day': pd.date_range(start='2023-01-01', periods=30, freq='D'),
-    'sales': np.random.randint(30, 100, size=30)
-})
-print(f"Simulated sales adta: {data}")
-# Calculate the mean sales
-mean_sales = data['sales'].mean()
-# Estimate the number of muffins to bake tomorrow
-estimated_muffins = mean_sales
-print(f"Estimated muffins to bake tomorrow: {round(estimated_muffins,2)}")
+Now imagine that your dataset has passed all the basic quality checks.
+
+You have thousands or millions of observations.
+
+The next question is:
+
+> **How do you quickly understand what is happening in all that data?**
+
+This is where **descriptive statistics** becomes useful.
+
+---
+
+# 1. What Are Descriptive Statistics?
+
+Descriptive statistics are techniques used to **summarize, organize, and understand the main characteristics of a dataset**.
+
+Instead of looking at thousands of individual observations, we can use a few meaningful measures to answer questions such as:
+
+* What is a typical value?
+* How much do the values vary?
+* Are the values concentrated or widely spread?
+* Is the data symmetric or skewed?
+* Are there unusual values?
+* Are there different groups or patterns?
+* Are two variables related?
+
+For example, imagine a food delivery company has recorded the delivery time for **100,000 orders**.
+
+Looking at every delivery time individually is difficult.
+
+Instead, we might summarize the data as:
+
+> Average delivery time: **38 minutes**
+> Median delivery time: **34 minutes**
+> Minimum: **18 minutes**
+> Maximum: **120 minutes**
+> Standard deviation: **15 minutes**
+
+These numbers give us a quick understanding of the dataset.
+
+But there is an important principle:
+
+> **A summary statistic is useful only when we understand what it is telling us — and what it is hiding.**
+
+---
+
+# 2. A Business Example: Food Delivery Performance
+
+Let's use a simple consulting scenario throughout this module.
+
+You are working with a food delivery company.
+
+The business wants to understand:
+
+> **"How long does it typically take us to deliver an order, and how consistent is our delivery experience?"**
+
+The company provides you with delivery-time data for several thousand orders.
+
+Your job is to help answer:
+
+1. What is a typical delivery time?
+2. How much do delivery times vary?
+3. Are there unusually long deliveries?
+4. Is delivery time consistent?
+5. Is the data symmetric or skewed?
+6. Are some regions performing differently?
+7. Does distance from the restaurant relate to delivery time?
+
+These questions introduce the major concepts in descriptive statistics.
+
+---
+
+# 3. The Three Questions You Should Ask First
+
+When you receive numerical data, start with three simple questions:
+
+### 1. Where is the center?
+
+> What is a typical value?
+
+This leads to:
+
+* Mean
+* Median
+* Mode
+
+### 2. How spread out is the data?
+
+> How much do observations differ from each other?
+
+This leads to:
+
+* Range
+* IQR
+* Variance
+* Standard deviation
+
+### 3. What does the overall shape look like?
+
+> How are the values distributed?
+
+This leads to:
+
+* Symmetry
+* Skewness
+* Outliers
+* Peaks or clusters
+
+Later, we can also ask:
+
+> **Are variables related to each other?**
+
+This leads to:
+
+* Correlation
+* Association
+
+---
+
+# 4. Measures of Central Tendency
+
+Suppose five customers experienced the following delivery times:
+
+```text
+20, 25, 30, 35, 40 minutes
 ```
 
-### What does this code do?  
-- It simulates sales data for 30 days, calculates the average sales, and estimates the number of muffins to bake for tomorrow based on that average.
+We want one number that represents the "center" of the data.
 
-**Before we move ahead refer this table to understand the key symbols used in statistics.**
-### 📚 Statistical Symbols Glossary
+Three commonly used measures are:
 
-| **Symbol** | **Meaning**                                                                 |
-|------------|-----------------------------------------------------------------------------|
-| **Σ**      | Sum of all values or terms.                                                 |
-| **x**      | A data point or value in the dataset.                                       |
-| **μ (Mu)** | The mean (average) of the dataset or population.                            |
-| **n**      | The total number of data points in the dataset or sample size.              |
-| **σ (Sigma)** | The standard deviation of the dataset or population.                     |
-| **σ² (Sigma Squared)** | The variance of the dataset or population.                            |
-| **(x - μ)** | The difference between a data point and the mean, or the deviation from the mean. |
-| **(x - μ)³** | The deviation from the mean raised to the third power (used in skewness).  |
-| **P(x)** | The probability of observing a value x in a probability distribution.         |
-| **Z**      | The **Z-score**, which represents how many standard deviations a data point is from the mean. |
+* Mean
+* Median
+* Mode
 
+---
 
-Let’s explore the key concepts!
+# 5. Mean
+
+The **mean** is what we commonly call the average.
+
+It is calculated as:
+
+> **Mean = Sum of all values ÷ Number of values**
+
+For our example:
+
+```text
+20 + 25 + 30 + 35 + 40
+-----------------------
+          5
+```
+
+The mean is:
+
+**30 minutes**
+
+The mean can be thought of as the **balance point** or **center of gravity** of the data.
+
+### Business interpretation
+
+If the average delivery time is 30 minutes, we can say:
+
+> "Across these observations, the average delivery time is 30 minutes."
+
+But be careful.
+
+The mean does **not necessarily represent the delivery time experienced by a typical customer**.
+
+Why?
+
+Because extreme values can strongly influence it.
+
+---
+
+# 6. Median
+
+The **median** is the middle value when observations are arranged in order.
+
+Consider:
+
+```text
+20, 25, 30, 35, 40
+```
+
+The middle value is:
+
+**30**
+
+Therefore:
+
+**Median = 30 minutes**
+
+The median is useful because it is relatively resistant to extreme values.
+
+---
+
+# 7. Mean, Median, and Distribution Shape
+
+Now imagine one delivery took extremely long:
+
+```text
+20, 25, 30, 35, 120
+```
+
+The mean becomes:
+
+```text
+20 + 25 + 30 + 35 + 120
+------------------------
+           5
+```
+
+The mean is now:
+
+**46 minutes**
+
+But the median is still:
+
+**30 minutes**
+
+Notice what happened.
+
+The extreme delivery of 120 minutes pulled the mean upward.
+
+The median remained much more stable.
+
+This is why:
+
+> **Mean is sensitive to extreme values.**
+
+and:
+
+> **Median is more resistant to extreme values.**
+
+The shape of the distribution helps us understand why.
+
+<div>
+  <h2>Visualizing Normal, Left-Skewed, and Right-Skewed Distributions</h2>
+  <p>
+    A useful way to see this is to imagine the values plotted along a number line. The distribution tells us whether
+    the mean is a fair representation of a typical observation or whether a few extreme values are pulling the average.
+  </p>
+  <DistributionExplorer />
+  <p>
+    <strong>Key idea:</strong> the <em>mean</em> is sensitive to extreme values, while the <em>median</em> is more
+    robust. When the data is skewed, the tail pulls the mean in that direction.
+  </p>
+  <p>
+    A distribution may also be <strong>symmetric</strong> (balanced on both sides), <strong>right-skewed</strong>
+    (long tail to the right, often with a few unusually large values), <strong>left-skewed</strong>
+    (long tail to the left, with a few unusually small values), or <strong>multi-peaked</strong> (more than one cluster
+    or sub-group in the data). These patterns help explain whether one average is really representative of the whole
+    dataset or whether hidden groups are being merged together.
+  </p>
+</div>
+
+---
+
+# 8. Mode
+
+The **mode** is the most frequently occurring value.
+
+Suppose delivery times are:
+
+```text
+25, 30, 30, 30, 35, 40
+```
+
+The mode is:
+
+**30 minutes**
+
+because 30 occurs most frequently.
+
+The mode is particularly useful when we want to know:
+
+> **What happens most often?**
+
+---
+
+# 9. Mode Is Useful for Categorical Data
+
+Mode does not require numerical data.
+
+Suppose customers use these payment methods:
+
+```text
+UPI
+Card
+UPI
+Cash
+UPI
+Card
+UPI
+```
+
+The mode is:
+
+**UPI**
+
+because it occurs most frequently.
+
+This makes mode particularly useful for questions such as:
+
+* What is the most common payment method?
+* What is the most common product size?
+* Which category has the most customers?
+* What is the most frequently reported complaint?
+
+---
+
+# 10. Mean, Median and Mode Together
+
+These three measures answer slightly different questions.
+
+| Measure    | Main Question                     | Key Characteristic                        |
+| ---------- | --------------------------------- | ----------------------------------------- |
+| **Mean**   | What is the mathematical average? | Sensitive to extreme values               |
+| **Median** | What is the middle observation?   | More resistant to extreme values          |
+| **Mode**   | What occurs most often?           | Useful for categories and repeated values |
+
+### Consultant question
+
+Don't automatically ask:
+
+> "What is the average?"
+
+Ask:
+
+> **"Which measure of center best represents the business question and the shape of the data?"**
+
+---
+
+# 11. Dispersion: How Spread Out Is the Data?
+
+Now that we understand the center, the next question is:
+
+> **How much do the observations differ from each other?**
+
+This is the idea of **dispersion**.
+
+Two datasets can have the same mean but very different behavior. A data story becomes much more useful when we know how tightly or loosely the values are spread.
+
+<div>
+  <h2>Visualizing Distribution Spread and Variability</h2>
+  <p>
+    Use this interactive to compare a <strong>normal distribution</strong> with <strong>high SD</strong>,
+    <strong>low SD</strong>, <strong>high variance</strong>, <strong>low variance</strong>, and combinations of
+    spread. This is the conceptual bridge between the center of the dataset and the measures of spread that follow.
+  </p>
+  <SpreadDistributionExplorer />
+  <p>
+    <strong>Key idea:</strong> a dataset may have the same center but a very different amount of variability.
+    Standard deviation, variance, and IQR are all ways of capturing that difference.
+  </p>
+</div>
+
+---
+
+# 12. Measures of Spread
+
+Once we understand the center of the data, we also need to quantify how much the values move around that center.
+
+This is where measures of **dispersion** become important.
+
+Consider two delivery regions:
+
+### Region A
+
+```text
+28, 29, 30, 30, 31, 32
+```
+
+### Region B
+
+```text
+10, 20, 30, 40, 50, 60
+```
+
+Both have:
+
+**Mean = 30**
+
+But the business experience is very different. Region A is stable, while Region B is highly variable.
+
+> **Dispersion describes how widely the data values are spread around the center.**
+
+---
+
+## Range
+
+The simplest measure of dispersion is the:
+
+> **Range**
+
+### Formula
+
+```text
+Range = Maximum − Minimum
+```
+
+For Region A:
+
+```text
+32 − 28 = 4 minutes
+```
+
+For Region B:
+
+```text
+60 − 10 = 50 minutes
+```
+
+The range immediately shows us that Region B is much more variable.
+
+### Limitation
+
+The range uses only two observations:
+
+* Minimum
+* Maximum
+
+Therefore, one extreme outlier can dramatically change the range.
+
+---
+
+## Interquartile Range — IQR
+
+The **Interquartile Range (IQR)** focuses on the middle 50% of observations.
+
+It is calculated as:
+
+> **IQR = Q3 − Q1**
+
+where:
+
+* **Q1** = first quartile
+* **Q3** = third quartile
+
+Conceptually:
+
+```text
+Minimum       Q1        Median        Q3       Maximum
+  |------------|-----------|------------|-----------|
+               <----------->
+                 Middle 50%
+                    = IQR
+```
+
+Why is this useful?
+
+Because the IQR is less affected by extreme values.
+
+If a dataset contains a few unusually large or small observations, the IQR can provide a better representation of the **core spread of the data** than the range.
+
+---
+
+## Quartiles
+
+Quartiles divide ordered data into four approximately equal parts.
+
+```text
+0%          25%          50%          75%          100%
+|------------|------------|------------|------------|
+             Q1          Median        Q3
+```
+
+Therefore:
+
+* Q1 = 25th percentile
+* Median = 50th percentile
+* Q3 = 75th percentile
+
+The middle 50% of observations lie between Q1 and Q3.
+
+That interval is the IQR.
+
+---
+
+## Standard Deviation
+
+The standard deviation is another measure of dispersion.
+
+It tells us, broadly:
+
+> **How far observations tend to vary from the mean.**
+
+A **small standard deviation** means observations tend to be close to the mean.
+
+A **large standard deviation** means observations tend to be more spread out.
+
+For example:
+
+### Store A
+
+Average revenue = ₹10 lakh
+
+Standard deviation = ₹0.5 lakh
+
+### Store B
+
+Average revenue = ₹10 lakh
+
+Standard deviation = ₹4 lakh
+
+Both stores have the same average revenue.
+
+But Store B has much greater variability.
+
+That difference may matter to the business.
+
+---
+
+## Variance vs Standard Deviation
+
+Variance and standard deviation are closely related.
+
+### Variance
+
+Variance measures the average squared deviation from the mean.
+
+### Standard deviation
+
+Standard deviation is the square root of variance.
+
+```text
+Variance
+    ↓ square root
+Standard Deviation
+```
+
+Why is standard deviation often easier to interpret?
+
+Because it is expressed in the **same units as the original data**.
+
+If delivery time is measured in minutes:
+
+> Standard deviation is measured in minutes.
+
+Variance is expressed in squared units.
+
+For introductory data analysis, focus on the interpretation rather than memorizing the formula.
+
+---
+
+## Comparing the Measures of Dispersion
+
+| Measure                | What It Tells You                            | Main Limitation                  |
+| ---------------------- | -------------------------------------------- | -------------------------------- |
+| **Range**              | Distance between minimum and maximum         | Very sensitive to extreme values |
+| **IQR**                | Spread of the middle 50%                     | Does not use all observations    |
+| **Variance**           | Overall variability using squared deviations | Units are squared                |
+| **Standard Deviation** | Typical amount of variation around the mean  | Sensitive to extreme values      |
+
+### Consultant perspective
+
+Ask:
+
+> **"Which measure best represents the variability relevant to my business question?"**
+
+There is no single dispersion measure that is always best.
+
+---
+
+## Outliers
+
+An **outlier** is an observation that is unusually far from the rest of the data.
+
+Imagine delivery times:
+
+```text
+22, 24, 25, 27, 28, 30, 31, 32, 35, 120
+```
+
+The 120-minute delivery is very different from the others.
+
+It may be an outlier.
+
+But an important point is:
+
+> **An outlier is not automatically an error.**
+
+It could represent:
+
+* A data-entry mistake
+* A system problem
+* An unusual customer
+* A genuine business event
+* A rare operational failure
+
+Therefore:
+
+> **Do not automatically delete outliers. Investigate them first.**
+
+---
+
+## Why Outliers Matter
+
+Outliers can affect:
+
+* Mean
+* Range
+* Variance
+* Standard deviation
+* Some statistical models
+
+They may also contain valuable business information.
+
+For example:
+
+If most deliveries take 20–40 minutes but a small number take over 2 hours, those extreme observations may reveal an important operational problem.
+
+A consultant should ask:
+
+> **"Why are these observations unusual?"**
+
+rather than:
+
+> **"How do I remove them?"**
+
+---
+
+# 13. Correlation and Association
+
+Now let's ask a different question.
+
+Suppose we have data on:
+
+* Distance from restaurant
+* Delivery time
+
+We want to know:
+
+> **Do longer delivery distances tend to be associated with longer delivery times?**
+
+This introduces the concept of **correlation**.
+
+Correlation describes the **direction and strength of a linear relationship between two numerical variables**.
+
+---
+
+## Positive Correlation
+
+Suppose:
+
+> As distance increases, delivery time tends to increase.
+
+Conceptually:
+
+```text
+Delivery Time
+     ↑
+     │              ●
+     │           ●
+     │         ●
+     │      ●
+     │    ●
+     │  ●
+     │ ●
+     └────────────────────→
+             Distance
+```
+
+This is a **positive relationship**.
+
+As one variable increases, the other tends to increase.
+
+Examples:
+
+* Advertising spend ↔ sales
+* Distance ↔ delivery time
+* Experience ↔ salary
+
+The relationship does not have to be perfect.
+
+---
+
+## Negative Correlation
+
+Suppose:
+
+> As a discount increases, profit margin tends to decrease.
+
+Conceptually:
+
+```text
+Profit Margin
+     ↑
+     │ ●
+     │   ●
+     │     ●
+     │       ●
+     │          ●
+     │            ●
+     │              ●
+     └────────────────────→
+             Discount
+```
+
+This is a **negative relationship**.
+
+As one variable increases, the other tends to decrease.
+
+---
+
+## Weak or No Correlation
+
+Sometimes two variables do not show a clear linear relationship.
+
+```text
+Delivery Time
+     ↑
+     │   ●       ●
+     │      ●
+     │ ●          ●
+     │        ●
+     │    ●
+     │          ●
+     │ ●
+     └────────────────────→
+             Distance
+```
+
+The points are scattered without a clear linear pattern.
+
+This suggests a **weak linear relationship**.
+
+---
+
+## Strong vs Weak Correlation
+
+Correlation is not only about direction.
+
+It is also about **strength**.
+
+### Strong positive correlation
+
+```text
+     ●
+    ●
+   ●
+  ●
+ ●
+```
+
+The points closely follow an upward pattern.
+
+### Weak positive correlation
+
+```text
+  ●     ●
+     ●
+●       ●
+   ●
+      ●
+```
+
+There is an upward tendency, but the points are more scattered.
+
+### Important
+
+A correlation can be:
+
+* Positive
+* Negative
+* Weak
+* Strong
+* Close to zero
+
+---
+
+## Correlation Does Not Mean Causation
+
+This is one of the most important concepts in data analysis.
+
+Suppose we discover:
+
+> Ice cream sales increase when drowning incidents increase.
+
+There may be a positive correlation.
+
+Does eating ice cream cause drowning?
+
+No.
+
+A third variable — **hot weather** — may influence both.
+
+Similarly, if we find:
+
+> Delivery distance and delivery time are positively correlated.
+
+That does not automatically prove distance is the only cause of longer delivery times.
+
+Other factors could include:
+
+* Traffic
+* Weather
+* Number of orders
+* Restaurant preparation time
+* Driver availability
+
+Therefore:
+
+> **Correlation identifies a relationship. It does not, by itself, establish causation.**
+
+---
+
+## Correlation Coefficient
+
+A commonly used measure of linear correlation is the **Pearson correlation coefficient**, usually represented by:
+
+> **r**
+
+Its value lies between:
+
+```text
+-1  ←──────────  0  ──────────→  +1
+Strong           No              Strong
+negative         linear           positive
+                 correlation
+```
+
+Conceptually:
+
+|     Correlation | Interpretation                       |
+| --------------: | ------------------------------------ |
+|          **+1** | Perfect positive linear relationship |
+| **Close to +1** | Strong positive linear relationship  |
+|  **Close to 0** | Weak or no linear relationship       |
+| **Close to -1** | Strong negative linear relationship  |
+|          **-1** | Perfect negative linear relationship |
+
+For this introductory course, focus on interpretation rather than calculation.
+
+---
+
+## Be Careful With Correlation
+
+Correlation has limitations.
+
+A correlation close to zero does not necessarily mean that two variables have **no relationship at all**.
+
+They may have a **non-linear relationship**.
+
+For example:
+
+```text
+Y
+↑
+│ ●               ●
+│   ●           ●
+│     ●       ●
+│       ●   ●
+│        ●
+└────────────────────→ X
+```
+
+The variables clearly have a pattern, but it is not a straight-line relationship.
+
+Therefore:
+
+> **Pearson correlation measures linear association.**
+
+Always visualize the data when possible.
+
+---
+
+# 14. From Statistics to Business Insight
+
+Now return to our food delivery case.
+
+Suppose our analysis shows:
+
+### Center
+
+Median delivery time:
+
+**34 minutes**
+
+### Spread
+
+IQR:
+
+**12 minutes**
+
+### Distribution
+
+Right-skewed.
+
+### Outliers
+
+A small number of deliveries take more than:
+
+**90 minutes**
+
+### Correlation
+
+Distance and delivery time:
+
+**Positive correlation**
+
+Now we can begin translating statistics into business language.
+
+Instead of saying:
+
+> "The distribution is positively skewed and has a high IQR."
+
+A consultant might say:
+
+> **"Most deliveries are completed within a relatively narrow time range, but a small number of significantly delayed orders are pulling the average delivery time upward. Longer delivery distances are also associated with longer delivery times."**
+
+That is much more useful to a business stakeholder.
+
+---
+
+## Statistical Summary vs Business Interpretation
+
+Consider the following:
+
+| Statistical Finding                | Possible Business Interpretation                                             |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| Mean delivery time = 38 min        | Average operational delivery time is 38 minutes                              |
+| Median = 34 min                    | A typical order is delivered in around 34 minutes                            |
+| Mean > Median                      | A small number of very long deliveries may be pulling the average upward     |
+| High IQR                           | Delivery experience varies considerably                                      |
+| Large standard deviation           | Delivery times are inconsistent                                              |
+| Right skew                         | Most deliveries are relatively quick, but some experience significant delays |
+| Outliers above 90 min              | Investigate severe delivery failures                                         |
+| Positive distance-time correlation | Longer delivery distances tend to be associated with longer delivery times   |
+| Multiple peaks                     | Different operational groups or customer segments may exist                  |
+
+This is the skill we ultimately want to develop:
+
+> **Translate statistical patterns into business meaning.**
+
+---
+
+## A Simple Consultant Framework
+
+When looking at a new numerical dataset, use this sequence:
+
+### Step 1 — Center
+
+> What is typical?
+
+Look at:
+
+**Mean → Median → Mode**
+
+### Step 2 — Spread
+
+> How variable is the data?
+
+Look at:
+
+**Range → IQR → Standard Deviation**
+
+### Step 3 — Shape
+
+> What does the distribution look like?
+
+Look for:
+
+**Symmetry → Skewness → Peaks → Outliers**
+
+### Step 4 — Relationships
+
+> Are variables related?
+
+Look at:
+
+**Scatter plots → Correlation → Associations**
+
+### Step 5 — Business Meaning
+
+Ask:
+
+> **So what does this mean for the business?**
+
+This final step is what separates a data calculation from a data analysis.
+
+---
+
+## Summary of Key Concepts
+
+| Concept                | Question It Answers                                                              |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| **Mean**               | What is the mathematical average?                                                |
+| **Median**             | What is the middle value?                                                        |
+| **Mode**               | What occurs most frequently?                                                     |
+| **Range**              | How far apart are the minimum and maximum values?                                |
+| **IQR**                | How spread out is the middle 50%?                                                |
+| **Variance**           | How much overall variability exists?                                             |
+| **Standard Deviation** | How much do values typically vary around the mean?                               |
+| **Outlier**            | Which observations are unusually far from the rest?                              |
+| **Distribution**       | How are values spread across the dataset?                                        |
+| **Skewness**           | Is the distribution asymmetric?                                                  |
+| **Correlation**        | How strongly and in what direction are two numerical variables linearly related? |
+
+---
+
+## What You Should Remember
+
+You do not need to memorize formulas at this stage.
+
+Instead, remember the questions each concept helps you answer.
+
+### Mean
+
+> **What is the mathematical average?**
+
+### Median
+
+> **What is the middle observation?**
+
+### Mode
+
+> **What happens most frequently?**
+
+### Range
+
+> **How far apart are the extremes?**
+
+### IQR
+
+> **How spread out is the middle 50%?**
+
+### Standard deviation
+
+> **How much do observations typically vary around the mean?**
+
+### Skewness
+
+> **Is the distribution pulled toward one side?**
+
+### Outliers
+
+> **Are there unusual observations that need investigation?**
+
+### Correlation
+
+> **Do two numerical variables tend to move together in a linear pattern?**
+
+And most importantly:
+
+> **What does all of this mean for the business?**
+
+---
+
+## Knowledge Check
+> **NOTE**: `Try to answer yourself before checking the provided output`
+
+## Question 1
+
+A dataset contains the following delivery times:
+
+```text
+20, 25, 30, 35, 40
+```
+
+What is the mean?
+
+<details>
+<summary>Answer</summary>
+
+**30 minutes**
+
+</details>
+
+---
+
+## Question 2
+
+A dataset contains:
+
+```text
+20, 25, 30, 35, 120
+```
+
+Which measure is likely to be more representative of a typical observation: mean or median?
+
+<details>
+<summary>Answer</summary>
+
+**Median**, because the extreme value of 120 strongly affects the mean but has much less effect on the median.
+
+</details>
+
+---
+
+## Question 3
+
+Which measure tells you the most frequently occurring value?
+
+<details>
+<summary>Answer</summary>
+
+**Mode**
+
+</details>
+
+---
+
+## Question 4
+
+Two stores have the same average daily sales, but Store A has a much smaller standard deviation than Store B.
+
+What does this tell you?
+
+<details>
+<summary>Answer</summary>
+
+Store A's sales are more consistent, while Store B's sales vary more around the average.
+
+</details>
+
+---
+
+## Question 5
+
+A dataset contains:
+
+```text
+10, 12, 13, 14, 15, 16, 100
+```
+
+Would the range be strongly affected by 100?
+
+<details>
+<summary>Answer</summary>
+
+Yes.
+
+The range depends directly on the minimum and maximum, so the extreme value of 100 makes the range much larger.
+
+</details>
+
+---
+
+## Question 6
+
+Which measure focuses on the middle 50% of observations?
+
+<details>
+<summary>Answer</summary>
+
+**Interquartile Range (IQR)**
+
+</details>
+
+---
+
+## Question 7
+
+A distribution has a long tail toward larger values.
+
+What type of skewness does it have?
+
+<details>
+<summary>Answer</summary>
+
+**Right skewness**, also called **positive skewness**.
+
+</details>
+
+---
+
+## Question 8
+
+In a typical right-skewed distribution, which relationship is expected?
+
+<details>
+<summary>Answer</summary>
+
+**Mode < Median < Mean**
+
+The large values in the right tail pull the mean toward the right.
+
+</details>
+
+---
+
+## Question 9
+
+In a typical left-skewed distribution, which relationship is expected?
+
+<details>
+<summary>Answer</summary>
+
+**Mean < Median < Mode**
+
+The low values in the left tail pull the mean toward the left.
+
+</details>
+
+---
+
+## Question 10
+
+Suppose distance from a restaurant increases and delivery time generally increases as well.
+
+What type of correlation would you expect?
+
+<details>
+<summary>Answer</summary>
+
+**Positive correlation.**
+
+</details>
+
+---
+
+## Question 11
+
+Suppose discount percentage increases while profit margin generally decreases.
+
+What type of correlation would you expect?
+
+<details>
+<summary>Answer</summary>
+
+**Negative correlation.**
+
+</details>
+
+---
+
+## Question 12
+
+If two variables have a strong positive correlation, does that prove that one causes the other?
+
+<details>
+<summary>Answer</summary>
+
+**No.**
+
+Correlation indicates an association or linear relationship. It does not by itself establish causation.
+
+</details>
+
+---
+
+## Consultant Challenge
+
+You are given the following summary of a food delivery dataset:
+
+```text
+Number of orders: 50,000
+
+Mean delivery time: 42 minutes
+Median delivery time: 34 minutes
+Minimum: 18 minutes
+Maximum: 180 minutes
+IQR: 11 minutes
+Standard deviation: 21 minutes
+
+Distribution: Right-skewed
+
+Orders above 90 minutes: 2%
+```
+
+The operations manager says:
+
+> **"Our average delivery time is 42 minutes. Therefore, most customers wait around 42 minutes."**
+
+### Do you agree?
+
+Think about:
+
+* Mean vs median
+* Right skewness
+* Extreme values
+* IQR
+* Outliers
+
+<details>
+<summary>Suggested interpretation</summary>
+
+Not necessarily.
+
+The median is **34 minutes**, which means half of the observed orders are at or below 34 minutes and half are at or above 34 minutes.
+
+The mean of 42 minutes is substantially higher than the median, and the distribution is right-skewed. This suggests that a relatively small number of very long deliveries are pulling the mean upward.
+
+The 180-minute maximum also indicates the presence of extreme observations.
+
+Therefore, saying that "most customers wait around 42 minutes" would be misleading.
+
+A better statement would be:
+
+> **"A typical delivery takes around 34 minutes, while a smaller number of very long deliveries increase the overall average to 42 minutes. These extreme delays should be investigated separately."**
+
+</details>
+
+---
+
+## Final Takeaway
+
+Descriptive statistics helps us turn a large collection of observations into a meaningful summary.
+
+But remember:
+
+> **One statistic is rarely enough.**
+
+A good analyst looks at:
+
+**Center**
+
+→ What is typical?
+
+**Spread**
+
+→ How variable is it?
+
+**Shape**
+
+→ How is the data distributed?
+
+**Outliers**
+
+→ Are there unusual observations?
+
+**Relationships**
+
+→ Are variables associated?
+
+**Business context**
+
+→ Why does any of this matter?
+
+The ultimate goal is not to produce a table containing mean, median, standard deviation, and correlation.
+
+The goal is to move from:
+
+> **Data → Pattern → Interpretation → Business Insight**
+
+That is the foundation of effective exploratory data analysis.
+
+---
+
+# Optional Reference Material
+
+For learners who want to explore the concepts further:
+
+* [A Guide to Complete Statistics for Data Science Beginners](https://www.analyticsvidhya.com/blog/2021/08/a-guide-to-complete-statistics-for-data-science-beginners/)
+* [Python Statistics Functions](https://realpython.com/python-statistics/)
+
+The Python implementation of these concepts will be introduced alongside practical EDA exercises rather than requiring learners to memorize statistical functions at this stage.
+
+---
+
+## Next step: Exploratory Data Analysis (EDA)
+
+Once you are comfortable with the central ideas of summary statistics, spread, and distribution, continue to the EDA module to see how these concepts are used in practice for profiling, visual exploration, and business interpretation.
+
+[Explore EDA](../exploratory-data-analysis/exploratory-data-analysis)
+
 
