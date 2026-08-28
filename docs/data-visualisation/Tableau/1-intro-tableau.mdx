@@ -1,30 +1,374 @@
 ---
 sidebar_position: 1
+title: Introduction to Tableau
 ---
 
-# Tableau: Data Visualization Tool
+# Introduction to Tableau
 
-We have discussed enought about data visualization, its importance, approaches and tools. Now let us look at one of the popular data visualization tool, Tableau.
-Tableau is one of the top five widely used and a powerful data visualization tool that allows users to create interactive and shareable dashboards. Tableau has both enterprise commercial version and a individual non business free version.
-It is widely used in business intelligence and analytics. Tableau is a powerful data visualization tool that allows users to create interactive and shareable dashboards provide the data is public.
+In the previous sections, we learned that good data visualisation does not begin with a chart.
 
-Note: The primary reason why we choose Tableau for our learning is because of below reasons and it has no other special affiliations.
-- For Microsoft Power BI, We need a Windows machine, which is not available for mac and installing windows inside mac had additional and cost overhead.
-- For Qlik Sense, the trial version is limited to 30 days and the free version is not available for public use.
+It begins with a **business problem**.
 
+The analyst first needs to understand:
 
-## Tableau Setup
+- what the business is trying to achieve,
+- what decision needs to be supported,
+- what questions need to be answered,
+- what data is required.
 
-The goal of this module is to learn the basics of Data Visualization alone, We will be getting to know the basic features of Tableau and how to use them to create simple visualizations. For in-depth learning of Tableau, we have lots of learning resources including Thoughtworks udemy's courses, So let keep in mind our goal is to learn the basics of Data Visualization for now.
+Only then should we decide how the analysis should be visualised.
 
-We will be using the Tableau Public version for our learning, which is free to use and can be [downloaded here](https://www.tableau.com/en-gb/products/public/download), Tableau public is a free version of Tableau is free to use as long as the data is public.To get started with Tableau Public, we need to sign up for a [free account](https://id.tableau.com/register).
+In this section, we will apply this process using **Tableau**.
 
-[Learn the Basics of Tableau Public](https://public.tableau.com/en-us/s/resources)
+---
 
-The above video briefly explains the basics of Tableau, its UI components, creating few charts and a simple dashboard.
+# The Analytical Workflow
 
-[Creating a Dashboard using Tableau Public](https://www.youtube.com/watch?v=wSfyBw1rlJ4&ab_channel=Chandoo)
+Throughout the Tableau exercise, we will follow this process:
 
-The above video gives a slightly in-depth explanation of creating a dashboard using Tableau Public, and also explains how to join multiple data and create a dashboard.
+**Business Problem  
+→ Business Decision  
+→ Analytical Questions  
+→ Data  
+→ Data Preparation  
+→ Metrics and Dimensions  
+→ Analysis  
+→ Visualisation  
+→ Executive Dashboard  
+→ Insight  
+→ Recommendation**
 
-Note: reiterating again, the goal of this module is to learn the basics of Data Visualization alone not to master Tableau. Lets keep our learning simple.
+The objective is not simply to learn how to create charts in Tableau.
+
+The objective is to use Tableau as part of an analytical solution that supports better business decisions.
+
+---
+
+# What is Tableau?
+
+Tableau is a business intelligence and data visualisation tool.
+
+It allows analysts to:
+
+- connect to different data sources,
+- explore and analyse data,
+- create calculated fields and business metrics,
+- create visualisations,
+- compare different groups and measures,
+- identify trends and patterns,
+- build interactive dashboards,
+- apply filters and interactions,
+- communicate findings to stakeholders.
+
+For this exercise, we will use **Tableau Public**.
+
+> **Important:** Work published to Tableau Public may be publicly accessible. Do not upload confidential or sensitive organisational data.
+
+---
+
+# How Tableau Organises Your Work
+
+Before working with the case study, it is useful to understand the main ways Tableau organises visualisations.
+
+---
+
+## Worksheet
+
+A **worksheet** is where you create an individual visualisation.
+
+For example, a worksheet could contain:
+
+- a bar chart,
+- a line chart,
+- a scatter plot,
+- a table,
+- a KPI.
+
+A worksheet normally focuses on answering **one analytical question**.
+
+---
+
+## Dashboard
+
+A **dashboard** combines several worksheets into one view.
+
+A dashboard may contain:
+
+- multiple visualisations,
+- KPI cards,
+- filters,
+- legends,
+- text,
+- interactive elements.
+
+The purpose of a dashboard is to bring related analytical findings together so that the audience can understand a larger business problem.
+
+---
+
+## Story
+
+A Tableau **Story** allows multiple worksheets or dashboards to be presented in a sequence.
+
+This can be useful when an analyst wants to guide the audience through several stages of an analysis.
+
+For example:
+
+**Overview  
+→ Identify an Important Segment  
+→ Investigate Further  
+→ Recommendation**
+
+In this exercise, our main focus will be on creating an **executive dashboard**.
+
+---
+
+# The Case Study: Travel Insurance
+
+We will apply the Tableau workflow using a travel insurance dataset.
+
+Imagine a company that facilitates the sale of travel insurance through different agencies and distribution channels.
+
+The company offers different insurance products for travellers going to destinations around the world.
+
+Management wants to better understand the performance of the travel insurance portfolio and identify where opportunities or risks may exist.
+
+We will eventually use the data to investigate questions such as:
+
+- Which products generate the strongest sales?
+- Which channels contribute most to the business?
+- Which destinations generate high sales?
+- Are some destinations associated with higher Claim Rates?
+- Where should management investigate further?
+
+Before answering these questions, however, we first need to understand and prepare the data.
+
+---
+
+# The Dataset
+
+We will use the following public dataset:
+
+[Travel Insurance Dataset - Kaggle](https://www.kaggle.com/datasets/mhdzahier/travel-insurance)
+
+The original dataset contains information relating to:
+
+- travel insurance agencies,
+- agency types,
+- distribution channels,
+- insurance products,
+- claims,
+- travel duration,
+- travel destinations,
+- Net Sales,
+- commission,
+- traveller gender,
+- traveller age.
+
+In the next section, we will examine these fields in more detail and prepare the dataset for analysis.
+
+---
+
+# Understanding Dimensions and Measures
+
+Now that we know what the dataset contains, we can introduce two important Tableau concepts:
+
+**Dimensions** and **Measures**.
+
+---
+
+## Dimensions
+
+Dimensions describe or categorise the data.
+
+They normally answer:
+
+> **How do we want to group or break down the analysis?**
+
+Examples from our travel insurance dataset include:
+
+- Agency
+- Agency Type
+- Distribution Channel
+- Product Name
+- Claim
+- Destination
+- Gender
+
+For example, if we want to compare performance across different products:
+
+`Product Name`
+
+would be a dimension.
+
+---
+
+## Measures
+
+Measures are numerical values that can usually be aggregated.
+
+They answer:
+
+> **What are we measuring?**
+
+Examples from the travel insurance dataset include:
+
+- Duration
+- Net Sales
+- Commission
+- Age
+
+For example, if we want to measure the total value of travel insurance sales:
+
+`Net Sales`
+
+would be a measure.
+
+---
+
+# Dimensions and Measures Work Together
+
+Most analytical questions require both a measure and a dimension.
+
+Consider:
+
+> **Which travel insurance products generate the highest sales?**
+
+We need:
+
+**Measure:** Net Sales
+
+and:
+
+**Dimension:** Product Name
+
+Together:
+
+**Net Sales by Product Name**
+
+This could then be visualised to help compare product performance.
+
+---
+
+## Another Example
+
+Consider:
+
+> **Which destinations have higher Claim Rates?**
+
+We need:
+
+**Measure:** Claim Rate
+
+and:
+
+**Dimension:** Destination
+
+Together:
+
+**Claim Rate by Destination**
+
+Notice that `Claim Rate` does not exist directly in the original dataset.
+
+It will need to be calculated from the available data.
+
+This is why understanding and preparing the dataset comes before building the dashboard.
+
+---
+
+# From Raw Data to Business Metrics
+
+The original dataset contains raw fields.
+
+However, stakeholders often think in terms of business metrics rather than raw columns.
+
+For example, management may want to know:
+
+- How many policies were sold?
+- What was Total Net Sales?
+- What was the Claim Rate?
+- How did performance differ across products or markets?
+
+Some of these measures will need to be created from the raw data.
+
+We will do this in the next section.
+
+---
+
+# What You Will Build
+
+By the end of the Tableau exercise, you will create an executive dashboard that helps management understand:
+
+## Overall Performance
+
+How is the travel insurance portfolio performing?
+
+## Product Performance
+
+Which travel insurance products contribute most to sales?
+
+## Channel Performance
+
+How do different distribution channels perform?
+
+## Destination Performance
+
+Which destinations contribute most to the business?
+
+## Risk
+
+Which destinations or segments may require closer attention because of higher Claim Rates?
+
+---
+
+# From Dashboard to Decision
+
+Creating the dashboard is not the final objective.
+
+You will also use the analysis to communicate:
+
+1. **What happened?**
+2. **Where is the important opportunity or risk?**
+3. **Why does it matter?**
+4. **What should management investigate or consider doing next?**
+
+The final output should therefore move beyond:
+
+> **"Here is my dashboard."**
+
+towards:
+
+> **"Here is what the data tells us and why it matters to the business."**
+
+---
+
+# Learning Objectives
+
+By the end of this Tableau section, you should be able to:
+
+1. understand how Tableau is used within an analytical workflow,
+2. understand the difference between worksheets and dashboards,
+3. distinguish between dimensions and measures,
+4. prepare data for analysis,
+5. create useful business metrics,
+6. build visualisations that answer analytical questions,
+7. combine visualisations into an executive dashboard,
+8. identify meaningful insights,
+9. communicate evidence-based recommendations.
+
+---
+
+# Key Takeaway
+
+Tableau is a **tool** within the analytical process.
+
+Do not begin by asking:
+
+> **"Which chart should I create?"**
+
+Begin by asking:
+
+> **"What business question am I trying to answer?"**
+
+Then use the data and the appropriate visualisation to help answer that question.
+
+In the next section, we will define the travel insurance business problem in more detail and prepare the raw dataset for analysis.
