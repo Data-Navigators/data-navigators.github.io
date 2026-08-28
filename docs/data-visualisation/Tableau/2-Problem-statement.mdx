@@ -1,31 +1,467 @@
 ---
 sidebar_position: 2
+title: Business Problem and Data Preparation
 ---
 
-# Problem Statement 🦉 
+# Business Problem and Data Preparation
 
-##  Climate Change Dataset Project
+In the previous section, we introduced the Travel Insurance dataset and how Tableau fits into the analytical workflow.
 
-Climate change is a contentious issue, with some believing it to be a critical threat and others dismissing it as a myth based on flawed science.
+Before creating visualisations, we first need to:
 
-In this project, we present a dataset that allows you to draw your own conclusions.
+1. understand the business problem,
+2. translate it into analytical questions,
+3. review the available data,
+4. prepare the data for analysis,
+5. define the business metrics we will use.
 
-This dataset, compiled by the Berkeley Earth Surface Temperature Study, contains over 1.6 billion temperature reports from 16 archives and provides insights into long-term climate trends. The dataset includes global land and ocean temperatures, as well as temperatures by country, state, and city.
+The objective is not simply:
 
-However, collecting this data has not been easy. Early temperature data was collected using mercury thermometers that were subject to variations in measurement depending on visit time, and the construction of airports in the 1940s forced many weather stations to be relocated. In the 1980s, electronic thermometers were introduced, but they were found to have a cooling bias.
+> **"Create a travel insurance dashboard."**
 
-Despite these challenges, three organizations - NOAA’s MLOST, NASA’s GISTEMP, and the UK’s HadCrut - have been collating and publishing climate trends data. We have repackaged the data from the Berkeley Earth Study, which offers cleaner and more organized data with source code and transformations.
+Instead, we need to ask:
 
-## Climate Dashboard Project
+> **"What does the business need to know, and what decision should our analysis support?"**
 
-Welcome to the Climate Dashboard Project! In this project, we aim to build an interactive dashboard that provides insights into climate-related data using open-source datasets from Open World in Data and Kaggle.
+---
 
-The dashboard will focus on the following questions:
+# Business Context
 
-- **Total Emissions and Average Temperature for different Countries 🧭:** Explore the relationship between total emissions and average temperature for various countries.
-- **Total Emissions and Average Temperature 🚀:** Analyze the correlation between total emissions and average temperature globally.
-- **Share of Global Emissions by Continent 🗺️:** Visualize the proportion of global emissions contributed by each continent.
-- **Average Temperature around the World 🌏:** Discover the average temperature trends across different regions of the world.
-- **Total Emission 🏭 around the world:** Examine the total emission trends from various sources around the world.
+Consider a company that facilitates the sale of travel insurance through different agencies and distribution channels.
 
-Through data visualization and analysis, we hope to provide valuable insights into climate change, its impact, and the factors contributing to it. Let's explore the data together and draw meaningful conclusions.
+The company offers different travel insurance products for customers travelling to destinations around the world.
+
+Management wants to understand how different parts of the portfolio are performing and where potential claim risk may exist.
+
+---
+
+# Business Problem
+
+Management asks:
+
+> **Which travel insurance products, channels and regions are performing well, and where should the company focus its attention to support sustainable business performance while managing claim risk?**
+
+---
+
+# Business Decision
+
+The analysis should help management understand:
+
+- which products contribute most to the business,
+- which distribution channels perform strongly,
+- which regions contribute most to sales,
+- where claim risk may be higher,
+- which areas may require further investigation.
+
+---
+
+# Analytical Questions
+
+We can translate the business problem into a small number of analytical questions.
+
+## Overall Performance
+
+- How many policies have been sold?
+- How much Net Sales has been generated?
+- What is the overall Net Profit?
+- What is the overall Profit Margin?
+- What is the overall Claim Rate?
+
+## Product Performance
+
+- Which products contribute most to Net Sales?
+- Are sales concentrated in a small number of products?
+
+## Channel Performance
+
+- Which distribution channels contribute most to the business?
+- How does performance differ across channels?
+
+## Regional Performance
+
+- Which regions contribute most to Net Sales?
+- How do Claim Rates differ across regions?
+- Are there regions that may require closer attention?
+
+These questions will guide the Tableau analysis later.
+
+---
+
+# The Raw Dataset
+
+We will use the public Travel Insurance dataset from Kaggle:
+
+[Travel Insurance Dataset - Kaggle](https://www.kaggle.com/datasets/mhdzahier/travel-insurance)
+
+The original dataset contains 11 fields.
+
+| Field | Description |
+|---|---|
+| Agency | Name of travel insurance agency |
+| Agency Type | Type of agency |
+| Distribution Channel | Distribution channel |
+| Product Name | Travel insurance product |
+| Claim | Claim status: Yes / No |
+| Duration | Length of travel |
+| Destination | Travel destination |
+| Net Sales | Value of travel insurance sales |
+| Commission | Commission value |
+| Gender | Gender of insured traveller |
+| Age | Age of insured traveller |
+
+Before analysing the data in Tableau, we will perform several simple preparation steps.
+
+---
+
+# Why Prepare the Data?
+
+Raw datasets are rarely ready for analysis immediately.
+
+Common issues may include:
+
+- unclear field names,
+- missing values,
+- inconsistent category labels,
+- fields that need to be grouped,
+- business metrics that do not yet exist.
+
+Data preparation helps make the dataset easier to understand and analyse consistently.
+
+---
+
+# Data Preparation Exercise
+
+Keep the original downloaded dataset unchanged.
+
+Create a separate prepared version, for example:
+
+`travel_insurance_prepared.csv`
+
+Your workflow should be:
+
+**Raw Dataset → Prepare Data → Save Prepared Dataset → Tableau**
+
+---
+
+# Step 1: Review the Data
+
+Open the raw dataset and inspect the columns.
+
+Look for:
+
+- missing values,
+- inconsistent text values,
+- unusual values,
+- negative Net Sales,
+- inconsistent destination names.
+
+Do not automatically remove unusual records.
+
+First ask:
+
+> **Could this value have a legitimate business meaning?**
+
+For example, negative Net Sales may represent refunds, cancellations or reversals.
+
+---
+
+# Step 2: Rename Fields
+
+Rename:
+
+`Distribution Channel`
+
+to:
+
+`Channel`
+
+This makes the field shorter and easier to use in Tableau.
+
+You may also rename the Commission field to:
+
+`Commission (S$)`
+
+if the values represent Singapore dollars.
+
+---
+
+# Step 3: Handle Missing Gender Values
+
+Review the `Gender` field.
+
+If blank values exist, replace them with:
+
+`N/A`
+
+For example:
+
+```text
+M = Male
+F = Female
+N/A = Not Available
+```
+
+This allows the records to remain in the dataset while keeping missing information visible.
+
+---
+
+# Step 4: Standardise Destination Names
+
+Review the unique values in:
+
+`Destination`
+
+Look for:
+
+- inconsistent country names,
+- unusually long names,
+- different labels referring to the same place.
+
+A simple workflow is:
+
+1. create a list of unique Destination values,
+2. review inconsistent names,
+3. define a standard naming convention,
+4. replace inconsistent labels.
+
+For example:
+
+```text
+KOREA, REPUBLIC OF → SOUTH KOREA
+VIET NAM → VIETNAM
+BRUNEI DARUSSALAM → BRUNEI
+RUSSIAN FEDERATION → RUSSIA
+```
+
+Keep the mapping so that the transformation can be reviewed later.
+
+---
+
+# Step 5: Add Region
+
+To support higher-level analysis, add a new field called:
+
+`Region`
+
+Map each Destination into a broader region.
+
+For example:
+
+| Destination | Region |
+|---|---|
+| Singapore | Asia |
+| Malaysia | Asia |
+| Japan | Asia |
+| France | Europe |
+| Australia | Oceania |
+| United States | Americas |
+
+Create a separate mapping table:
+
+**Destination → Region**
+
+You can then use a lookup function such as `VLOOKUP` or `XLOOKUP` to populate the Region field.
+
+This allows the analysis to move from:
+
+**Overall Portfolio → Region → Destination**
+
+For this exercise, Region is sufficient. You do not need to create a more detailed Sub-Region classification.
+
+---
+
+# Step 6: Create Claim Flag
+
+The original `Claim` field contains:
+
+- Yes
+- No
+
+Create a new numerical field called:
+
+`Claim Flag`
+
+Use:
+
+```text
+Yes = 1
+No = 0
+```
+
+You may create this in Excel or directly in Tableau.
+
+In Tableau:
+
+```text
+IF [Claim] = "Yes" THEN 1
+ELSE 0
+END
+```
+
+This allows Claim Rate to be calculated later.
+
+---
+
+# Step 7: Create Net Profit
+
+For this teaching exercise, use the following definition:
+
+```text
+Net Profit = Net Sales - Commission
+```
+
+You may create this field in Excel or Tableau.
+
+In Tableau:
+
+```text
+[Net Sales] - [Commission (S$)]
+```
+
+Name the field:
+
+`Net Profit`
+
+---
+
+# Step 8: Create Profit Margin
+
+Create:
+
+```text
+IF [Net Sales] = 0 THEN 0
+ELSE [Net Profit] / [Net Sales]
+END
+```
+
+Name the field:
+
+`Profit Margin`
+
+Format the result as a percentage.
+
+---
+
+# Important Note About Metric Definitions
+
+For this exercise, we are using:
+
+```text
+Net Profit = Net Sales - Commission
+```
+
+and:
+
+```text
+Profit Margin = Net Profit / Net Sales
+```
+
+These definitions are used to support the teaching exercise and sample executive dashboard.
+
+In a real organisation, business metric definitions must be confirmed with stakeholders.
+
+A true accounting profitability calculation may require additional information such as:
+
+- claim payout amounts,
+- operating expenses,
+- acquisition costs,
+- servicing costs,
+- other business expenses.
+
+These fields are not available in the original dataset.
+
+The important lesson is:
+
+> **Always understand and validate what a business metric represents before using it for decision making.**
+
+---
+
+# Review the Prepared Dataset
+
+After completing the preparation, your dataset should contain fields such as:
+
+| Field | Tableau Role |
+|---|---|
+| Agency | Dimension |
+| Agency Type | Dimension |
+| Channel | Dimension |
+| Product Name | Dimension |
+| Claim | Dimension |
+| Claim Flag | Measure |
+| Duration | Measure |
+| Destination | Dimension |
+| Region | Dimension |
+| Net Sales | Measure |
+| Commission (S$) | Measure |
+| Net Profit | Measure |
+| Profit Margin | Measure |
+| Gender | Dimension |
+| Age | Measure |
+
+---
+
+# Save the Prepared Dataset
+
+Save the prepared version as:
+
+`travel_insurance_prepared.csv`
+
+Do not overwrite the original downloaded dataset.
+
+This keeps the raw and prepared data separate:
+
+```text
+Raw Kaggle Dataset
+        ↓
+Review and Clean
+        ↓
+Add Region
+        ↓
+Create Analytical Fields
+        ↓
+Prepared Dataset
+        ↓
+Tableau
+```
+
+---
+
+# Define the Business Metrics
+
+Before building any visualisations, define the key metrics clearly.
+
+| Metric | Definition | Business Question |
+|---|---|---|
+| Policies Sold | Count of policy records | How much policy volume do we have? |
+| Total Net Sales | Sum of Net Sales | How much sales value was generated? |
+| Total Net Profit | Sum of Net Profit | What is the reference profitability measure? |
+| Profit Margin* | Net Profit / Net Sales | How much reference profit is generated relative to sales? |
+| Claim Rate | Average Claim Flag | What proportion of policies result in claims? |
+
+`*` The profitability definitions are used for this exercise and should be validated against actual business definitions in a real organisation.
+
+---
+
+# Analytical Plan
+
+We can now connect the business questions to the data we need.
+
+| Analytical Question | Metric | Dimension |
+|---|---|---|
+| What is the overall performance? | Policies, Net Sales, Net Profit, Profit Margin, Claim Rate | Overall |
+| Which products contribute most? | Net Sales | Product Name |
+| Which channels contribute most? | Net Sales | Channel |
+| Which regions contribute most? | Net Sales | Region |
+| Which regions may require closer attention? | Claim Rate | Region |
+
+Notice that we still have not started creating charts.
+
+First, we have defined:
+
+- the business problem,
+- the questions,
+- the data,
+- the required preparation,
+- the metrics.
+
+In the next section, we will use Tableau to turn these into a small number of useful visualisations.
