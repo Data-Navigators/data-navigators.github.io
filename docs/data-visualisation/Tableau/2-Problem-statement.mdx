@@ -12,8 +12,7 @@ Before creating visualisations, we first need to:
 1. understand the business problem,
 2. translate it into analytical questions,
 3. review the available data,
-4. prepare the data for analysis,
-5. define the business metrics we will use.
+4. prepare the data for analysis.
 
 The objective is not simply:
 
@@ -39,7 +38,7 @@ Management wants to understand how different parts of the portfolio are performi
 
 Management asks:
 
-> **Which travel insurance products, channels and regions are performing well, and where should the company focus its attention to support sustainable business performance while managing claim risk?**
+> **Which travel insurance products, channels and regions are performing well, and where should the company focus its attention while managing claim risk?**
 
 ---
 
@@ -63,8 +62,7 @@ We can translate the business problem into a small number of analytical question
 
 - How many policies have been sold?
 - How much Net Sales has been generated?
-- What is the overall Net Profit?
-- What is the overall Profit Margin?
+- What is the overall profitability based on the measures used in this exercise?
 - What is the overall Claim Rate?
 
 ## Product Performance
@@ -75,7 +73,6 @@ We can translate the business problem into a small number of analytical question
 ## Channel Performance
 
 - Which distribution channels contribute most to the business?
-- How does performance differ across channels?
 
 ## Regional Performance
 
@@ -109,7 +106,7 @@ The original dataset contains 11 fields.
 | Gender | Gender of insured traveller |
 | Age | Age of insured traveller |
 
-Before analysing the data in Tableau, we will perform several simple preparation steps.
+Before analysing the data in Tableau, we will perform a few simple preparation steps.
 
 ---
 
@@ -122,8 +119,7 @@ Common issues may include:
 - unclear field names,
 - missing values,
 - inconsistent category labels,
-- fields that need to be grouped,
-- business metrics that do not yet exist.
+- fields that need to be grouped.
 
 Data preparation helps make the dataset easier to understand and analyse consistently.
 
@@ -133,13 +129,15 @@ Data preparation helps make the dataset easier to understand and analyse consist
 
 Keep the original downloaded dataset unchanged.
 
-Create a separate prepared version, for example:
+Create a separate prepared version that will later be loaded into Tableau.
+
+For example:
 
 `travel_insurance_prepared.csv`
 
-Your workflow should be:
+The workflow is:
 
-**Raw Dataset → Prepare Data → Save Prepared Dataset → Tableau**
+**Raw Dataset → Review and Clean → Prepared Dataset → Tableau**
 
 ---
 
@@ -177,11 +175,15 @@ to:
 
 This makes the field shorter and easier to use in Tableau.
 
-You may also rename the Commission field to:
+You may also rename:
+
+`Commission (in value)`
+
+to:
 
 `Commission (S$)`
 
-if the values represent Singapore dollars.
+if appropriate for the dataset being used.
 
 ---
 
@@ -201,7 +203,7 @@ F = Female
 N/A = Not Available
 ```
 
-This allows the records to remain in the dataset while keeping missing information visible.
+This keeps the records in the dataset while making missing information visible.
 
 ---
 
@@ -214,7 +216,7 @@ Review the unique values in:
 Look for:
 
 - inconsistent country names,
-- unusually long names,
+- unusually long formal names,
 - different labels referring to the same place.
 
 A simple workflow is:
@@ -260,143 +262,79 @@ Create a separate mapping table:
 
 **Destination → Region**
 
-You can then use a lookup function such as `VLOOKUP` or `XLOOKUP` to populate the Region field.
+You may use a lookup function such as `VLOOKUP` or `XLOOKUP` to populate the Region field.
 
-This allows the analysis to move from:
+For this exercise, Region is sufficient. A more detailed Sub-Region classification is not required.
+
+This allows us to analyse the data at different levels:
 
 **Overall Portfolio → Region → Destination**
-
-For this exercise, Region is sufficient. You do not need to create a more detailed Sub-Region classification.
-
----
-
-# Step 6: Create Claim Flag
-
-The original `Claim` field contains:
-
-- Yes
-- No
-
-Create a new numerical field called:
-
-`Claim Flag`
-
-Use:
-
-```text
-Yes = 1
-No = 0
-```
-
-You may create this in Excel or directly in Tableau.
-
-In Tableau:
-
-```text
-IF [Claim] = "Yes" THEN 1
-ELSE 0
-END
-```
-
-This allows Claim Rate to be calculated later.
-
----
-
-# Step 7: Create Net Profit
-
-For this teaching exercise, use the following definition:
-
-```text
-Net Profit = Net Sales - Commission
-```
-
-You may create this field in Excel or Tableau.
-
-In Tableau:
-
-```text
-[Net Sales] - [Commission (S$)]
-```
-
-Name the field:
-
-`Net Profit`
-
----
-
-# Step 8: Create Profit Margin
-
-Create:
-
-```text
-IF [Net Sales] = 0 THEN 0
-ELSE [Net Profit] / [Net Sales]
-END
-```
-
-Name the field:
-
-`Profit Margin`
-
-Format the result as a percentage.
-
----
-
-# Important Note About Metric Definitions
-
-For this exercise, we are using:
-
-```text
-Net Profit = Net Sales - Commission
-```
-
-and:
-
-```text
-Profit Margin = Net Profit / Net Sales
-```
-
-These definitions are used to support the teaching exercise and sample executive dashboard.
-
-In a real organisation, business metric definitions must be confirmed with stakeholders.
-
-A true accounting profitability calculation may require additional information such as:
-
-- claim payout amounts,
-- operating expenses,
-- acquisition costs,
-- servicing costs,
-- other business expenses.
-
-These fields are not available in the original dataset.
-
-The important lesson is:
-
-> **Always understand and validate what a business metric represents before using it for decision making.**
 
 ---
 
 # Review the Prepared Dataset
 
-After completing the preparation, your dataset should contain fields such as:
+After the preparation steps, your dataset should contain fields such as:
 
-| Field | Tableau Role |
+| Field | Expected Tableau Role |
 |---|---|
 | Agency | Dimension |
 | Agency Type | Dimension |
 | Channel | Dimension |
 | Product Name | Dimension |
 | Claim | Dimension |
-| Claim Flag | Measure |
 | Duration | Measure |
 | Destination | Dimension |
 | Region | Dimension |
 | Net Sales | Measure |
 | Commission (S$) | Measure |
-| Net Profit | Measure |
-| Profit Margin | Measure |
 | Gender | Dimension |
 | Age | Measure |
+
+The additional business metrics will be created directly in Tableau in the next exercise.
+
+---
+
+# Metrics Required for Analysis
+
+Once the prepared dataset is loaded into Tableau, we will create several metrics to support the analysis.
+
+| Metric | Purpose |
+|---|---|
+| Policies Sold | Understand overall policy volume |
+| Total Net Sales | Measure total sales value |
+| Net Profit | Reference profitability measure used in this exercise |
+| Profit Margin | Compare profitability relative to sales |
+| Claim Rate | Measure the proportion of policies with claims |
+
+The calculated fields will be created in Tableau in the next exercise.
+
+---
+
+# Important Note About Metric Definitions
+
+For this teaching exercise, the sample dashboard uses:
+
+**Net Profit = Net Sales - Commission**
+
+and:
+
+**Profit Margin = Net Profit / Net Sales**
+
+These definitions are used to support the exercise.
+
+In a real organisation, business metric definitions should always be confirmed with stakeholders.
+
+True accounting profitability may require additional information such as:
+
+- claim payouts,
+- operating expenses,
+- acquisition costs,
+- servicing costs.
+
+These fields are not available in the original dataset.
+
+> **Always understand and validate what a business metric represents before using it for decision making.**
 
 ---
 
@@ -408,16 +346,16 @@ Save the prepared version as:
 
 Do not overwrite the original downloaded dataset.
 
-This keeps the raw and prepared data separate:
+Your workflow should now look like:
 
 ```text
 Raw Kaggle Dataset
         ↓
-Review and Clean
+Review the Data
+        ↓
+Clean and Standardise
         ↓
 Add Region
-        ↓
-Create Analytical Fields
         ↓
 Prepared Dataset
         ↓
@@ -426,42 +364,25 @@ Tableau
 
 ---
 
-# Define the Business Metrics
-
-Before building any visualisations, define the key metrics clearly.
-
-| Metric | Definition | Business Question |
-|---|---|---|
-| Policies Sold | Count of policy records | How much policy volume do we have? |
-| Total Net Sales | Sum of Net Sales | How much sales value was generated? |
-| Total Net Profit | Sum of Net Profit | What is the reference profitability measure? |
-| Profit Margin* | Net Profit / Net Sales | How much reference profit is generated relative to sales? |
-| Claim Rate | Average Claim Flag | What proportion of policies result in claims? |
-
-`*` The profitability definitions are used for this exercise and should be validated against actual business definitions in a real organisation.
-
----
-
 # Analytical Plan
 
-We can now connect the business questions to the data we need.
+Before opening Tableau, connect the analytical questions to the data required.
 
 | Analytical Question | Metric | Dimension |
 |---|---|---|
-| What is the overall performance? | Policies, Net Sales, Net Profit, Profit Margin, Claim Rate | Overall |
+| What is overall performance? | Policies, Net Sales, Profit, Claim Rate | Overall |
 | Which products contribute most? | Net Sales | Product Name |
 | Which channels contribute most? | Net Sales | Channel |
 | Which regions contribute most? | Net Sales | Region |
 | Which regions may require closer attention? | Claim Rate | Region |
 
-Notice that we still have not started creating charts.
+Notice that we still have not created any charts.
 
-First, we have defined:
+We have first defined:
 
 - the business problem,
-- the questions,
+- the analytical questions,
 - the data,
-- the required preparation,
-- the metrics.
+- the required preparation.
 
-In the next section, we will use Tableau to turn these into a small number of useful visualisations.
+In the next exercise, we will load the prepared dataset into Tableau, create the required metrics and build the visualisations.
