@@ -7,23 +7,25 @@ title: Analyse and Visualise the Data
 
 You should now have a prepared version of the Travel Insurance dataset.
 
-Before reaching this stage, we have already:
+So far, we have:
 
 1. understood the business problem,
-2. translated the problem into analytical questions,
-3. reviewed and prepared the raw data,
-4. created the required analytical fields,
-5. defined the key business metrics.
+2. translated it into analytical questions,
+3. reviewed and prepared the raw data.
 
-We can now begin analysing the data in Tableau.
+We can now use Tableau to:
 
-For every visualisation, remember:
+1. create the required business metrics,
+2. analyse the data,
+3. build the key visualisations needed for the executive dashboard.
+
+Remember:
 
 > **Business Question → Metric + Dimension → Visualisation → Insight**
 
-The purpose of this exercise is not to create as many charts as possible.
+The purpose is not to create as many charts as possible.
 
-Instead, we will create a small number of useful views that can later be combined into an executive dashboard.
+We will create only the views needed to answer the main business questions.
 
 ---
 
@@ -31,20 +33,75 @@ Instead, we will create a small number of useful views that can later be combine
 
 1. Open Tableau Public.
 2. Select **Text File** or the appropriate file connection.
-3. Open your prepared dataset:
+3. Open:
 
 `travel_insurance_prepared.csv`
 
 4. Review the fields and data types.
-5. Check that Tableau has correctly identified the dimensions and measures.
+5. Confirm that Tableau has correctly identified the dimensions and measures.
 
 ---
 
-# Step 2: Create Any Missing Calculated Fields
+# Review Dimensions and Measures
 
-If you did not create these fields during data preparation, create them in Tableau.
+Your prepared dataset should contain dimensions such as:
+
+- Agency
+- Agency Type
+- Channel
+- Product Name
+- Claim
+- Destination
+- Region
+- Gender
+
+Measures may include:
+
+- Duration
+- Net Sales
+- Commission
+- Age
+
+Tableau may not always classify every field correctly.
+
+Change a field between **Dimension** and **Measure** if necessary.
+
+---
+
+# Step 2: Create the Business Metrics
+
+Before building the visualisations, create the metrics required for the analysis.
+
+---
+
+## Policies Sold
+
+Each row represents a travel insurance record.
+
+Create a calculated field or use a record count to calculate policy volume.
+
+For example:
+
+```text
+COUNT([Product Name])
+```
+
+Name the field:
+
+`Policies Sold`
+
+---
 
 ## Claim Flag
+
+The original Claim field contains:
+
+- Yes
+- No
+
+Create a calculated field called:
+
+`Claim Flag`
 
 ```text
 IF [Claim] = "Yes" THEN 1
@@ -56,21 +113,40 @@ END
 
 ## Claim Rate
 
+Create:
+
 ```text
 AVG([Claim Flag])
 ```
 
+Name the field:
+
+`Claim Rate`
+
 Format the result as a percentage.
+
+Because:
+
+```text
+Claim = 1
+No Claim = 0
+```
+
+the average represents the proportion of policy records with a claim.
 
 ---
 
 ## Net Profit
 
-For this exercise:
+For this teaching exercise, create:
 
 ```text
 [Net Sales] - [Commission (S$)]
 ```
+
+Name the field:
+
+`Net Profit`
 
 Use the exact Commission field name in your dataset.
 
@@ -78,23 +154,29 @@ Use the exact Commission field name in your dataset.
 
 ## Profit Margin
 
+Create:
+
 ```text
 IF [Net Sales] = 0 THEN 0
 ELSE [Net Profit] / [Net Sales]
 END
 ```
 
+Name the field:
+
+`Profit Margin`
+
 Format the result as a percentage.
 
 ---
 
-# Analysis 1: Create the Executive KPIs
+# Step 3: Create the Executive KPIs
 
 ## Business Question
 
 > **What is the overall performance of the travel insurance portfolio?**
 
-Create KPI views for:
+Create KPI worksheets for:
 
 - Policies Sold
 - Total Net Sales
@@ -102,37 +184,33 @@ Create KPI views for:
 - Profit Margin
 - Claim Rate
 
-These metrics provide management with a quick overview of the business.
+These metrics will later appear at the top of the executive dashboard.
 
 ---
 
-## Why Use KPIs?
+# Creating a KPI
 
-An executive audience normally wants to understand the overall situation quickly.
+For example, to create:
 
-KPIs help answer:
+`Total Net Sales`
 
-> **What is happening overall?**
+1. Create a new worksheet.
+2. Drag `Net Sales` to **Text** on the Marks card.
+3. Ensure the aggregation is `SUM`.
+4. Format the number so that it is easy to read.
+5. Rename the worksheet:
 
-For example:
+`Total Net Sales`
 
-```text
-Policies Sold
-63.3K
-```
+Repeat the process for the other KPIs.
 
-or:
+Keep the KPI design simple.
 
-```text
-Claim Rate
-1.5%
-```
-
-Keep each KPI simple and easy to read.
+An executive should be able to understand the number immediately.
 
 ---
 
-# Analysis 2: Net Sales by Product
+# Step 4: Analyse Product Performance
 
 ## Business Question
 
@@ -153,48 +231,46 @@ Recommended visual:
 ## Tableau Steps
 
 1. Create a new worksheet.
-2. Drag `Product Name` to Rows.
-3. Drag `Net Sales` to Columns.
+2. Drag `Product Name` to **Rows**.
+3. Drag `Net Sales` to **Columns**.
 4. Confirm that Net Sales is aggregated using `SUM`.
 5. Sort the products from highest to lowest.
-6. Format the values so that they are easy to read.
+6. Format the values so they are easy to read.
 7. Rename the worksheet:
 
 `Net Sales by Product`
 
 ---
 
-## What Should You Look For?
+# What Should You Look For?
 
 Ask:
 
 - Which products contribute most to Net Sales?
-- Is sales performance concentrated in only a few products?
+- Is sales performance concentrated in a small number of products?
 - Are there products with noticeably lower sales?
 
-The chart helps move from:
+Do not stop at:
 
-> **What is happening overall?**
+> **"Product A has the highest sales."**
 
-to:
+Ask:
 
-> **Where is performance coming from?**
+> **"What should management notice about the product mix?"**
 
 ---
 
-# Analysis 3: Regional Performance
+# Step 5: Analyse Regional Performance
 
 ## Business Question
 
-> **How does performance differ across regions?**
+> **Which regions contribute most to Net Sales?**
 
-Use:
-
-**Dimension:** Region
-
-Start with:
+We need:
 
 **Measure:** Net Sales
+
+**Dimension:** Region
 
 Recommended visual:
 
@@ -205,10 +281,11 @@ Recommended visual:
 ## Tableau Steps
 
 1. Create a new worksheet.
-2. Drag `Region` to Rows.
-3. Drag `Net Sales` to Columns.
-4. Sort from highest to lowest.
-5. Rename the worksheet:
+2. Drag `Region` to **Rows**.
+3. Drag `Net Sales` to **Columns**.
+4. Confirm that Net Sales is aggregated using `SUM`.
+5. Sort the regions from highest to lowest.
+6. Rename the worksheet:
 
 `Net Sales by Region`
 
@@ -216,74 +293,58 @@ Recommended visual:
 
 # Add Claim Rate for Context
 
-Net Sales alone does not tell us everything about performance.
+Sales alone does not tell us everything about performance.
 
 Add:
 
 `Claim Rate`
 
-to the Tooltip.
+to the **Tooltip**.
 
-This allows the user to see both:
-
-- commercial performance, and
-- claim risk.
-
-For example, a region may generate high Net Sales but also have a higher Claim Rate.
-
-This may indicate an area that deserves further investigation.
-
----
-
-# Analysis 4: Compare Performance and Risk
-
-Instead of creating many additional charts, we can enhance the regional analysis by comparing:
+When a user moves over a region, they can now see:
 
 - Net Sales,
-- Profit Margin,
 - Claim Rate.
 
-You may display these through:
+This helps answer:
 
-- the tooltip,
-- labels,
-- an additional simple bar chart.
+> **Does a high-sales region also have a comparatively high Claim Rate?**
 
-The purpose is to help answer:
+The objective is not to perform a detailed risk investigation here.
 
-> **Are the strongest commercial regions also associated with higher claim risk?**
-
-Do not try to explain every possible driver at this stage.
-
-The dashboard should help identify areas that may require further investigation.
+The dashboard should simply help identify areas that may require closer attention.
 
 ---
 
-# Step 5: Add a Filter
+# Step 6: Add a Useful Filter
 
-Add one useful filter to the analysis.
+Add at least one useful filter.
 
 For example:
 
-- Region,
-- Channel,
-- Product Name.
+- Region
+- Channel
+- Product Name
 
-A filter should help the user answer a business question.
+A filter should help answer a business question.
 
-For example, selecting a Region may allow management to see:
+For example:
 
-> Which products contribute most to sales within this region?
+Selecting a Region may help management understand:
+
+> **Which products contribute most to Net Sales within this region?**
 
 Avoid adding too many filters.
+
+An executive dashboard should remain simple.
 
 ---
 
 # What You Should Have Now
 
-By the end of this exercise, you should have:
+By the end of this exercise, you should have the following Tableau worksheets.
 
-## KPI Worksheets
+## Executive KPIs
 
 - Policies Sold
 - Total Net Sales
@@ -291,7 +352,7 @@ By the end of this exercise, you should have:
 - Profit Margin
 - Claim Rate
 
-## Supporting Visuals
+## Supporting Visualisations
 
 - Net Sales by Product
 - Net Sales by Region
@@ -300,13 +361,13 @@ By the end of this exercise, you should have:
 
 - At least one useful filter
 
-These are enough to build a simple executive dashboard.
+These views will form the basis of the executive dashboard in the next exercise.
 
 ---
 
-# From Chart to Insight
+# From Visualisation to Insight
 
-Do not stop after creating the visual.
+Creating the visualisation is only the first step.
 
 Ask:
 
@@ -316,20 +377,50 @@ For example:
 
 An observation might be:
 
-> Region A has the highest Net Sales.
+> **Asia has the highest Net Sales.**
 
 A stronger analytical statement might be:
 
-> Region A contributes the largest share of Net Sales while maintaining a Claim Rate close to the overall portfolio average.
+> **Asia contributes the largest share of Net Sales while its Claim Rate remains close to the overall portfolio average.**
 
-The second statement provides more business context.
+The second statement adds context and begins to explain why the result matters.
+
+Your actual insight should always be based on what your data shows.
+
+---
+
+# Keep the Analysis Focused
+
+It is possible to create many more visualisations from this dataset.
+
+For example, you could analyse:
+
+- agencies,
+- destinations,
+- age,
+- travel duration,
+- individual products,
+- additional claim patterns.
+
+However, these are not required for this exercise.
+
+Our goal is to build a **simple executive overview**, not a complete capstone analysis.
+
+The selected views are sufficient to demonstrate:
+
+**Overall Performance  
+→ Product Performance  
+→ Regional Performance  
+→ Area Requiring Attention**
 
 ---
 
 # Key Takeaway
 
-The goal of this exercise is not to create many different charts.
+The goal is not to create many charts.
 
-The goal is to create a **small number of useful visualisations that answer the most important business questions**.
+The goal is to create a **small number of useful visualisations that answer important business questions**.
 
-In the next section, we will combine these views into an executive dashboard.
+You should now have everything required to build the executive dashboard.
+
+In the next section, we will combine these worksheets into a single executive overview and communicate the key findings.
