@@ -1,0 +1,107 @@
+---
+title:  Retail Dataset Analysis & Problem Solving
+sidebar_position: 999
+---
+
+# **Exercise**: Retail Dataset Analysis & Problem Solving 📦🛒
+
+In this module, we will introduce a **Retail Sales Dataset** and pinch your curiousity on problem-solving exercises that will help you understand key statistical concepts like **descriptive statistics, distributions,EDA and visualizations**.
+
+## Retail Dataset Overview 🗂
+
+The **Retail Dataset** contains information about sales transactions, customers, and products. Let’s start by getting familiar with the columns in the dataset and understanding what they represent.
+
+### Columns in the Dataset:
+
+1. **Customer ID** 🔑
+   - A unique identifier for each customer in the dataset.
+  
+2. **Gender** 👩‍🦰👨‍🦱
+   - The gender of the customer (Male or Female).
+  
+3. **Age** 🎂
+   - The age of the customer.
+  
+4. **Product Category** 🛍️
+   - The category to which the purchased product belongs (e.g., Electronics, Clothing, Home Appliances, etc.).
+  
+5. **Quantity** 🛒
+   - The number of units of the product purchased in the transaction.
+  
+6. **Price per Unit** 💵
+   - The price of a single unit of the product purchased.
+  
+7. **Total Amount** 💰
+   - The total amount spent by the customer for the transaction, calculated as `Quantity * Price per Unit`.
+
+---
+
+## Final Retail Dataset Exercise
+
+This exercise is designed to take approximately 1 to 1.5 hours and is intended to test a candidate's ability to move from raw data exploration to statistical reasoning and a business-ready conclusion.
+
+Use the sample dataset below as the working data. The goal is not to find a single textbook answer, but to build a coherent analytical story using descriptive statistics, EDA, and hypothesis testing.
+
+### Sample Data
+
+| Transaction ID | Date       | Customer ID | Gender | Age | Product Category | Quantity | Price per Unit | Total Amount |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2023-11-24 | CUST001 | Male | 34 | Beauty | 3 | 50 | 150 |
+| 2 | 2023-02-27 | CUST002 | Female | 26 | Clothing | 2 | 500 | 1000 |
+| 3 | 2023-01-13 | CUST003 | Male | 50 | Electronics | 1 | 30 | 30 |
+| 4 | 2023-05-21 | CUST004 | Male | 37 | Clothing | 1 | 500 | 500 |
+| 5 | 2023-05-06 | CUST005 | Male | 30 | Beauty | 2 | 50 | 100 |
+| 6 | 2023-04-25 | CUST006 | Female | 45 | Beauty | 1 | 30 | 30 |
+| 7 | 2023-03-13 | CUST007 | Male | 46 | Clothing | 2 | 25 | 50 |
+| 8 | 2023-02-22 | CUST008 | Male | 30 | Electronics | 4 | 25 | 100 |
+| 9 | 2023-12-13 | CUST009 | Male | 63 | Electronics | 2 | 300 | 600 |
+
+### Exercise Questions
+
+1. **Data quality and descriptive summary**
+   - Review the dataset for missing values, inconsistent entries, and any obvious data issues.
+   - Compute a concise summary of the main numerical variables: Age, Quantity, Price per Unit, and Total Amount.
+   - Explain what these summary measures suggest about the retail mix and customer spending pattern.
+
+2. **Exploratory Data Analysis: customer and product patterns**
+   - Build a profile of the customer base using age, gender, and product category distribution.
+   - Compare category-level spending patterns and identify which categories contribute the most revenue and which appear relatively low-value.
+   - Create at least two visuals that help explain the customer and product patterns. Interpret them in business language rather than just describing the chart.
+
+3. **Relationship and outlier analysis**
+   - Investigate whether there is a relationship between age and total spend, and whether that relationship is different across product categories.
+   - Identify any outliers or unusually high-value transactions and discuss whether they are likely to be genuine business signals or potential data anomalies.
+   - Explain how such observations might affect the decision to rely on averages alone.
+
+4. **Formulate and test a business hypothesis**
+   - Frame a business question using the same dataset, for example: whether spending differs by gender or whether one product category has a materially different customer profile.
+   - Choose an appropriate statistical test based on the type of variable and the research question.
+   - State the null and alternative hypotheses clearly, explain whether the test conditions are reasonable for this dataset, and interpret the outcome in business terms.
+
+5. **Decision-oriented conclusion**
+   - Write a short business recommendation based on your findings from the descriptive analysis and hypothesis testing.
+   - Discuss whether the evidence is strong enough to support a strategy change, and what additional information would make the conclusion more reliable.
+   - Contrast the risk of a false positive and a false negative in this retail setting, and explain which type of mistake would be more costly for the business.
+
+### What this exercise is testing
+
+This task is deliberately designed to require a candidate to:
+
+* inspect the data before applying analysis,
+* choose appropriate visuals and summary statistics,
+* connect patterns to actual business meaning,
+* decide which statistical method matches the question,
+* interpret uncertainty and decision risk,
+* and present a conclusion that is evidence-based rather than formula-driven.
+
+A strong answer should be a short analytical report, not a list of raw outputs. It should show reasoning, assumptions, and judgment.
+
+## > Note to the learner
+
+This exercise is intentionally designed so that a direct answer is not available from a generic GPT response alone. The value of the task lies in the reasoning process, not in a single numerical output.
+
+A candidate should be expected to produce a structured analysis, supporting visuals, and a business recommendation based on evidence from the data.
+> Below is the reference material with some sample exercise solutions and hypothesis testing, they do not answer any of the above questions directly.
+Learners are recommended to download the data and build their own working notebook and solve for the question with their own reasoning and analysis.
+*Learners can leverage LLM models to sharpen your analytical thought, align the direction, brainstrom for refinement and speed up the process.*
+[GitHub Link to reference material](https://github.com/Data-Navigators/Statistical_Concept_Excercise/tree/main)

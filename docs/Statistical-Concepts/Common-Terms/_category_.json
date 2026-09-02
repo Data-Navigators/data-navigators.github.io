@@ -1,4 +1,8 @@
 {
-    "label": "Brief intro to common terms",
-    "position": 1
+    "label": "Foundations",
+    "position": 1,
+    "link": {
+      "type": "doc",
+      "id": "Statistical-Concepts/Common-Terms/Common Terms"
+    }
 }

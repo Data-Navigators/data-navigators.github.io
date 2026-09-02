@@ -1,8 +1,8 @@
 {
-    "label": "Hypothesis-Testing",
+    "label": "Making Reliable Inferences",
     "position": 4,
     "link": {
-      "type": "generated-index",
-      "description": "Hypothesis-Testing"
+      "type": "doc",
+      "id": "Statistical-Concepts/Hypothesis-Testing /Hypothesis-Testing"
     }
   }
