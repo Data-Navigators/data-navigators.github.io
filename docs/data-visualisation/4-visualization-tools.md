@@ -1,74 +1,386 @@
 ---
 sidebar_position: 4
+title: Choosing the Right Visualisation Tool
 ---
 
-# Visualization Tools
+# Choosing the Right Visualisation Tool
 
-This page lists some of the popular and widely used tools for data visualization,
-The Data Visualization tools can be broadly classified into two categories:
-1. Commercial vs Open Source 
-2. Online vs Offline 
+There are many tools available for creating data visualisations and dashboards.
 
-Some key points to consider while choosing the right tool for your data visualization needs are:
-- **Ease of Use**: The tool should be easy to use and should not require extensive training or expertise to get started.
+Examples include:
 
-- **Integration**: The tool should be able to integrate with other tools existing tools with external systems, data pipeline, data warehouses, and data lakes or Local data sources.
+- Tableau,
+- Power BI,
+- Qlik,
+- Looker,
+- Apache Superset,
+- Metabase,
+- Streamlit,
+- Plotly,
+- Matplotlib,
+- Grafana.
 
-- **Cost**: The tool should be cost-effective and should not require a large upfront investment. Some tools may offer free versions or trial periods, while others may require a subscription or one-time payment. Some tools offer pay-as-you-go pricing models, which can be more cost-effective for smaller projects. Team size and scalibility should be considered for tool selection.
+However, the purpose of this section is not to memorise a list of products.
 
-- **Scalability**: Depending on the size of team members who create the visualizations vs who consume the visualizations, the accessibility of the tool with authentication and authorization should be considered. Some time managing the access to the data and visualizations itself will be of a greater challenge than creating the visualizations.
+An analyst should choose a tool based on the needs of the analytical solution.
 
-- **Support**: The tool should have a good support system in place, including documentation, tutorials, and a community of users who can help with any questions or issues that may arise.Public community support and Customization / Extension options should be available.
+The principle is:
 
-Note: We have listed only some of the popular tools available in the market, and there are many other tools available that may be more suitable for your specific needs. We need to consider all the above points while selecting the right tool for the client needs.   
-As the effort and time required to setup the tool will be time consuming and cannot be undone easily.
+> **Understand the problem first. Choose the tool second.**
 
-## Commercial Visualization Tools
-- [Tableau](https://www.tableau.com/en-gb/products/public/download) - Tableau is a powerful data visualization tool that allows users to create interactive and shareable dashboards. It is widely used in business intelligence and analytics.
-- [Microsoft Power BI](https://www.microsoft.com/en-us/power-platform/products/power-bi) - Power BI is a business analytics tool by Microsoft that provides interactive visualizations and business intelligence capabilities with an interface simple enough for end users to create their own reports and dashboards.
-- [Qlik Sense](https://www.qlik.com/us/products/qlik-sense) - Qlik Sense is a self-service data analytics and visualization tool that allows users to create interactive dashboards and reports.
+---
 
-Cost and licensing models vary based on the number of users and the features required. 
-These are generally recommended for large organizations with a large number of users and a large amount of data to be processed.
+# Start With the Requirements
 
-## Open Source Visualization Tools
+Before choosing a visualisation tool, ask:
 
+- Who will use the output?
+- What decision will it support?
+- What data is required?
+- How much data is involved?
+- Does the user need interactivity?
+- How will the visualisation be shared?
+- How often should the data refresh?
+- What security is required?
+- What tools and skills already exist in the organisation?
 
-- [Apache Superset](https://github.com/apache/superset) - Apache Superset is a modern data exploration and visualization platform that allows users to create interactive dashboards and reports. It is built on top of Flask, React, and SQLAlchemy.
+The same analytical problem can sometimes be solved using several different tools.
 
-- [Metabase](https://github.com/metabase/metabase) - Metabase is an open-source business intelligence tool that allows users to create interactive dashboards and reports. It is designed for non-technical users and provides a simple interface for creating visualizations.
+The best choice depends on the context.
 
-- [streamlit](https://github.com/streamlit/streamlit) - Streamlit is an another popular open-source app framework projecting more libraries  specifically for machine learning and data science projects. Recently it has gained lots of popularity with its features to create interactive dashboards and reports using python code and also the code can be tracked with version control systems end to end unlike other tools.
+---
 
-- [Redash](https://github.com/getredash/redash) - Redash is an open-source data visualization and collaboration tool that allows users to create interactive dashboards and reports. It is designed for data analysts and provides a simple interface for creating visualizations. 
+# 1. Audience
 
-Note: Except for Apache Superset, all the other tools also provide a Software as a Service (PaaS) version, which can be used for free for small teams. The PaaS version is hosted on the cloud and provides all the features of the open-source version, which can be free from hosting and maintenance overhead.
+Who will use the visualisation?
 
-### Additional tools
-Some small team use [Grafana](https://grafana.com/) for data visualization, but it is primarily used for monitoring and observability for realtime data. Grafana is a powerful open-source analytics and monitoring platform that allows users to create interactive dashboards and visualizations. It will not have the exquisite features or interactive dashboard setup for data visualization and reporting, but it can be used for data visualization for small usecases.
+Possible audiences include:
 
-## Open Source Visualization Libraries
+- senior executives,
+- business users,
+- operational teams,
+- analysts,
+- data scientists,
+- external customers.
 
-Visualization libraries are programming libraries that can be integrated into our code itself to create visualizations, Which can then be exported as images or PDF or PowerPoint slides automatically. They are typically easier to use than visualization tools, but they may not be as powerful or flexible. Sometime the customization and extension of tools will be limited, where these libraries can be used to create custom visualizations and can have more flexibility in terms of design and functionality.
-These will not have all the features of a full-fledged visualization tool, but they can be used to create simple customized visualizations provided we have the expertise in the code platform .
+For example, an executive dashboard should generally be easy to access and understand.
 
-Visualization Tools are standalone applications that can be used to create visualizations, dashboards, and reports. They are typically more powerful and flexible than visualization libraries, but they may require more time and effort to set up and use.
+A data scientist may instead need a flexible environment for experimenting with data and models.
 
+---
 
-- [Matplotlib](https://matplotlib.org/) Visualization library in python
-- [Seaborn](https://seaborn.pydata.org/) statistical data Visualization in python built upon matplotlib
-- [Plotly](https://dash.plotly.com): build beautiful interactive visualizations without needing loads and loads of Javascript
-- [Plotly Express](https://plotly.com/python/plotly-express/): build beautiful interactive visualizations in literally a few lines!
+# 2. Data Sources
 
+Consider where the data is stored.
 
-## Commercial Visualization Tools - Web-based
-- [Looker (Formerly Data Studio)](https://lookerstudio.google.com) - Googles very own Google Data Studio is a business intelligence tool that allows users to create interactive dashboards and reports. If our data is in Google Cloud BigQuery or BigTable, Then this is a good option to consider.
+Examples include:
 
-- [Google Charts](https://developers.google.com/chart/) - Google Charts is a free tool that allows that can also be used to create simple light weight charts. It is a simple easy to use and can be integrated with other Google data.
+- Excel files,
+- CSV files,
+- relational databases,
+- cloud data warehouses,
+- data lakes,
+- APIs,
+- streaming platforms.
 
-- [QuickSight](https://aws.amazon.com/quicksight/) - Amazon QuickSight is a cloud-based business intelligence service that allows users to create interactive dashboards and reports. All the access and authentication can be managed through AWS IAM and SSO, and support integrations with other AWS services.
+The selected visualisation tool should be able to connect to the required data sources effectively.
 
-### Practical Python Visualisation examples to practice in python notebook
-- [Refer to link](https://www.geeksforgeeks.org/data-visualization/python-data-visualization-tutorial/?utm_source=chatgpt.com#getting-started-data-visualization-with-matplotlib)
-- go to the above link and practice few visualisation techniques using python libraries such as Matplotlib, Seaborn and Pandas etc..
+---
 
+# 3. Data Volume
+
+Small datasets can often be analysed locally.
+
+Larger datasets may require:
+
+- database connections,
+- optimised queries,
+- extracts,
+- cloud infrastructure,
+- appropriate refresh strategies.
+
+The amount of data can therefore influence the tool and architecture used.
+
+---
+
+# 4. Interactivity
+
+Does the audience simply need to view the result?
+
+Or do they need to explore it?
+
+Interactive requirements may include:
+
+- filters,
+- drill-down,
+- tooltips,
+- cross-filtering,
+- parameters,
+- detailed views.
+
+For example, an executive may only need a high-level dashboard.
+
+An operational manager may need to filter the dashboard by team, product or location.
+
+---
+
+# 5. Distribution
+
+How will the visualisation reach the audience?
+
+Possible delivery methods include:
+
+- presentation slides,
+- PDF reports,
+- internal dashboards,
+- public websites,
+- mobile devices,
+- embedded applications.
+
+The delivery method may affect the choice of tool.
+
+---
+
+# 6. Security and Governance
+
+Business dashboards may contain confidential information.
+
+Consider:
+
+- authentication,
+- user permissions,
+- data access,
+- row-level security,
+- governance,
+- audit requirements.
+
+A tool that is appropriate for public data may not be appropriate for sensitive organisational data.
+
+---
+
+# 7. Refresh Frequency
+
+How current does the information need to be?
+
+Examples include:
+
+- annual reporting,
+- monthly reporting,
+- daily dashboards,
+- hourly monitoring,
+- near-real-time operational monitoring.
+
+A monthly management report has different requirements from an operational monitoring system.
+
+---
+
+# 8. Cost
+
+Cost may include more than the software licence.
+
+Consider:
+
+- licence fees,
+- infrastructure,
+- maintenance,
+- administration,
+- training,
+- development effort.
+
+Organisations should evaluate the overall cost of supporting the solution.
+
+---
+
+# 9. Skills
+
+Consider the skills available in the organisation.
+
+Business analysts may prefer tools with visual interfaces.
+
+Data scientists may prefer code-based tools.
+
+Developers may need tools that can be integrated into applications.
+
+The most technically powerful tool is not automatically the best tool.
+
+---
+
+# Categories of Visualisation Tools
+
+Different tools are designed for different types of work.
+
+---
+
+## Business Intelligence Tools
+
+Examples include:
+
+- Tableau,
+- Power BI,
+- Qlik.
+
+They are commonly used for:
+
+- business dashboards,
+- management reporting,
+- KPI monitoring,
+- interactive analysis,
+- self-service analytics.
+
+They are particularly useful when many business users need access to the same analytical information.
+
+---
+
+## Code-Based Visualisation Tools
+
+Examples include:
+
+- Matplotlib,
+- Plotly,
+- other Python visualisation libraries.
+
+They can be useful when:
+
+- the analysis already takes place in Python,
+- customised visualisations are required,
+- charts need to be produced programmatically,
+- the analyst needs greater technical control.
+
+These tools generally require programming skills.
+
+---
+
+## Data Applications
+
+Tools such as Streamlit allow analysts and data scientists to create interactive applications using code.
+
+They can be useful when:
+
+- users need to provide inputs,
+- an application needs to run analytical logic,
+- a predictive model needs to be demonstrated,
+- more customised interaction is required.
+
+---
+
+## Monitoring Tools
+
+Tools such as Grafana are commonly used for:
+
+- system monitoring,
+- infrastructure metrics,
+- operational telemetry,
+- near-real-time monitoring.
+
+This is a different use case from a typical management dashboard.
+
+---
+
+# Example 1: Executive Dashboard
+
+Suppose the Chief Operating Officer says:
+
+> "I want a dashboard showing our main operational KPIs. Around 50 managers need access, the data should refresh every morning, and users should be able to filter by region."
+
+Important requirements include:
+
+- shared business access,
+- interactive filtering,
+- scheduled refresh,
+- governance,
+- business-friendly presentation.
+
+A business intelligence platform such as Tableau or Power BI may be appropriate.
+
+---
+
+# Example 2: Data Science Application
+
+Suppose a data scientist says:
+
+> "I want users to enter information about a customer and see the churn probability produced by our machine-learning model."
+
+Important requirements include:
+
+- user input,
+- Python integration,
+- model execution,
+- customised interaction.
+
+A data application framework may be more appropriate.
+
+---
+
+# Example 3: Quarterly Presentation
+
+Suppose an analyst needs three charts for a quarterly management presentation.
+
+A complete interactive dashboard platform may not be necessary.
+
+The analyst could create the required analysis using an existing business intelligence tool, spreadsheet or programming environment and place the final visuals into the presentation.
+
+---
+
+# A Simple Tool Selection Guide
+
+| Requirement | Possible Tool Category |
+|---|---|
+| Executive dashboard | Business Intelligence |
+| Interactive management reporting | Business Intelligence |
+| Self-service analysis | Business Intelligence |
+| Custom statistical analysis | Code-Based Visualisation |
+| Data science prototype | Data Application |
+| Operational system monitoring | Monitoring Tool |
+| Static management presentation | Existing BI, Spreadsheet or Code |
+| Public interactive analytical application | Data / Web Application |
+
+This is a guide rather than a strict rule.
+
+Many tools can support several different use cases.
+
+---
+
+# Why Tableau Is Used in This Module
+
+In the next section, we will use Tableau to apply the analytical process we have learned.
+
+The objective is not simply to learn where buttons are located in Tableau.
+
+Instead, we will use Tableau to practise the entire process:
+
+**Business Problem  
+→ Analytical Questions  
+→ Data Model  
+→ Metrics  
+→ Analysis  
+→ Visualisation  
+→ Dashboard  
+→ Insight  
+→ Recommendation**
+
+The same thinking can later be applied to other visualisation tools.
+
+Learning the analytical process is more important than memorising one piece of software.
+
+---
+
+# Key Takeaways
+
+Choose the visualisation tool only after understanding:
+
+- the business problem,
+- the audience,
+- the data,
+- the analytical requirements,
+- the level of interactivity,
+- the delivery method,
+- security requirements,
+- refresh requirements,
+- cost,
+- available skills.
+
+Remember:
+
+> **The tool should support the analytical solution. The analytical solution should not be designed around the tool.**
+
+In the next section, we will bring everything together by solving a business problem and building an executive dashboard in Tableau.

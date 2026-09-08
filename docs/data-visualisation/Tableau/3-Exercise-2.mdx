@@ -1,40 +1,231 @@
 ---
 sidebar_position: 4
+title: Build an Executive Dashboard
 ---
 
-# Exercise 2
+# Build an Executive Dashboard
 
-## Exercise: Total Emissions and Average Temperature
+In the previous exercise, you created the key worksheets needed to analyse the Travel Insurance portfolio.
 
-In this exercise, we will create visualizations using Streamlit to analyze the total emissions and average temperature for a specific country over a selected range of years. We will display key metrics such as total emissions, average temperature, and their percentage changes. Additionally, we will create a line plot to visualize the trends in emissions and temperature over time.
+You should now have:
 
-### Problem Description:
-You have been provided with a dataset that contains information about carbon emissions and average temperature for different countries over several years. Your task is to create visualizations that showcase the total emissions and average temperature for a selected country over a specific range of years. Additionally, you will display the percentage change in emissions and temperature compared to the previous year.
+- Executive KPIs
+- Net Sales by Product
+- Net Sales by Region
+- Claim Rate information
+- At least one useful filter
 
+The final step is to combine these views into an **executive dashboard**.
 
-### Instructions:
-Follow the steps below to complete the exercise:
+---
 
-1. Import the csv data generated from the previous exercise into Tableau public.
+# What is an Executive Dashboard?
 
-2. Go to the "Sheet 1" tab in Tableau Public and rename it to "Total Emissions and Average Temperature for different Countries 🧭", Select the option as Line under the "Mark" - "All" Section
+An executive dashboard provides a high-level view of the most important business information.
 
-3. Ensure that the "YEAR" and "COUNTRY" columns are set as dimensions in Tableau, Also ensure Year is set as Whole Number by right clicking on the Year column.
+It should allow management to quickly understand:
 
-4. Drag the Total Emissions and Average Temperature columns to the Rows shelf and Drag the Year to the Columns shelf.
+- overall performance,
+- where performance is coming from,
+- areas that may require attention.
 
-5. Drag the "COUNTRY" dimension to the Filter shelf and select show filter option.  
+The goal is not to show every analysis you have created.
 
-6. Similarly, drag the "YEAR" dimension to the Filter shelf and select show filter option, the filter should be showing range of values instead of list of values, because here the year is whole number.
+Instead:
 
-7. Select the Total Emissions dual axis by right clicking, to merge the two charts to be displayed on the same axis.
+> **Show the most important information needed to understand the business situation.**
 
-7. In the title make the Year and Country dynamic by below syntax:
-   ```
-    Country: <Country>
-    Year: <Year>
-   ```
+---
 
-8. The final chart should look something like below:
+# Sample Executive Overview
 
-![different-countries.png](./assets/Exer-2.png)
+The following is an example of an executive overview created using the Travel Insurance dataset.
+
+![Sample Travel Insurance Executive Overview](./assets/overview_tableau_dashboard.png)
+
+Use this as a **reference for how information can be organised**.
+
+You do not need to reproduce the design exactly.
+
+Notice how the most important KPIs are displayed prominently before the supporting analysis.
+
+---
+
+# Build Your Dashboard
+
+Create a new dashboard in Tableau.
+
+Add the worksheets you created in the previous exercise.
+
+A simple structure could be:
+
+```text
+-----------------------------------------------------------------
+
+             TRAVEL INSURANCE EXECUTIVE OVERVIEW
+
+                       Region [Filter]
+
+-----------------------------------------------------------------
+
+ Policies      Net Sales      Net Profit      Profit Margin      Claim Rate
+
+  XX.XK         $X.XXM         $X.XXM              XX%              X.X%
+
+-----------------------------------------------------------------
+
+                  NET SALES BY PRODUCT
+
+                       [Bar Chart]
+
+-----------------------------------------------------------------
+
+                  NET SALES BY REGION
+
+                       [Bar Chart]
+
+-----------------------------------------------------------------
+```
+
+Your dashboard does not need to follow this layout exactly.
+
+The important question is:
+
+> **Can management understand the overall performance quickly?**
+
+---
+
+# Organise the Dashboard for the Audience
+
+A useful reading flow is:
+
+**Overall Performance  
+→ Product Performance  
+→ Regional Performance  
+→ Area Requiring Attention**
+
+Place the most important information near the top.
+
+Keep the dashboard simple and avoid unnecessary charts, colours or filters.
+
+---
+
+# Add a Useful Filter
+
+Add at least one filter that helps the user explore the dashboard.
+
+For example:
+
+- Region
+- Channel
+- Product
+
+The filter should support a useful analytical question.
+
+For example:
+
+> **How does product performance change when a particular region is selected?**
+
+Avoid adding too many filters.
+
+---
+
+# Communicate the Key Findings
+
+Once the dashboard is complete, review the results and identify the most important findings.
+
+Write **two or three key insights**.
+
+For each insight, consider:
+
+### What happened?
+
+What does the data show?
+
+### Why does it matter?
+
+Why should management care?
+
+### What should be investigated or considered next?
+
+What action or further analysis may be useful?
+
+---
+
+# Example
+
+An executive summary might follow this structure:
+
+> **Overall:** The travel insurance portfolio shows strong overall sales performance.
+
+> **Key Insight:** Sales are concentrated in a small number of products and regions, while Claim Rates vary across the portfolio.
+
+> **Recommendation:** Management should investigate high-value segments with comparatively higher Claim Rates and identify strong-performing segments that may offer further opportunities.
+
+This is only an example of the structure.
+
+Your final conclusions should be based on your own analysis.
+
+---
+
+# Dashboard Checklist
+
+Before completing the exercise, check:
+
+## Content
+
+- Are the most important KPIs included?
+- Are only useful charts shown?
+- Does the dashboard address the business problem?
+
+## Design
+
+- Is the dashboard easy to read?
+- Is the most important information shown first?
+- Is unnecessary clutter removed?
+
+## Communication
+
+- Can the audience identify the main findings quickly?
+- Have you explained why the findings matter?
+- Are your recommendations supported by the data?
+
+---
+
+# The Complete Analytical Flow
+
+You have now completed the Tableau exercise:
+
+```text
+BUSINESS PROBLEM
+       ↓
+ANALYTICAL QUESTIONS
+       ↓
+DATA PREPARATION
+       ↓
+METRICS
+       ↓
+ANALYSIS
+       ↓
+VISUALISATIONS
+       ↓
+EXECUTIVE DASHBOARD
+       ↓
+INSIGHT
+       ↓
+RECOMMENDATION
+```
+
+Tableau helps us analyse and communicate the data.
+
+The ultimate goal is to help the business make better-informed decisions.
+
+---
+
+# Final Takeaway
+
+A good executive dashboard does not try to show everything.
+
+It shows the **most important information for the audience** and helps answer:
+
+> **What is happening, why does it matter, and where should we focus our attention?**
