@@ -1,0 +1,210 @@
+---
+sidebar_position: 2
+---
+
+# Core Data Concepts: OLAP, OLTP, Metadata, MDM & Data Catalog
+
+Before building pipelines or writing transformations, a data analyst needs a shared vocabulary for how data is stored, organised, and governed. This page introduces five foundational concepts you will encounter in almost every data project.
+
+---
+
+## OLTP vs OLAP
+
+Most organisations run two very different kinds of databases side by side. They are optimised for opposite goals, and confusing them leads to slow queries and broken pipelines.
+
+| Dimension | **OLTP** (Online Transaction Processing) | **OLAP** (Online Analytical Processing) |
+| --- | --- | --- |
+| **Purpose** | Run day-to-day business operations | Support analysis and decision-making |
+| **Primary question** | "Record this transaction now" | "What happened and why?" |
+| **Workload** | Many short, fast reads/writes | Fewer, long, complex read-heavy queries |
+| **Data shape** | Highly normalised (no redundancy) | Denormalised (star/snowflake schema) |
+| **Granularity** | Individual rows (one order, one payment) | Aggregates and summaries (monthly sales) |
+| **Latency** | Millisecond responses | Seconds to minutes |
+| **Typical systems** | PostgreSQL, MySQL, SQL Server | Snowflake, BigQuery, Redshift, ClickHouse |
+| **Who uses it** | Applications, cashiers, customers | Analysts, BI dashboards, data scientists |
+
+### Why the distinction matters to an analyst
+
+- **Don't run heavy analytical queries against OLTP systems.** They are tuned for fast transactions, and a long-running aggregate query can slow down the application your customers are using.
+- **OLAP systems are where you do your analysis.** Data is copied (via a pipeline) from OLTP systems into an analytical warehouse, then modelled into dimensions and facts.
+- **The two are connected by a pipeline**, not by direct access. Understanding this boundary is the first step to understanding data lineage.
+
+### A simple mental model
+
+```text
+OLTP (source)                    OLAP (analytical)
+┌─────────────────┐    ETL/ELT   ┌──────────────────────┐
+│  Orders table   │ ───────────► │  fact_orders         │
+│  Customers table│              │  dim_customer        │
+│  Payments table │              │  dim_date            │
+└─────────────────┘              └──────────────────────┘
+  "record the sale"                "analyse the sales"
+```
+
+---
+
+## Metadata
+
+> **Metadata is data about data.**
+
+It describes *what* a dataset is, *where* it came from, *how* it was created, and *who* is responsible for it. Without metadata, a table full of numbers is meaningless.
+
+### Common types of metadata
+
+| Type | Answers | Examples |
+| --- | --- | --- |
+| **Technical metadata** | How is the data stored and structured? | Column names, data types, schema, row counts, table size |
+| **Business metadata** | What does the data mean? | Column descriptions, KPI definitions, business glossary terms |
+| **Operational metadata** | How was the data processed? | Job run times, load timestamps, error logs, refresh frequency |
+| **Provenance/lineage metadata** | Where did the data come from? | Source system, transformation steps, upstream/downstream dependencies |
+
+### Why metadata matters to a data analyst
+
+- **Trust:** you can verify a column's definition before using it in a report.
+- **Discoverability:** you can find the right dataset instead of asking around.
+- **Reproducibility:** you can trace how a number was calculated.
+- **Impact analysis:** you can see what breaks if a source changes.
+
+---
+
+## Master Data Management (MDM)
+
+> **Master Data Management is the discipline of maintaining one consistent, authoritative version of the most important business entities.**
+
+Master data are the *core entities* that are shared and reused across the whole organisation — the "nouns" of the business:
+
+- **Customers**
+- **Products**
+- **Suppliers**
+- **Employees**
+- **Locations / stores**
+
+### The problem MDM solves
+
+The same customer might be stored differently in the CRM, the billing system, and the support portal:
+
+```text
+CRM:        "Acme Corp",  cust_id = 10042
+Billing:    "ACME CORPORATION",  account_no = 8831
+Support:    "Acme",  ticket_contact = 10042-A
+```
+
+Without MDM, three systems disagree on who "Acme" is. Analysts then produce conflicting reports ("How many customers do we have?"), and joins across systems silently break.
+
+### Key MDM concepts
+
+| Concept | Meaning |
+| --- | --- |
+| **Golden record** | The single, reconciled, authoritative version of an entity |
+| **Matching & deduplication** | Identifying that multiple records refer to the same real-world entity |
+| **Survivorship** | Rules for which source's value "wins" when sources disagree |
+| **Master data vs transactional data** | Master data changes slowly (customer name); transactional data changes constantly (each order) |
+
+### Why it matters to a data analyst
+
+- MDM gives you a **single customer ID** to join across systems reliably.
+- It reduces **duplicate-counting** and **misattributed** metrics.
+- It is the reason a well-governed warehouse has a clean `dim_customer` table.
+
+---
+
+## Data Catalog
+
+> **A data catalog is a searchable inventory of an organisation's data assets, enriched with metadata, lineage, and ownership.**
+
+If metadata is the *description* of a dataset, the data catalog is the *library* where all those descriptions live and can be searched.
+
+### What a data catalog typically provides
+
+- **Search & discovery:** find datasets by name, tag, owner, or business term.
+- **Profiles & statistics:** row counts, null percentages, value distributions.
+- **Lineage:** visual "where did this come from / where does it go" graphs.
+- **Ownership & stewardship:** who is accountable for each dataset.
+- **Glossary integration:** link columns to canonical business definitions.
+- **Access & usage:** who is using the dataset, and how.
+
+### Popular tools
+
+- OpenMetadata, Amundsen, DataHub (open source)
+- Alation, Collibra, Atlan (commercial)
+- Native catalog features in Snowflake, BigQuery, Databricks
+
+### How a data analyst uses a catalog
+
+1. **Before writing a query:** search the catalog to confirm the right table and understand its columns.
+2. **Before trusting a number:** check lineage to see how the metric was derived.
+3. **After building a report:** register the dataset so others can discover and reuse it.
+
+---
+
+## How these concepts fit together
+
+```text
+┌────────────────────────────────────────────────────────────┐
+│                       DATA CATALOG                         │
+│          search · lineage · ownership · glossary           │
+└───────────────────────────┬────────────────────────────────┘
+                            │ indexes
+┌───────────────────────────▼────────────────────────────────┐
+│                        METADATA                            │
+│     technical · business · operational · lineage           │
+└───────────────────────────┬────────────────────────────────┘
+                            │ describes
+┌───────────────────────────▼────────────────────────────────┐
+│   OLTP ──────────► (pipeline) ──────────► OLAP             │
+│   (transactions)                          (analysis)        │
+│                                                             │
+│   MDM: golden records for customer & product                │
+└─────────────────────────────────────────────────────────────┘
+```
+
+- **OLTP** produces the raw transactions.
+- **MDM** ensures the shared entities (customers, products) are consistent.
+- **OLAP** stores the analytical model for fast querying.
+- **Metadata** describes everything along the way.
+- **Data catalog** makes it all discoverable and governed.
+
+---
+
+## Roles Matrix: Data Analyst vs Data Engineer vs Data Scientist
+
+The same pipeline is touched by different roles with different responsibilities. This matrix distinguishes the three core roles you will work alongside.
+
+| Dimension | **Data Analyst (DA)** | **Data Engineer (DE)** | **Data Scientist (DS)** |
+| --- | --- | --- | --- |
+| **Core question** | "What happened and why should the business care?" | "How do we reliably move and store data?" | "What will happen and what pattern exists?" |
+| **Primary output** | Dashboards, reports, insights, recommendations | Pipelines, schemas, infrastructure, curated datasets | Predictive models, experiments, algorithms |
+| **Key tools** | SQL, Tableau/Power BI, Python, spreadsheets | SQL, Python, Airflow, dbt, Spark, Snowflake | Python, R, scikit-learn, statistics, ML frameworks |
+| **Works with** | Business stakeholders, DEs, DSs | Analysts, DSs, platform teams | Analysts, DEs, product teams |
+| **Focus on data** | Interpreting and communicating meaning | Ingesting, transforming, storing, and serving data | Modelling patterns and forecasting |
+| **Typical deliverable** | A KPI dashboard + executive summary | A reliable, tested data pipeline | A trained model with evaluation metrics |
+| **Success measure** | Business decisions improved by insight | Data is accurate, timely, and available | Model accuracy and business impact of predictions |
+
+### How the roles interact on one pipeline
+
+```text
+Data Engineer                Data Analyst               Data Scientist
+    │                            │                          │
+    │  builds ingestion &        │  writes queries &        │  builds models on
+    │  transformation jobs       │  dashboards on top       │  curated datasets
+    │                            │                          │
+    ▼                            ▼                          ▼
+  raw data ──► clean tables ──► metrics & reports ──► predictions & experiments
+```
+
+> **Note:** boundaries are fluid and depend on team size and maturity. In a small team, one person may wear all three hats. The matrix is a guide to *responsibilities*, not a rigid org chart.
+
+---
+
+## Quick reference
+
+| Term | One-line definition |
+| --- | --- |
+| **OLTP** | Databases that run day-to-day business transactions |
+| **OLAP** | Databases optimised for analytical queries and reporting |
+| **Metadata** | Data about data (structure, meaning, provenance) |
+| **MDM** | Maintaining one authoritative version of core business entities |
+| **Data catalog** | A searchable, governed inventory of data assets |
+| **Data Analyst** | Turns data into business insight and recommendations |
+| **Data Engineer** | Builds and maintains the data pipelines and infrastructure |
+| **Data Scientist** | Builds predictive models and runs experiments |
