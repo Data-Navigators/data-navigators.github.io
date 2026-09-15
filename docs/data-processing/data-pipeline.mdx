@@ -1,0 +1,208 @@
+---
+sidebar_position: 3
+---
+
+# A Simple Data Pipeline: Lineage, Data Flow & Outcome
+
+A **data pipeline** is the sequence of steps that moves data from its source to a final, analysis-ready state. To understand any pipeline, you need to answer three questions:
+
+1. **Lineage** — where did the data come from, and how was it transformed at each step?
+2. **Data flow** — in what order and direction does data move between stages?
+3. **Outcome** — what final, business-ready result does the pipeline produce?
+
+This page walks through a small but complete pipeline end-to-end, with concrete data and SQL at every stage.
+
+---
+
+## The business problem
+
+**Acme Retail** wants a daily report of **revenue by region**. The raw data lives in three OLTP source tables, but it is messy: duplicate customers, inconsistent region names, and a `NULL` discount that should be treated as zero.
+
+The pipeline's job is to turn that mess into a clean, trusted `daily_sales_by_region` table that a dashboard can read.
+
+---
+
+## 1. Lineage — the full picture
+
+Lineage is the "family tree" of your data. It shows every table and every transformation between the raw source and the final report.
+
+```text
+LINEAGE MAP
+═══════════════════════════════════════════════════════════════════════════════
+
+  SOURCE (OLTP)      STAGING (raw copy)     MODELLED (clean)        SERVED
+─────────────────    ───────────────────    ──────────────────      ─────────────
+
+  orders ─────────► raw_orders ─────────► stg_orders ─────────────────────────┐
+  customers ──────► raw_customers ──────► stg_customers ──► dim_customer ────┤
+  products ───────► raw_products ───────► stg_products ───► dim_product ─────┤
+                                                                              ▼
+                                                                         fact_sales
+                                                                              │
+                                                                              ▼
+                                                                   daily_sales_by_region
+                                                                              │
+                                                                              ▼
+                                                                        BI dashboard
+```
+
+Every arrow above is a **transformation** you can audit. If a number is wrong, you walk backwards along the arrows to find which step introduced the error.
+
+---
+
+## 2. Data flow — stage by stage
+
+Data flows in **one direction**: `source → staging → modelled → served`. Each stage is described below with the actual SQL that performs the transformation.
+
+### Stage 1 — Extract (source → staging)
+
+Copy raw rows into staging tables *without* changing them. Staging is a faithful snapshot that lets you re-run later stages without hitting the production source.
+
+```sql
+CREATE TABLE raw_orders AS
+SELECT * FROM source.orders;
+```
+
+**Sample `raw_orders`:**
+
+| order_id | customer_id | product_id | order_date | region | quantity | unit_price | discount |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1001 | C001 | P01 | 2026-01-04 | south | 2 | 425 | NULL |
+| 1002 | C002 | P02 | 2026-01-05 | West | 1 | 1450 | 10 |
+| 1003 | C001 | P03 | 2026-01-07 | South | 4 | 80 | 0 |
+| 1004 | C003 | P01 | 2026-01-08 | north | 3 | 700 | 15 |
+
+### Stage 2 — Clean (staging → modelled)
+
+Standardise values, handle nulls, and deduplicate. This is where data-quality rules are applied.
+
+```sql
+-- Standardise region casing and treat NULL discount as zero
+CREATE TABLE stg_orders AS
+SELECT
+    order_id,
+    customer_id,
+    product_id,
+    order_date,
+    TRIM(UPPER(region))            AS region,
+    quantity,
+    unit_price,
+    COALESCE(discount, 0)           AS discount
+FROM raw_orders;
+
+-- Deduplicate customers: keep the latest record per customer_id
+CREATE TABLE stg_customers AS
+SELECT customer_id, customer_name, email, updated_at
+FROM (
+    SELECT
+        customer_id,
+        customer_name,
+        email,
+        updated_at,
+        ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY updated_at DESC) AS rn
+    FROM raw_customers
+)
+WHERE rn = 1;
+```
+
+**Result:** `region` is now consistently `SOUTH`, `WEST`, `NORTH` (no more `south` vs `South`), and `discount` is never `NULL`.
+
+> `stg_products` (and later `dim_product`) is built the same way — standardise text and deduplicate by `product_id`. The pattern is identical, so it is not repeated here.
+
+### Stage 3 — Model (build fact & dimension tables)
+
+Join the cleaned tables into an analysis-ready **star schema**: a `fact_sales` table surrounded by `dim_customer` and `dim_product`.
+
+```sql
+CREATE TABLE fact_sales AS
+SELECT
+    o.order_id,
+    o.order_date,
+    c.customer_id,
+    c.customer_name,
+    p.product_id,
+    p.category,
+    o.region,
+    o.quantity,
+    o.unit_price,
+    o.quantity * o.unit_price AS revenue,
+    o.discount
+FROM stg_orders o
+LEFT JOIN stg_customers c ON o.customer_id = c.customer_id
+LEFT JOIN stg_products  p ON o.product_id  = p.product_id;
+```
+
+### Stage 4 — Aggregate (model → business grain)
+
+Roll up to the level the business actually cares about: daily revenue by region.
+
+```sql
+CREATE TABLE daily_sales_by_region AS
+SELECT
+    region,
+    order_date,
+    SUM(revenue)          AS total_revenue,
+    COUNT(DISTINCT order_id) AS order_count
+FROM fact_sales
+GROUP BY region, order_date;
+```
+
+**Sample `daily_sales_by_region`:**
+
+| region | order_date | total_revenue | order_count |
+| --- | --- | --- | --- |
+| SOUTH | 2026-01-04 | 850 | 1 |
+| WEST | 2026-01-05 | 1450 | 1 |
+| SOUTH | 2026-01-07 | 320 | 1 |
+| NORTH | 2026-01-08 | 2100 | 1 |
+
+### Stage 5 — Serve (business grain → dashboard)
+
+The aggregate table is now read by a BI dashboard. No further transformation happens here — the dashboard simply queries `daily_sales_by_region`.
+
+---
+
+## 3. Outcome — what "done" looks like
+
+The pipeline is successful when a business user opens a dashboard and sees a **trusted, up-to-date** revenue-by-region view, with every number traceable back to its source.
+
+| Before the pipeline | After the pipeline |
+| --- | --- |
+| `region` has `south`, `South`, `SOUTH` | `region` is consistently `SOUTH` |
+| `discount` is sometimes `NULL` | `discount` is always a number (0 when missing) |
+| duplicate customers counted twice | one row per customer |
+| raw tables joined manually each time | `fact_sales` ready to query |
+| no way to explain a number | full lineage from source to report |
+
+---
+
+## Why lineage matters in practice
+
+When a stakeholder asks *"why is yesterday's revenue different from last week's report?"*, lineage lets you trace the number backwards:
+
+```text
+dashboard:  "SOUTH revenue = 850"
+      ▲  (SUM revenue GROUP BY region, order_date)
+daily_sales_by_region
+      ▲  (join orders ⋈ customers ⋈ products)
+fact_sales
+      ▲  (COALESCE discount, UPPER region, dedupe customers)
+stg_orders / stg_customers
+      ▲  (faithful copy)
+raw_orders / raw_customers
+      ▲  (extract)
+source.orders / source.customers
+```
+
+Each arrow is a transformation you can audit. A wrong number is almost always caused by a specific step — a broken join, a missed deduplication, or a bad source value — and lineage tells you exactly where to look.
+
+---
+
+## Data flow principles to remember
+
+- **Data flows one direction** — `source → staging → modelled → served`. Avoid circular dependencies.
+- **Each stage is idempotent** — re-running a stage produces the same result, so pipelines can be safely retried.
+- **Staging is a faithful copy** — never transform data in the source system; snapshot it first.
+- **Lineage is captured as you build** — document each transformation as you write it, not after the fact.
+
+> **The key takeaway:** a pipeline is not just "moving data." It is a chain of *auditable transformations* that turns raw, messy inputs into a trusted, business-ready outcome — and lineage is what makes that chain traceable.
