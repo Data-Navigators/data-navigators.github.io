@@ -27,10 +27,10 @@ This course is organised into five focused modules. Each module builds on the pr
 
 ---
 
-## Module 3 — Business Intelligence & Data Modelling
+## Module 3 — Data Modelling
 **Why it matters**: BI and good data modelling translate analysis into scalable assets (dashboards, reports, star/snowflake schemas) that business users can rely on.
 
-**What the module covers**: dimensional modelling, fact and dimension tables, aggregation strategies, performance-aware schema design, and hands-on use of BI tools (building interactive dashboards and KPIs).
+**What the module covers**: dimensional modelling, fact and dimension tables, aggregation strategies, and performance-aware schema design.
 
 **How the flow helps you learn in depth**: connect modelling choices to user questions and performance requirements; practice building a data model from cleaned data and expose it through a BI report.
 
