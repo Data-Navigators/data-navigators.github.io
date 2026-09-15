@@ -1,0 +1,84 @@
+---
+sidebar_position: 2
+---
+
+# Case Study 1: Brazilian E-Commerce and Marketing Funnel
+
+**Recommended case study**
+
+> **Note:** Case Study 1 is the main case study and uses a rich Brazilian e-commerce dataset with many related tables. Understanding the data, keys, grains, and relationships may take more time than the optional Case Studies 2 and 3. Choose this case when you want a deeper end-to-end consulting challenge. You do not need to create the data model entirely from scratch: you may start with standard, publicly available modeling code or patterns, then adapt, validate, and explain them for your own problem statement. If your analysis does not require a full model, a documented consolidated analytical table is also acceptable. Case Studies 2 and 3 remain available as optional alternatives with narrower scopes.
+
+## Business context
+
+You are consulting for an online marketplace operating in Brazil. The business wants to understand how customer orders, sellers, products, reviews, payments, freight, and delivery performance combine to influence commercial outcomes.
+
+The case uses two public Olist datasets:
+
+- [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- [Marketing Funnel by Olist](https://www.kaggle.com/datasets/olistbr/marketing-funnel-olist?select=olist_marketing_qualified_leads_dataset.csv)
+
+These datasets cover different business processes. The Brazilian e-commerce dataset describes orders and their outcomes. The marketing funnel dataset describes qualified leads and seller acquisition. They do not share an obvious row-level customer or order key, so do not join them directly. Treat them as two analytical tracks unless you can establish and defend a valid bridge.
+
+## Available data
+
+The e-commerce dataset includes files such as:
+
+- Customers and customer locations.
+- Orders and order status timestamps.
+- Order items, sellers, and products.
+- Product category translation.
+- Payments and payment installments.
+- Reviews and review scores.
+
+The marketing funnel dataset includes lead and seller-acquisition fields such as lead dates, origin, landing page, seller identifier, business segment, lead type, business type, declared catalog size, and declared monthly revenue.
+
+Before analysis, document the grain of every file. For example, an order table has one row per order, while an order-items table has one row per product line within an order. Reviews, payments, and order items may each have multiple rows per order.
+
+## Your consulting assignment
+
+The leadership team has not asked for a fixed list of charts. They want a decision supported by evidence. Define one focused problem statement that matters to a stakeholder and explain why the chosen data can answer it.
+
+Possible stakeholder directions include:
+
+- Operations: identify factors associated with late delivery, cancellations, or poor review scores.
+- Commercial: understand category, seller, payment, freight, and order-value patterns.
+- Customer experience: investigate the relationship between delivery performance and review scores.
+- Seller management: identify seller segments or regions that may need support.
+- Marketing: investigate lead origins, conversion timing, seller acquisition, or segment quality using the funnel dataset.
+
+These are starting points, not questions that must all be answered. Narrow the work to one decision that can be explained clearly.
+
+## Expected analytical path
+
+Use the techniques from the course as appropriate:
+
+1. Define the stakeholder, decision, population, time period, and unit of analysis.
+2. Inspect file grains, keys, missing values, duplicates, date ranges, and status fields.
+3. Build a safe analytical model before combining order-level, item-level, payment-level, review-level, and seller-level data.
+4. Define metrics such as delivery duration, order value, freight share, cancellation rate, repeat behavior, conversion time, or review-score distribution.
+5. Explore patterns with summaries, segment comparisons, trends, and visualizations.
+6. Use statistical reasoning where it strengthens the conclusion, while distinguishing association from causation.
+7. State assumptions, exclusions, data-quality limitations, and risks of double counting.
+8. Present a recommendation to the selected stakeholder and identify the next analysis or experiment required.
+
+## Important modeling risks
+
+- Do not sum order-level values after joining directly to multiple order-item rows without controlling the grain.
+- Do not treat a review, payment, or shipment record as one order.
+- Do not join the marketing funnel data to the e-commerce data solely because both contain seller-related concepts; verify the keys and coverage first.
+- Keep cancelled, unavailable, delivered, and returned orders distinct when defining business metrics.
+- Explain how missing delivery timestamps affect delivery-duration analysis.
+
+## Deliverable
+
+Produce a short consultant-style report or presentation containing:
+
+- Stakeholder and decision context.
+- Your original problem statement.
+- Data inventory and grain map.
+- Data-quality and preparation decisions.
+- Metric definitions and assumptions.
+- Evidence supporting the finding.
+- Recommendation, limitations, and next steps.
+
+The recommended scope is one main problem statement with one optional supporting analysis. A strong submission is selective and decision-oriented rather than a tour of every table.
