@@ -1,18 +1,9 @@
 # Introduction to Data Modelling
 
-**Orders**
+Data modelling is the process of organizing business data so that its meaning, relationships, and measures remain clear and reliable. In this module, you will work through a fictional marketplace case study and learn how consultants move from business questions to a structure that supports trustworthy analysis.
 
-| order_id | customer_id | order_date |
-| --- | --- | --- |
-| O1001 | C001 | 2026-01-05 |
-| O1002 | C002 | 2026-01-06 |
+The focus is not only on drawing tables. You will learn how to decide what one row represents, identify the entities and keys in a business process, choose appropriate relationships, and recognize when a flat table is sufficient or when a model is safer.
 
-**Order items**
-
-| order_item_id | order_id | product_id | quantity |
-| --- | --- | --- | ---: |
-| OI001 | O1001 | P001 | 2 |
-| OI002 | O1001 | P004 | 1 |
 ## Learning Objectives
 
 By the end of this module, you should be able to:
@@ -158,11 +149,11 @@ This table is difficult to query because the values in `product_ids`, `product_n
 | O1001 | 2 | C001 | Bengaluru | P004 | Notebook Set | Stationery | 1 | 18 |
 | O1002 | 1 | C002 | Mumbai | P002 | USB C Hub | Accessories | 1 | 45 |
 
-The key for this 1NF table is the combination `order_id + line_number`. In the repository dataset, the same role is represented by the unique `order_item_id`.
+For this simplified example, use the combination `order_id + product_id` as the composite business key for the 1NF table. `line_number` identifies the line's position within the order, but it is not the key used for the normalization explanation. In the repository dataset, the same row-identification role is represented by the unique `order_item_id`.
 
 #### 2NF: remove partial dependencies
 
-**Before 2NF:** the 1NF table uses `order_id + product_id` as a composite business key. `customer_id` and `customer_city` depend only on `order_id`; `product_name` and `category_name` depend only on `product_id`. These attributes do not depend on the whole key.
+**Before 2NF:** the 1NF table uses the same `order_id + product_id` composite business key. `customer_id` and `customer_city` depend only on `order_id`; `product_name` and `category_name` depend only on `product_id`. These attributes do not depend on the whole key.
 
 **After 2NF:** move order-level attributes to `orders`, product-level attributes to `products`, and leave line-level attributes in `order_items`:
 
