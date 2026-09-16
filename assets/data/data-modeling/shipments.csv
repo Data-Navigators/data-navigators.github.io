@@ -1,0 +1,10 @@
+shipment_id,order_id,shipment_status,shipped_date,delivered_date,carrier
+S001,O1001,Delivered,2026-01-06,2026-01-08,ParcelFast
+S002,O1002,Delivered,2026-01-07,2026-01-11,BlueDart
+S003,O1004,Delivered,2026-01-11,2026-01-14,ParcelFast
+S004,O1005,Returned,2026-01-13,2026-01-20,BlueDart
+S005,O1006,Delivered,2026-01-16,2026-01-17,ParcelFast
+S006,O1007,Delivered,2026-01-19,2026-01-24,QuickShip
+S007,O1008,Delivered,2026-01-22,2026-01-24,QuickShip
+S008,O1010,Partially Delivered,2026-01-28,2026-01-30,ParcelFast
+S009,O1010,Delivered,2026-01-29,2026-01-31,ParcelFast

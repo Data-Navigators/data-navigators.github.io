@@ -1,0 +1,8 @@
+product_id,product_name,category_id,unit_price
+P001,Wireless Mouse,CAT01,25
+P002,USB C Hub,CAT01,45
+P003,Desk Lamp,CAT02,35
+P004,Notebook Set,CAT03,18
+P005,Keyboard,CAT01,60
+P006,Monitor Stand,CAT02,75
+P007,Data Storytelling Book,CAT03,30
